@@ -50,7 +50,25 @@
   </article>
 </section>
 {% endif %}
-<section id="knead" style="max-width:1400px;margin:0 auto;padding:64px 32px 8px"> <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center"> <div style="background:#F4F4F5;border-radius:14px;padding:16px"><div style="position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1200 }}" alt="{{ p_sushi.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">{% endif %}</div></div> <div> <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D71920">Season 2</p> <h2 style="margin:0 0 16px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:52px;line-height:1;letter-spacing:-.045em;text-transform:lowercase">nine to find. one is rare.</h2> <p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#5A5A61;max-width:46ch">Every flavour has eight common styles and one chase. In sushi that's Poppy, the special roll. Boxes are sealed, so the only way to know is to open one.</p> <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:26px"> {% for image in p_sushi.images limit: 9 %}<div style="position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;background:#F4F4F5{% if forloop.last %};border:2px solid #D71920{% endif %}"><img src="{{ image | image_url: width: 400 }}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%"></div>{% endfor %} <div style="aspect-ratio:1;border-radius:8px;background:#101012;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px"><span style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Poppy</span><span style="font-size:10px;color:#9a9aa2">the chase</span></div> </div> <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"> <a href="/collections/knead-that" style="background:#D71920;color:#fff;text-decoration:none;font-weight:600;font-size:16px;padding:15px 26px;border-radius:6px">Shop Knead That</a> </div> </div> </div> </section> <section class="wt-section wt-flavour">
+<section id="knead" class="wt-section wt-knead">
+  <div class="wt-knead__grid">
+    <div class="wt-knead__frame">
+      <div class="wt-knead__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1200 }}" alt="{{ p_sushi.title }}" class="wt-knead__img">{% endif %}</div>
+    </div>
+    <div>
+      <p class="wt-knead__eyebrow">Season 2</p>
+      <h2 class="wt-knead__title">nine to find. one is rare.</h2>
+      <p class="wt-knead__body">Every flavour has eight common styles and one chase. In sushi that's Poppy, the special roll. Boxes are sealed, so the only way to know is to open one.</p>
+      <div class="wt-knead__styles">
+        {% for image in p_sushi.images limit: 9 %}<div class="wt-knead__tile{% if forloop.last %} wt-knead__tile--chase{% endif %}"><img src="{{ image | image_url: width: 400 }}" alt="" class="wt-knead__tile-img"></div>{% endfor %}
+        <div class="wt-knead__chase"><span class="wt-knead__chase-name">Poppy</span><span class="wt-knead__chase-meta">the chase</span></div>
+      </div>
+      <div class="wt-knead__actions">
+        <a href="/collections/knead-that" class="wt-btn">Shop Knead That</a>
+      </div>
+    </div>
+  </div>
+</section> <section class="wt-section wt-flavour">
   <h3 class="wt-flavour__heading">Pick a flavour</h3>
   <div class="wt-flavour__grid">
     <a href="{{ p_sushi.url | default: '/collections/knead-that' }}" class="wt-flavour__card"><div class="wt-flavour__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 700 }}" alt="{{ p_sushi.title }}" class="wt-flavour__img">{% endif %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Sushi &mdash; Season 2</span><span class="wt-flavour__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">9 styles &middot; 1 rare</span></a>
@@ -433,5 +451,130 @@
   .wt-flavour__meta {
     font-size: 13px;
     color: var(--wt-muted);
+  }
+  /* ============================================================
+     "Nine to find" band  (#knead)
+     ============================================================ */
+  .wt-knead {
+    --wt-section-pad-top: 64px; /* .wt-section default is 32px */
+
+    --wt-knead-gap: 56px;
+    --wt-knead-tile-radius: 8px;
+    --wt-knead-chase-meta: #9a9aa2;
+  }
+
+  .wt-knead__grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--wt-knead-gap);
+    align-items: center;
+  }
+
+  .wt-knead__frame {
+    background: var(--wt-mist);
+    border-radius: var(--wt-card-radius);
+    padding: 16px;
+  }
+
+  .wt-knead__media {
+    position: relative;
+    aspect-ratio: 4/3;
+    border-radius: var(--wt-knead-tile-radius);
+    overflow: hidden;
+  }
+
+  .wt-knead__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wt-knead__eyebrow {
+    margin: 0 0 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--wt-red);
+  }
+
+  .wt-knead__title {
+    margin: 0 0 16px;
+    font-family: var(--wt-font-display);
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    text-transform: lowercase;
+  }
+
+  .wt-knead__body {
+    margin: 0 0 24px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--wt-muted);
+    max-width: 46ch;
+  }
+
+  .wt-knead__styles {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .wt-knead__tile {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--wt-knead-tile-radius);
+    overflow: hidden;
+    background: var(--wt-mist);
+  }
+
+  .wt-knead__tile--chase {
+    border: 2px solid var(--wt-red);
+  }
+
+  .wt-knead__tile-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8%;
+  }
+
+  .wt-knead__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .wt-knead__chase {
+    aspect-ratio: 1;
+    border-radius: var(--wt-knead-tile-radius);
+    background: var(--wt-ink);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6px;
+  }
+
+  .wt-knead__chase-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .wt-knead__chase-meta {
+    font-size: 10px;
+    color: var(--wt-knead-chase-meta);
   }
 {% endstylesheet %}
