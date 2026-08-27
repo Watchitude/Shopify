@@ -1,1 +1,74 @@
-<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> <div style="font-family:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#101012"> {% if section.settings.show_announcement %}<div style="background:#D71920;color:#fff;text-align:center;font-size:13px;font-weight:600;letter-spacing:.05em;padding:9px 16px">{{ section.settings.announcement_text }}</div>{% endif %} <header style="border-bottom:1px solid #E2E2E4;background:#fff;position:sticky;top:0;z-index:20"> <div style="max-width:1400px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:32px"> <a href="{{ routes.root_url }}" style="flex:0 0 auto;display:block;width:190px">{% if section.settings.logo %}<img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name }}" style="width:100%;display:block">{% else %}<span style="font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:28px;letter-spacing:-.04em;text-transform:lowercase;color:#101012">watchitude</span>{% endif %}</a> <nav style="flex:1 1 auto;display:flex;gap:26px;align-items:center"> <a href="/collections/knead-that" style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap">Knead That</a> <a href="/collections/endless-bubble" style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap">Endless Bubble</a> <a href="/collections/tagd" style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap">Tag'd</a> <a href="/collections/fidgets" style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap">Fidgets</a> <a href="/collections/slap-watches" style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap">Slap Watches</a> <a href="/collections/new" style="font-size:15px;font-weight:600;color:#D71920;text-decoration:none;white-space:nowrap">New</a> </nav> <div style="flex:0 0 auto;display:flex;gap:18px;align-items:center;font-size:14px;font-weight:600"> <a href="{{ routes.search_url }}" style="color:#5A5A61;text-decoration:none">Search</a> <a href="{{ routes.account_url }}" style="color:#5A5A61;text-decoration:none">Account</a> <a href="{{ routes.cart_url }}" style="color:#101012;text-decoration:none;display:inline-flex;align-items:center;gap:7px">Cart <span style="background:#D71920;color:#fff;border-radius:999px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:12px">{{ cart.item_count }}</span></a> </div> </div> </header> </div> {% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Orders over $20 ship free" } ] } {% endschema %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"
+>
+<div style="font-family:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#101012">
+  {% if section.settings.show_announcement %}
+    <div style="background:#D71920;color:#fff;text-align:center;font-size:13px;font-weight:600;letter-spacing:.05em;padding:9px 16px">
+      {{ section.settings.announcement_text }}
+    </div>
+  {% endif %}
+  <header style="border-bottom:1px solid #E2E2E4;background:#fff;position:sticky;top:0;z-index:20">
+    <div style="max-width:1400px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:32px">
+      <a href="{{ routes.root_url }}" style="flex:0 0 auto;display:block;width:190px">
+        {%- if section.settings.logo -%}
+          <img
+            src="{{ section.settings.logo | image_url: width: 400 }}"
+            alt="{{ shop.name }}"
+            style="width:100%;display:block"
+          >
+        {%- else -%}
+          <span style="font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:28px;letter-spacing:-.04em;text-transform:lowercase;color:#101012"
+            >watchitude</span
+          >
+        {%- endif -%}
+      </a>
+      <nav style="flex:1 1 auto;display:flex;gap:26px;align-items:center">
+        <a
+          href="/collections/knead-that"
+          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          >Knead That</a
+        >
+        <a
+          href="/collections/endless-bubble"
+          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          >Endless Bubble</a
+        >
+        <a
+          href="/collections/tagd"
+          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          >Tag'd</a
+        >
+        <a
+          href="/collections/fidgets"
+          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          >Fidgets</a
+        >
+        <a
+          href="/collections/slap-watches"
+          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          >Slap Watches</a
+        >
+        <a
+          href="/collections/new"
+          style="font-size:15px;font-weight:600;color:#D71920;text-decoration:none;white-space:nowrap"
+          >New</a
+        >
+      </nav>
+      <div style="flex:0 0 auto;display:flex;gap:18px;align-items:center;font-size:14px;font-weight:600">
+        <a href="{{ routes.search_url }}" style="color:#5A5A61;text-decoration:none">Search</a>
+        <a href="{{ routes.account_url }}" style="color:#5A5A61;text-decoration:none">Account</a>
+        <a
+          href="{{ routes.cart_url }}"
+          style="color:#101012;text-decoration:none;display:inline-flex;align-items:center;gap:7px"
+          >Cart
+          <span style="background:#D71920;color:#fff;border-radius:999px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:12px">
+            {{- cart.item_count -}}
+          </span></a
+        >
+      </div>
+    </div>
+  </header>
+</div>
+{% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Orders over $20 ship free" } ] } {% endschema %}
