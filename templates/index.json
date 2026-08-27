@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "watchitude_home": {
+      "type": "watchitude-home",
+      "settings": {
+        "ice_image": "shopify://shop_images/567_-_Knead_That_Ice_Cream_592729f1-69f8-4b8b-9aab-fed2f7cd567a.jpg",
+        "twogo_image": "shopify://shop_images/243-bb1_-_Copy.jpg",
+        "new_image": "shopify://shop_images/740-1.jpg",
+        "new_copy": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it."
+      }
+    }
+  },
+  "order": [
+    "watchitude_home"
+  ]
+}
