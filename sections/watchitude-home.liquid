@@ -75,7 +75,18 @@
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.ice_image, label: 'Ice cream art', fit: 'contain' %}<span class="wt-flavour__badge">Sept 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Ice Cream</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.burger_image, label: 'Burger art', fit: 'contain' %}<span class="wt-flavour__badge">Oct 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Burger</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
   </div>
-</section> <section id="bubble" style="background:#F4F4F5;margin-top:64px"> <div style="max-width:1400px;margin:0 auto;padding:64px 32px"> <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:32px"> <div> <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D71920">Never runs out</p> <h2 style="margin:0;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:52px;line-height:1;letter-spacing:-.045em;text-transform:lowercase">endless bubble wrap</h2> </div> <p style="margin:0;font-size:17px;line-height:1.6;color:#5A5A61;max-width:44ch">Pop it, flip it, pop it again. Two sizes: the 2Go blind bag to clip on a backpack, or the full size in six colors.</p> </div> {% render 'wt-bubble' %} </div> </section> <section id="tagd" style="max-width:1400px;margin:0 auto;padding:72px 32px 8px"> <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center"> <div> <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D71920">Works with Apple AirTag</p> <h2 style="margin:0 0 16px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:52px;line-height:1;letter-spacing:-.045em;text-transform:lowercase">tag'd 2</h2> <p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#5A5A61;max-width:46ch">A slap watch with a pocket for an AirTag, so you can find it on the bus, at school, or wherever it ended up. Kids set the time themselves. AirTag sold separately.</p> <div style="display:grid;gap:14px;margin-bottom:28px;max-width:44ch"> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#101012;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">1</span><span style="font-size:15px;line-height:1.5">Drop an AirTag into the pocket on the band.</span></div> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#101012;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:15px;line-height:1.5">Slap it on. One size, no buckles, no help needed.</span></div> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#D71920;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">3</span><span style="font-size:15px;line-height:1.5">Find it in the Find My app when it goes missing.</span></div> </div> <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"> <a href="/collections/tagd" style="background:#D71920;color:#fff;text-decoration:none;font-weight:600;font-size:16px;padding:15px 26px;border-radius:6px">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a> </div> </div> <div style="position:relative;border-radius:14px;overflow:hidden;background:#101012;aspect-ratio:4/3">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" alt="{{ p_tagd.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%">{% endif %}</div> </div> {% assign tagd_col = collections['tagd'] %} <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:36px"> {% for product in tagd_col.products limit: 6 %} <a href="{{ product.url }}" style="text-decoration:none;color:inherit"><div style="position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#F4F4F5;margin-bottom:10px"><img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%"></div><span style="font-size:14px;font-weight:500">{{ product.title | split: ' - ' | first }}</span></a> {% endfor %} </div> </section> {% render 'wt-play' %} <section style="max-width:1400px;margin:0 auto;padding:64px 32px"> <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid #E2E2E4;padding-top:40px"> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Tested and certified kid-safe</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Every product we make is safety tested and certified. Test reports and CPCs on file.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Orders over $20 ship free</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Two fidgets clear it. So does one watch.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Find a local reseller</h3><p style="margin:0 0 8px;font-size:15px;line-height:1.6;color:#5A5A61">Prefer to shop in person? We're carried in stores nationwide.</p><a href="/pages/find-a-store" style="font-size:15px;font-weight:600;color:#D71920">Find a store</a></div> </div> </section> <section style="background:#F4F4F5"> <div style="max-width:900px;margin:0 auto;padding:64px 32px;text-align:center"> <h2 style="margin:0 0 12px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.04em;text-transform:lowercase">new drops, first look</h2> <p style="margin:0 0 24px;font-size:16px;color:#5A5A61">New fidgets land a few times a year and sell through fast.</p> {% form 'customer' %} {% if form.posted_successfully? %}<p style="margin:0;font-size:16px;font-weight:600;color:#101012">Thanks &mdash; you're on the list.</p>{% else %} <input type="hidden" name="contact[tags]" value="newsletter"> <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"> <input type="email" name="contact[email]" placeholder="Email" required style="font-family:'Archivo',sans-serif;font-size:16px;padding:14px 16px;border:1px solid #E2E2E4;border-radius:6px;min-width:300px;background:#fff"> <button type="submit" style="font-family:'Archivo',sans-serif;background:#D71920;color:#fff;border:none;font-weight:600;font-size:16px;padding:14px 26px;border-radius:6px;cursor:pointer">Subscribe</button> </div> {% endif %} {% endform %} </div> </section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "header", "content": "Just landed band" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
+</section> <section id="bubble" class="wt-bubble">
+  <div class="wt-section wt-bubble__inner">
+    <div class="wt-bubble__head">
+      <div>
+        <p class="wt-bubble__eyebrow">Never runs out</p>
+        <h2 class="wt-bubble__title">endless bubble wrap</h2>
+      </div>
+      <p class="wt-bubble__lead">Pop it, flip it, pop it again. Two sizes: the 2Go blind bag to clip on a backpack, or the full size in six colors.</p>
+    </div>
+    {% render 'wt-bubble' %}
+  </div>
+</section> <section id="tagd" style="max-width:1400px;margin:0 auto;padding:72px 32px 8px"> <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center"> <div> <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D71920">Works with Apple AirTag</p> <h2 style="margin:0 0 16px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:52px;line-height:1;letter-spacing:-.045em;text-transform:lowercase">tag'd 2</h2> <p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#5A5A61;max-width:46ch">A slap watch with a pocket for an AirTag, so you can find it on the bus, at school, or wherever it ended up. Kids set the time themselves. AirTag sold separately.</p> <div style="display:grid;gap:14px;margin-bottom:28px;max-width:44ch"> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#101012;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">1</span><span style="font-size:15px;line-height:1.5">Drop an AirTag into the pocket on the band.</span></div> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#101012;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:15px;line-height:1.5">Slap it on. One size, no buckles, no help needed.</span></div> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#D71920;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">3</span><span style="font-size:15px;line-height:1.5">Find it in the Find My app when it goes missing.</span></div> </div> <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"> <a href="/collections/tagd" style="background:#D71920;color:#fff;text-decoration:none;font-weight:600;font-size:16px;padding:15px 26px;border-radius:6px">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a> </div> </div> <div style="position:relative;border-radius:14px;overflow:hidden;background:#101012;aspect-ratio:4/3">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" alt="{{ p_tagd.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%">{% endif %}</div> </div> {% assign tagd_col = collections['tagd'] %} <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:36px"> {% for product in tagd_col.products limit: 6 %} <a href="{{ product.url }}" style="text-decoration:none;color:inherit"><div style="position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#F4F4F5;margin-bottom:10px"><img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%"></div><span style="font-size:14px;font-weight:500">{{ product.title | split: ' - ' | first }}</span></a> {% endfor %} </div> </section> {% render 'wt-play' %} <section style="max-width:1400px;margin:0 auto;padding:64px 32px"> <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid #E2E2E4;padding-top:40px"> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Tested and certified kid-safe</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Every product we make is safety tested and certified. Test reports and CPCs on file.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Orders over $20 ship free</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Two fidgets clear it. So does one watch.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Find a local reseller</h3><p style="margin:0 0 8px;font-size:15px;line-height:1.6;color:#5A5A61">Prefer to shop in person? We're carried in stores nationwide.</p><a href="/pages/find-a-store" style="font-size:15px;font-weight:600;color:#D71920">Find a store</a></div> </div> </section> <section style="background:#F4F4F5"> <div style="max-width:900px;margin:0 auto;padding:64px 32px;text-align:center"> <h2 style="margin:0 0 12px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.04em;text-transform:lowercase">new drops, first look</h2> <p style="margin:0 0 24px;font-size:16px;color:#5A5A61">New fidgets land a few times a year and sell through fast.</p> {% form 'customer' %} {% if form.posted_successfully? %}<p style="margin:0;font-size:16px;font-weight:600;color:#101012">Thanks &mdash; you're on the list.</p>{% else %} <input type="hidden" name="contact[tags]" value="newsletter"> <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"> <input type="email" name="contact[email]" placeholder="Email" required style="font-family:'Archivo',sans-serif;font-size:16px;padding:14px 16px;border:1px solid #E2E2E4;border-radius:6px;min-width:300px;background:#fff"> <button type="submit" style="font-family:'Archivo',sans-serif;background:#D71920;color:#fff;border:none;font-weight:600;font-size:16px;padding:14px 26px;border-radius:6px;cursor:pointer">Subscribe</button> </div> {% endif %} {% endform %} </div> </section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "header", "content": "Just landed band" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
 
 {% stylesheet %}
   /* ============================================================
@@ -576,5 +587,65 @@
   .wt-knead__chase-meta {
     font-size: 10px;
     color: var(--wt-knead-chase-meta);
+  }
+  /* ============================================================
+     "Endless bubble wrap" band  (#bubble)
+     Full-bleed tint: the <section> spans the full width and carries
+     the background, while .wt-bubble__inner holds the usual
+     .wt-section measure and padding.
+
+     The padding override is written as .wt-section.wt-bubble__inner
+     so it outranks .wt-section on specificity, not on source order.
+
+     .wt-bubble itself sits outside .wt-section, so the shared tokens
+     are not in scope on it; the tint is declared locally and mirrors
+     --wt-mist.
+     ============================================================ */
+  .wt-bubble {
+    --wt-bubble-tint: #F4F4F5;
+
+    background: var(--wt-bubble-tint);
+    margin-top: 64px;
+  }
+
+  .wt-section.wt-bubble__inner {
+    --wt-section-pad-top: 64px;
+    --wt-section-pad-bottom: 64px;
+  }
+
+  .wt-bubble__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .wt-bubble__eyebrow {
+    margin: 0 0 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--wt-red);
+  }
+
+  .wt-bubble__title {
+    margin: 0;
+    font-family: var(--wt-font-display);
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    text-transform: lowercase;
+  }
+
+  .wt-bubble__lead {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--wt-muted);
+    max-width: 44ch;
   }
 {% endstylesheet %}
