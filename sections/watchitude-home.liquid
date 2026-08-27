@@ -86,7 +86,30 @@
     </div>
     {% render 'wt-bubble' %}
   </div>
-</section> <section id="tagd" style="max-width:1400px;margin:0 auto;padding:72px 32px 8px"> <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center"> <div> <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#D71920">Works with Apple AirTag</p> <h2 style="margin:0 0 16px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:52px;line-height:1;letter-spacing:-.045em;text-transform:lowercase">tag'd 2</h2> <p style="margin:0 0 24px;font-size:17px;line-height:1.6;color:#5A5A61;max-width:46ch">A slap watch with a pocket for an AirTag, so you can find it on the bus, at school, or wherever it ended up. Kids set the time themselves. AirTag sold separately.</p> <div style="display:grid;gap:14px;margin-bottom:28px;max-width:44ch"> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#101012;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">1</span><span style="font-size:15px;line-height:1.5">Drop an AirTag into the pocket on the band.</span></div> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#101012;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">2</span><span style="font-size:15px;line-height:1.5">Slap it on. One size, no buckles, no help needed.</span></div> <div style="display:flex;gap:14px;align-items:flex-start"><span style="flex:0 0 auto;width:26px;height:26px;border-radius:999px;background:#D71920;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center">3</span><span style="font-size:15px;line-height:1.5">Find it in the Find My app when it goes missing.</span></div> </div> <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"> <a href="/collections/tagd" style="background:#D71920;color:#fff;text-decoration:none;font-weight:600;font-size:16px;padding:15px 26px;border-radius:6px">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a> </div> </div> <div style="position:relative;border-radius:14px;overflow:hidden;background:#101012;aspect-ratio:4/3">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" alt="{{ p_tagd.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%">{% endif %}</div> </div> {% assign tagd_col = collections['tagd'] %} <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:36px"> {% for product in tagd_col.products limit: 6 %} <a href="{{ product.url }}" style="text-decoration:none;color:inherit"><div style="position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:#F4F4F5;margin-bottom:10px"><img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8%"></div><span style="font-size:14px;font-weight:500">{{ product.title | split: ' - ' | first }}</span></a> {% endfor %} </div> </section> {% render 'wt-play' %} <section style="max-width:1400px;margin:0 auto;padding:64px 32px"> <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid #E2E2E4;padding-top:40px"> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Tested and certified kid-safe</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Every product we make is safety tested and certified. Test reports and CPCs on file.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Orders over $20 ship free</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Two fidgets clear it. So does one watch.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Find a local reseller</h3><p style="margin:0 0 8px;font-size:15px;line-height:1.6;color:#5A5A61">Prefer to shop in person? We're carried in stores nationwide.</p><a href="/pages/find-a-store" style="font-size:15px;font-weight:600;color:#D71920">Find a store</a></div> </div> </section> <section style="background:#F4F4F5"> <div style="max-width:900px;margin:0 auto;padding:64px 32px;text-align:center"> <h2 style="margin:0 0 12px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.04em;text-transform:lowercase">new drops, first look</h2> <p style="margin:0 0 24px;font-size:16px;color:#5A5A61">New fidgets land a few times a year and sell through fast.</p> {% form 'customer' %} {% if form.posted_successfully? %}<p style="margin:0;font-size:16px;font-weight:600;color:#101012">Thanks &mdash; you're on the list.</p>{% else %} <input type="hidden" name="contact[tags]" value="newsletter"> <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"> <input type="email" name="contact[email]" placeholder="Email" required style="font-family:'Archivo',sans-serif;font-size:16px;padding:14px 16px;border:1px solid #E2E2E4;border-radius:6px;min-width:300px;background:#fff"> <button type="submit" style="font-family:'Archivo',sans-serif;background:#D71920;color:#fff;border:none;font-weight:600;font-size:16px;padding:14px 26px;border-radius:6px;cursor:pointer">Subscribe</button> </div> {% endif %} {% endform %} </div> </section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "header", "content": "Just landed band" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
+</section> <section id="tagd" class="wt-section wt-tagd">
+  <div class="wt-tagd__grid">
+    <div>
+      <p class="wt-tagd__eyebrow">Works with Apple AirTag</p>
+      <h2 class="wt-tagd__title">tag'd 2</h2>
+      <p class="wt-tagd__body">A slap watch with a pocket for an AirTag, so you can find it on the bus, at school, or wherever it ended up. Kids set the time themselves. AirTag sold separately.</p>
+      <div class="wt-tagd__steps">
+        <div class="wt-tagd__step"><span class="wt-tagd__step-num">1</span><span class="wt-tagd__step-text">Drop an AirTag into the pocket on the band.</span></div>
+        <div class="wt-tagd__step"><span class="wt-tagd__step-num">2</span><span class="wt-tagd__step-text">Slap it on. One size, no buckles, no help needed.</span></div>
+        <div class="wt-tagd__step"><span class="wt-tagd__step-num wt-tagd__step-num--accent">3</span><span class="wt-tagd__step-text">Find it in the Find My app when it goes missing.</span></div>
+      </div>
+      <div class="wt-tagd__actions">
+        <a href="/collections/tagd" class="wt-btn">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a>
+      </div>
+    </div>
+    <div class="wt-tagd__media">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>
+  </div>
+  {% assign tagd_col = collections['tagd'] %}
+  <div class="wt-tagd__row">
+    {% for product in tagd_col.products limit: 6 %}
+    <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
+    {% endfor %}
+  </div>
+</section> {% render 'wt-play' %} <section style="max-width:1400px;margin:0 auto;padding:64px 32px"> <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid #E2E2E4;padding-top:40px"> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Tested and certified kid-safe</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Every product we make is safety tested and certified. Test reports and CPCs on file.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Orders over $20 ship free</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Two fidgets clear it. So does one watch.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Find a local reseller</h3><p style="margin:0 0 8px;font-size:15px;line-height:1.6;color:#5A5A61">Prefer to shop in person? We're carried in stores nationwide.</p><a href="/pages/find-a-store" style="font-size:15px;font-weight:600;color:#D71920">Find a store</a></div> </div> </section> <section style="background:#F4F4F5"> <div style="max-width:900px;margin:0 auto;padding:64px 32px;text-align:center"> <h2 style="margin:0 0 12px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.04em;text-transform:lowercase">new drops, first look</h2> <p style="margin:0 0 24px;font-size:16px;color:#5A5A61">New fidgets land a few times a year and sell through fast.</p> {% form 'customer' %} {% if form.posted_successfully? %}<p style="margin:0;font-size:16px;font-weight:600;color:#101012">Thanks &mdash; you're on the list.</p>{% else %} <input type="hidden" name="contact[tags]" value="newsletter"> <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"> <input type="email" name="contact[email]" placeholder="Email" required style="font-family:'Archivo',sans-serif;font-size:16px;padding:14px 16px;border:1px solid #E2E2E4;border-radius:6px;min-width:300px;background:#fff"> <button type="submit" style="font-family:'Archivo',sans-serif;background:#D71920;color:#fff;border:none;font-weight:600;font-size:16px;padding:14px 26px;border-radius:6px;cursor:pointer">Subscribe</button> </div> {% endif %} {% endform %} </div> </section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "header", "content": "Just landed band" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
 
 {% stylesheet %}
   /* ============================================================
@@ -647,5 +670,143 @@
     line-height: 1.6;
     color: var(--wt-muted);
     max-width: 44ch;
+  }
+  /* ============================================================
+     "Tag'd 2" band  (#tagd)
+     Compound selector on the section so the padding override
+     outranks .wt-section on specificity, not on source order.
+     ============================================================ */
+  .wt-section.wt-tagd {
+    --wt-section-pad-top: 72px; /* .wt-section default is 32px */
+
+    --wt-tagd-gap: 56px;
+    --wt-tagd-step-size: 26px;
+    --wt-tagd-card-radius: 10px;
+  }
+
+  .wt-tagd__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--wt-tagd-gap);
+    align-items: center;
+  }
+
+  .wt-tagd__eyebrow {
+    margin: 0 0 12px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--wt-red);
+  }
+
+  .wt-tagd__title {
+    margin: 0 0 16px;
+    font-family: var(--wt-font-display);
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    text-transform: lowercase;
+  }
+
+  .wt-tagd__body {
+    margin: 0 0 24px;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--wt-muted);
+    max-width: 46ch;
+  }
+
+  /* ---------- tag'd: numbered steps ---------- */
+  .wt-tagd__steps {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 28px;
+    max-width: 44ch;
+  }
+
+  .wt-tagd__step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .wt-tagd__step-num {
+    flex: 0 0 auto;
+    width: var(--wt-tagd-step-size);
+    height: var(--wt-tagd-step-size);
+    border-radius: 999px;
+    background: var(--wt-ink);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wt-tagd__step-num--accent {
+    background: var(--wt-red);
+  }
+
+  .wt-tagd__step-text {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .wt-tagd__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- tag'd: feature image ---------- */
+  .wt-tagd__media {
+    position: relative;
+    border-radius: var(--wt-card-radius);
+    overflow: hidden;
+    background: var(--wt-ink);
+    aspect-ratio: 4/3;
+  }
+
+  /* Identical fill today; kept as separate hooks so the feature
+     image and the collection thumbs can diverge later. */
+  .wt-tagd__img,
+  .wt-tagd__card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 8%;
+  }
+
+  /* ---------- tag'd: collection row ---------- */
+  .wt-tagd__row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .wt-tagd__card {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .wt-tagd__card-media {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: var(--wt-tagd-card-radius);
+    overflow: hidden;
+    background: var(--wt-mist);
+    margin-bottom: 10px;
+  }
+
+  .wt-tagd__card-name {
+    font-size: 14px;
+    font-weight: 500;
   }
 {% endstylesheet %}
