@@ -1,7 +1,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
     <article class="wt-hero__feature">
-      <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" alt="Knead That Sushi" class="wt-hero__img">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" alt="{{ p_sushi.title }}" class="wt-hero__img">{% endif %}</div>
+      <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img">{% endif %}</div>
       <div class="wt-hero__overlay">
         <p class="wt-hero__eyebrow wt-hero__eyebrow--feature">Season 2 &middot; mystery box</p>
         <h1 class="wt-hero__title">knead that sushi.</h1>
@@ -16,7 +16,7 @@
     </article>
     <div class="wt-hero__side">
       <a href="{{ routes.collections_url }}/endless-bubble" class="wt-hero__card">
-        <div class="wt-hero__media">{% if p_bubble.featured_image %}<img src="{{ p_bubble.featured_image | image_url: width: 900 }}" alt="{{ p_bubble.title }}" class="wt-hero__img">{% endif %}</div>
+        <div class="wt-hero__media">{% if p_bubble.featured_image %}<img src="{{ p_bubble.featured_image | image_url: width: 900 }}" width="{{ p_bubble.featured_image.width }}" height="{{ p_bubble.featured_image.height }}" alt="{{ p_bubble.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Never runs out</p>
           <h2 class="wt-hero__card-title">endless bubble</h2>
@@ -24,7 +24,7 @@
         </div>
       </a>
       <a href="{{ routes.collections_url }}/tagd" class="wt-hero__card wt-hero__card--dark">
-        <div class="wt-hero__media wt-hero__media--dim">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
+        <div class="wt-hero__media wt-hero__media--dim">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Works with Apple AirTag</p>
           <h2 class="wt-hero__card-title">tag'd 2</h2>
@@ -37,7 +37,7 @@
 {% if p_ckb != blank %}
 <section id="new" class="wt-section wt-new">
   <article class="wt-new__card">
-    <div class="wt-new__media">{% if p_ckb.featured_image %}<img src="{{ p_ckb.featured_image | image_url: width: 800 }}" alt="{{ p_ckb.title }}" class="wt-new__img">{% else %}{% render 'wt-img', img: section.settings.new_image, label: 'Click-Key Blocks photo &mdash; SKU 740', fit: 'contain' %}{% endif %}</div>
+    <div class="wt-new__media">{% if p_ckb.featured_image %}<img src="{{ p_ckb.featured_image | image_url: width: 800 }}" width="{{ p_ckb.featured_image.width }}" height="{{ p_ckb.featured_image.height }}" alt="{{ p_ckb.title }}" class="wt-new__img">{% else %}{% render 'wt-img', img: section.settings.new_image, label: 'Click-Key Blocks photo &mdash; SKU 740', fit: 'contain' %}{% endif %}</div>
     <div class="wt-new__body">
       <p class="wt-new__eyebrow">Just landed &middot; available now</p>
       <h2 class="wt-new__title">click-key blocks</h2>
@@ -53,14 +53,14 @@
 <section id="knead" class="wt-section wt-knead">
   <div class="wt-knead__grid">
     <div class="wt-knead__frame">
-      <div class="wt-knead__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1200 }}" alt="{{ p_sushi.title }}" class="wt-knead__img">{% endif %}</div>
+      <div class="wt-knead__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1200 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-knead__img">{% endif %}</div>
     </div>
     <div>
       <p class="wt-knead__eyebrow">Season 2</p>
       <h2 class="wt-knead__title">nine to find. one is rare.</h2>
       <p class="wt-knead__body">Every flavour has eight common styles and one chase. In sushi that's Poppy, the special roll. Boxes are sealed, so the only way to know is to open one.</p>
       <div class="wt-knead__styles">
-        {% for image in p_sushi.images limit: 9 %}<div class="wt-knead__tile{% if forloop.last %} wt-knead__tile--chase{% endif %}"><img src="{{ image | image_url: width: 400 }}" alt="" class="wt-knead__tile-img"></div>{% endfor %}
+        {% for image in p_sushi.images limit: 9 %}<div class="wt-knead__tile{% if forloop.last %} wt-knead__tile--chase{% endif %}"><img src="{{ image | image_url: width: 400 }}" width="{{ image.width }}" height="{{ image.height }}" alt="" class="wt-knead__tile-img"></div>{% endfor %}
         <div class="wt-knead__chase"><span class="wt-knead__chase-name">Poppy</span><span class="wt-knead__chase-meta">the chase</span></div>
       </div>
       <div class="wt-knead__actions">
@@ -71,7 +71,7 @@
 </section> <section id="flavour" class="wt-section wt-flavour">
   <h3 class="wt-flavour__heading">Pick a flavour</h3>
   <div class="wt-flavour__grid">
-    <a href="{{ p_sushi.url | default: knead_collection_url }}" class="wt-flavour__card"><div class="wt-flavour__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 700 }}" alt="{{ p_sushi.title }}" class="wt-flavour__img">{% endif %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Sushi &mdash; Season 2</span><span class="wt-flavour__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">9 styles &middot; 1 rare</span></a>
+    <a href="{{ p_sushi.url | default: knead_collection_url }}" class="wt-flavour__card"><div class="wt-flavour__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 700 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-flavour__img">{% endif %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Sushi &mdash; Season 2</span><span class="wt-flavour__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">9 styles &middot; 1 rare</span></a>
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.ice_image, label: 'Ice cream art', fit: 'contain' %}<span class="wt-flavour__badge">Sept 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Ice Cream</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.burger_image, label: 'Burger art', fit: 'contain' %}<span class="wt-flavour__badge">Oct 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Burger</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
   </div>
@@ -101,12 +101,12 @@
         <a href="{{ routes.collections_url }}/tagd" class="wt-btn">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a>
       </div>
     </div>
-    <div class="wt-tagd__media">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>
+    <div class="wt-tagd__media">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>
   </div>
   {% assign tagd_col = collections['tagd'] %}
   <div class="wt-tagd__row">
     {% for product in tagd_col.products limit: 6 %}
-    <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
+    <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
     {% endfor %}
   </div>
 </section> {% render 'wt-play' %} <section id="trust" class="wt-section wt-trust">

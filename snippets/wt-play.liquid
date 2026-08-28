@@ -9,7 +9,7 @@
     {% assign col = collections[handle] %}
     <a href="{{ col.url | default: routes.all_products_collection_url }}" class="wt-play__card">
       <div class="wt-play__media">
-        {% if col.products.first.featured_image %}<img src="{{ col.products.first.featured_image | image_url: width: 700 }}" alt="{{ col.title }}" class="wt-play__img">{% else %}<div class="wt-play__placeholder">Photo needed</div>{% endif %}
+        {% if col.products.first.featured_image %}<img src="{{ col.products.first.featured_image | image_url: width: 700 }}" width="{{ col.products.first.featured_image.width }}" height="{{ col.products.first.featured_image.height }}" alt="{{ col.title }}" class="wt-play__img">{% else %}<div class="wt-play__placeholder">Photo needed</div>{% endif %}
         <div class="wt-play__overlay">
           <span class="wt-play__verb">{{ play_verbs[forloop.index0] }}</span>
           <span class="wt-play__sub">{{ play_subs[forloop.index0] }}</span>

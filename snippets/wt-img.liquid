@@ -4,4 +4,4 @@
   renders has an empty alt attribute. Fixing it means choosing alt text per
   call site, which is a content decision, not a markup one.
 {%- endcomment -%}
-{% if img != blank %}<img src="{{ img | image_url: width: 1400 }}" alt="{{ alt }}" class="wt-img wt-img--{{ fit | default: 'cover' }}">{% else %}<div class="wt-img__placeholder">{{ label }}</div>{% endif %}
+{% if img != blank %}<img src="{{ img | image_url: width: 1400 }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ alt }}" class="wt-img wt-img--{{ fit | default: 'cover' }}">{% else %}<div class="wt-img__placeholder">{{ label }}</div>{% endif %}

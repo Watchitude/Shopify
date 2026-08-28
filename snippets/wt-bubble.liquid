@@ -3,7 +3,7 @@
 {% assign bubble_collection_url = routes.collections_url | append: '/endless-bubble' %}
 <div class="wt-bubble__cards">
   <article class="wt-bubble__card">
-    <div class="wt-bubble__media">{% if b_full.featured_image %}<img src="{{ b_full.featured_image | image_url: width: 900 }}" alt="{{ b_full.title }}" class="wt-bubble__img">{% endif %}</div>
+    <div class="wt-bubble__media">{% if b_full.featured_image %}<img src="{{ b_full.featured_image | image_url: width: 900 }}" width="{{ b_full.featured_image.width }}" height="{{ b_full.featured_image.height }}" alt="{{ b_full.title }}" class="wt-bubble__img">{% endif %}</div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
         <h3 class="wt-bubble__name">Full size</h3>
@@ -22,7 +22,7 @@
     </div>
   </article>
   <article class="wt-bubble__card">
-    <div class="wt-bubble__media">{% if b_2go.featured_image %}<img src="{{ b_2go.featured_image | image_url: width: 900 }}" alt="{{ b_2go.title }}" class="wt-bubble__img">{% else %}{% render 'wt-img', img: section.settings.twogo_image, label: '2Go blind bag photo', fit: 'contain' %}{% endif %}</div>
+    <div class="wt-bubble__media">{% if b_2go.featured_image %}<img src="{{ b_2go.featured_image | image_url: width: 900 }}" width="{{ b_2go.featured_image.width }}" height="{{ b_2go.featured_image.height }}" alt="{{ b_2go.title }}" class="wt-bubble__img">{% else %}{% render 'wt-img', img: section.settings.twogo_image, label: '2Go blind bag photo', fit: 'contain' %}{% endif %}</div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
         <h3 class="wt-bubble__name">2Go blind bag</h3>
