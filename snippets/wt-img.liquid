@@ -1,1 +1,7 @@
+{%- comment -%}
+  TODO: `alt` is never passed by any call site -- they pass `label`, which
+  is only used by the placeholder branch below. So every image this snippet
+  renders has an empty alt attribute. Fixing it means choosing alt text per
+  call site, which is a content decision, not a markup one.
+{%- endcomment -%}
 {% if img != blank %}<img src="{{ img | image_url: width: 1400 }}" alt="{{ alt }}" class="wt-img wt-img--{{ fit | default: 'cover' }}">{% else %}<div class="wt-img__placeholder">{{ label }}</div>{% endif %}
