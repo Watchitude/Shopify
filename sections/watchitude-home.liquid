@@ -1222,4 +1222,20 @@
     text-transform: uppercase;
     line-height: 1.5;
   }
+  /* ============================================================
+     Mobile
+     Everything above is the desktop layout and is left untouched;
+     this block only narrows things below 768px.
+
+     Note on specificity: a media query adds none. Where a desktop
+     rule uses a compound selector, the mobile override has to
+     repeat that compound form or it will lose the cascade.
+     ============================================================ */
+  @media (max-width: 767px) {
+    /* The desktop track list starts with a hard 340px, which alone
+       overflows a 375px viewport's content box. Stacking removes it. */
+    .wt-new__card {
+      grid-template-columns: 1fr;
+    }
+  }
 {% endstylesheet %}
