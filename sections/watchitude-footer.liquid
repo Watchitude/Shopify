@@ -175,6 +175,53 @@
     font-size: 13px;
     color: var(--wt-muted);
   }
+
+  /* ============================================================
+     Mobile
+     Everything above is the desktop layout and is left untouched;
+     this block only narrows things below 768px.
+
+     The four-column grid was the footer's minimum width: fr tracks
+     carry min-width:auto, so no track could shrink below its
+     longest unbreakable word and four of them could not collapse
+     into fewer. One column removes that floor outright. The gap
+     and horizontal padding come down through the tokens, so the
+     grid and the legal bar both follow from one change each.
+     ============================================================ */
+  @media (max-width: 767px) {
+    .wt-footer {
+      --wt-footer-pad-x: 20px;
+      --wt-footer-gap: 28px;
+    }
+
+    .wt-footer__grid {
+      grid-template-columns: 1fr;
+      /* Shorthand rather than longhands: --wt-footer-pad-x is
+         already 20px in here, so this reads 32px 20px. */
+      padding: 32px var(--wt-footer-pad-x);
+    }
+
+    .wt-footer__logo-img {
+      width: 140px;
+    }
+
+    /* The 9px gap gives way to padding on the links themselves --
+       spacing between rows becomes part of the tap target instead
+       of dead space beside it. */
+    .wt-footer__list {
+      gap: 0;
+    }
+
+    /* 15px text on Dawn's body line-height is a ~22px box; 11px
+       top and bottom carries each row past the 44px minimum. */
+    .wt-footer__link {
+      padding: 11px 0;
+    }
+
+    .wt-footer__legal-inner {
+      padding: 16px var(--wt-footer-pad-x);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %} { "name": "Watchitude footer", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" } ] } {% endschema %}
