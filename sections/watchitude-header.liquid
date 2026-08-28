@@ -1,3 +1,26 @@
+{%- comment -%}
+  One source for the primary nav. The same links have to appear twice --
+  once in the desktop row, once inside the mobile drawer -- and two hand
+  written copies would drift the first time a collection is renamed. So
+  the markup is built once and captured, then printed into both places.
+
+  Liquid has no object literals, so the labels and their collection
+  handles ride in two arrays walked by a shared index.
+{%- endcomment -%}
+{%- liquid
+  assign nav_labels = "Knead That|Endless Bubble|Tag'd|Fidgets|Slap Watches|New" | split: '|'
+  assign nav_handles = 'knead-that|endless-bubble|tagd|fidgets|slap-watches|new' | split: '|'
+-%}
+{%- capture nav_links -%}
+  {%- for label in nav_labels -%}
+    {%- assign handle = nav_handles[forloop.index0] -%}
+    {%- assign link_class = 'wt-header__link' -%}
+    {%- if handle == 'new' -%}
+      {%- assign link_class = 'wt-header__link wt-header__link--new' -%}
+    {%- endif -%}
+    <a href="{{ routes.collections_url }}/{{ handle }}" class="{{ link_class }}">{{ label }}</a>
+  {%- endfor -%}
+{%- endcapture -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link
   rel="stylesheet"
@@ -27,36 +50,7 @@
         {%- endif -%}
       </a>
       <nav class="wt-header__nav">
-        <a
-          href="{{ routes.collections_url }}/knead-that"
-          class="wt-header__link"
-          >Knead That</a
-        >
-        <a
-          href="{{ routes.collections_url }}/endless-bubble"
-          class="wt-header__link"
-          >Endless Bubble</a
-        >
-        <a
-          href="{{ routes.collections_url }}/tagd"
-          class="wt-header__link"
-          >Tag'd</a
-        >
-        <a
-          href="{{ routes.collections_url }}/fidgets"
-          class="wt-header__link"
-          >Fidgets</a
-        >
-        <a
-          href="{{ routes.collections_url }}/slap-watches"
-          class="wt-header__link"
-          >Slap Watches</a
-        >
-        <a
-          href="{{ routes.collections_url }}/new"
-          class="wt-header__link wt-header__link--new"
-          >New</a
-        >
+        {{ nav_links }}
       </nav>
       <div class="wt-header__utils">
         <a href="{{ routes.search_url }}" class="wt-header__util">Search</a>
@@ -70,6 +64,12 @@
           </span></a
         >
       </div>
+      <details class="wt-header__drawer">
+        <summary class="wt-header__toggle">Menu</summary>
+        <nav class="wt-header__drawer-nav">
+          {{ nav_links }}
+        </nav>
+      </details>
     </div>
   </header>
 </div>
@@ -149,9 +149,9 @@
   }
 
   /* ---------- primary nav ----------
-     white-space: nowrap on the links is what pins the page's
-     minimum width; it is left as-is here so this commit stays a
-     pure extraction. */
+     white-space: nowrap on the links is what pinned the page's
+     minimum width. Below 768px this whole row is hidden in favour of
+     the drawer, so it no longer costs anything there. */
   .wt-header__nav {
     flex: 1 1 auto;
     display: flex;
@@ -207,6 +207,139 @@
     justify-content: center;
     font-size: 12px;
   }
+
+  /* ---------- mobile drawer ----------
+     In the markup at every width but hidden outright above 768px,
+     where .wt-header__nav is the copy that shows. Both are printed
+     from the same captured markup, so they cannot drift.
+
+     The panel stays in normal flow on purpose: it is a child of the
+     header row, not an absolutely positioned overlay, so opening it
+     grows the header and pushes the page down instead of covering
+     it. That is also why the <details> is full width -- the panel
+     cannot be wider than the box it sits in, so the summary has to
+     take a line of its own beneath the logo. */
+  .wt-header__drawer {
+    display: none;
+    width: 100%;
+    border-top: 1px solid var(--wt-line);
+  }
+
+  .wt-header__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--wt-ink);
+    cursor: pointer;
+    /* Three goes at killing the default marker, because no one of
+       them covers every browser: list-style for Firefox, the
+       -webkit- pseudo-element below for Safari, and display:flex,
+       which takes the summary out of list-item display in Chrome. */
+    list-style: none;
+  }
+
+  .wt-header__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Chevron drawn from two borders rather than a glyph, so it does
+     not wait on the webfont. */
+  .wt-header__toggle::after {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid var(--wt-muted);
+    border-bottom: 2px solid var(--wt-muted);
+    transform: translateY(-3px) rotate(45deg);
+    transition: transform 0.15s ease;
+  }
+
+  .wt-header__drawer[open] .wt-header__toggle::after {
+    transform: translateY(2px) rotate(-135deg);
+  }
+
+  .wt-header__drawer-nav {
+    display: grid;
+    padding-bottom: 8px;
+  }
+
+  /* Compound, so it beats .wt-header__link on specificity rather
+     than on source order. */
+  .wt-header__drawer-nav .wt-header__link {
+    padding: 11px 0;
+    border-top: 1px solid var(--wt-line);
+  }
+
+  /* ============================================================
+     Mobile
+     Everything above is the desktop layout and is left untouched;
+     this block only narrows things below 768px.
+
+     The row keeps its flex layout and is allowed to wrap: the logo
+     and the utility cluster share line one, and the drawer -- being
+     width:100% -- takes the whole of line two.
+     ============================================================ */
+  @media (max-width: 767px) {
+    .wt-header {
+      --wt-header-pad-x: 20px;
+      --wt-header-gap: 12px;
+    }
+
+    .wt-header__row {
+      flex-wrap: wrap;
+      padding-top: 12px;
+      /* The drawer carries its own bottom padding, open or closed. */
+      padding-bottom: 0;
+    }
+
+    .wt-header__logo {
+      width: 140px;
+    }
+
+    .wt-header__nav {
+      display: none;
+    }
+
+    /* The hidden nav was the flex:1 spacer holding the utilities
+       against the right edge; margin-left takes over that job. */
+    .wt-header__utils {
+      margin-left: auto;
+      gap: 14px;
+      font-size: 13px;
+    }
+
+    .wt-header__drawer {
+      display: block;
+    }
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  /* <details> opens and closes itself; the one case it cannot handle is
+     a link that never leaves the page. A same-page anchor such as
+     /#flavour only changes the hash, so the drawer would stay open on
+     top of the section the visitor just jumped to. Closing it on any
+     link click inside the drawer covers that, and costs nothing on a
+     real navigation, where the next page renders it closed anyway.
+
+     Delegated from the document rather than bound to the element: this
+     bundle is shared across sections and runs once, with no guarantee
+     the header is in the DOM at the time. */
+  document.addEventListener('click', function (event) {
+    var target = event.target;
+    if (!target || typeof target.closest !== 'function') return;
+
+    /* Requiring an <a> is what keeps the summary from tripping this --
+       a click on the summary is how the drawer gets opened. */
+    var link = target.closest('.wt-header__drawer a');
+    if (!link) return;
+
+    var drawer = link.closest('.wt-header__drawer');
+    if (drawer) drawer.open = false;
+  });
+{% endjavascript %}
 
 {% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Orders over $20 ship free" } ] } {% endschema %}
