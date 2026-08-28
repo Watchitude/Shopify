@@ -3,69 +3,69 @@
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"
 >
-<div style="font-family:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;color:#101012">
+<div class="wt-header">
   {% if section.settings.show_announcement %}
-    <div style="background:#D71920;color:#fff;text-align:center;font-size:13px;font-weight:600;letter-spacing:.05em;padding:9px 16px">
+    <div class="wt-header__announcement">
       {{ section.settings.announcement_text }}
     </div>
   {% endif %}
-  <header style="border-bottom:1px solid #E2E2E4;background:#fff;position:sticky;top:0;z-index:20">
-    <div style="max-width:1400px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;gap:32px">
-      <a href="{{ routes.root_url }}" style="flex:0 0 auto;display:block;width:190px">
+  <header class="wt-header__bar">
+    <div class="wt-header__row">
+      <a href="{{ routes.root_url }}" class="wt-header__logo">
         {%- if section.settings.logo -%}
           <img
             src="{{ section.settings.logo | image_url: width: 400 }}"
             width="{{ section.settings.logo.width }}"
             height="{{ section.settings.logo.height }}"
             alt="{{ shop.name }}"
-            style="width:100%;height:auto;display:block"
+            class="wt-header__logo-img"
           >
         {%- else -%}
-          <span style="font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:28px;letter-spacing:-.04em;text-transform:lowercase;color:#101012"
+          <span class="wt-header__wordmark"
             >watchitude</span
           >
         {%- endif -%}
       </a>
-      <nav style="flex:1 1 auto;display:flex;gap:26px;align-items:center">
+      <nav class="wt-header__nav">
         <a
           href="{{ routes.collections_url }}/knead-that"
-          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          class="wt-header__link"
           >Knead That</a
         >
         <a
           href="{{ routes.collections_url }}/endless-bubble"
-          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          class="wt-header__link"
           >Endless Bubble</a
         >
         <a
           href="{{ routes.collections_url }}/tagd"
-          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          class="wt-header__link"
           >Tag'd</a
         >
         <a
           href="{{ routes.collections_url }}/fidgets"
-          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          class="wt-header__link"
           >Fidgets</a
         >
         <a
           href="{{ routes.collections_url }}/slap-watches"
-          style="font-size:15px;font-weight:600;color:#101012;text-decoration:none;white-space:nowrap"
+          class="wt-header__link"
           >Slap Watches</a
         >
         <a
           href="{{ routes.collections_url }}/new"
-          style="font-size:15px;font-weight:600;color:#D71920;text-decoration:none;white-space:nowrap"
+          class="wt-header__link wt-header__link--new"
           >New</a
         >
       </nav>
-      <div style="flex:0 0 auto;display:flex;gap:18px;align-items:center;font-size:14px;font-weight:600">
-        <a href="{{ routes.search_url }}" style="color:#5A5A61;text-decoration:none">Search</a>
-        <a href="{{ routes.account_url }}" style="color:#5A5A61;text-decoration:none">Account</a>
+      <div class="wt-header__utils">
+        <a href="{{ routes.search_url }}" class="wt-header__util">Search</a>
+        <a href="{{ routes.account_url }}" class="wt-header__util">Account</a>
         <a
           href="{{ routes.cart_url }}"
-          style="color:#101012;text-decoration:none;display:inline-flex;align-items:center;gap:7px"
+          class="wt-header__cart"
           >Cart
-          <span style="background:#D71920;color:#fff;border-radius:999px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:12px">
+          <span class="wt-header__cart-count">
             {{- cart.item_count -}}
           </span></a
         >
@@ -73,4 +73,140 @@
     </div>
   </header>
 </div>
+{% stylesheet %}
+  /* ============================================================
+     Watchitude header
+     Self-contained by necessity. Shopify subsets styles.css so a
+     page only loads the CSS of files in its render tree, and this
+     header renders on every page while watchitude-home does not --
+     so nothing here may depend on .wt-home's tokens or .wt-section.
+     The few token values below are therefore declared locally and
+     mirror their counterparts in watchitude-home.liquid.
+     ============================================================ */
+  .wt-header {
+    --wt-header-max: 1400px;
+    --wt-header-pad-x: 32px;
+    --wt-header-gap: 32px;
+
+    --wt-font-body: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --wt-font-display: 'Jost', 'Century Gothic', Futura, sans-serif;
+    --wt-red: #D71920;
+    --wt-ink: #101012;
+    --wt-line: #E2E2E4;
+    --wt-muted: #5A5A61;
+
+    font-family: var(--wt-font-body);
+    color: var(--wt-ink);
+  }
+
+  .wt-header__announcement {
+    background: var(--wt-red);
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 9px 16px;
+  }
+
+  .wt-header__bar {
+    border-bottom: 1px solid var(--wt-line);
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .wt-header__row {
+    max-width: var(--wt-header-max);
+    margin: 0 auto;
+    padding: 14px var(--wt-header-pad-x);
+    display: flex;
+    align-items: center;
+    gap: var(--wt-header-gap);
+  }
+
+  /* ---------- logo ---------- */
+  .wt-header__logo {
+    flex: 0 0 auto;
+    display: block;
+    width: 190px;
+  }
+
+  .wt-header__logo-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .wt-header__wordmark {
+    font-family: var(--wt-font-display);
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+    color: var(--wt-ink);
+  }
+
+  /* ---------- primary nav ----------
+     white-space: nowrap on the links is what pins the page's
+     minimum width; it is left as-is here so this commit stays a
+     pure extraction. */
+  .wt-header__nav {
+    flex: 1 1 auto;
+    display: flex;
+    gap: 26px;
+    align-items: center;
+  }
+
+  .wt-header__link {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--wt-ink);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* Compound: overrides the base rule's colour, so it wins on
+     specificity rather than source order. */
+  .wt-header__link.wt-header__link--new {
+    color: var(--wt-red);
+  }
+
+  /* ---------- utility cluster ---------- */
+  .wt-header__utils {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .wt-header__util {
+    color: var(--wt-muted);
+    text-decoration: none;
+  }
+
+  .wt-header__cart {
+    color: var(--wt-ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .wt-header__cart-count {
+    background: var(--wt-red);
+    color: #fff;
+    border-radius: 999px;
+    min-width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+{% endstylesheet %}
+
 {% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Orders over $20 ship free" } ] } {% endschema %}
