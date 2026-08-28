@@ -1193,4 +1193,51 @@
     color: #fff;
     opacity: 0.85;
   }
+  /* ============================================================
+     Shared image fill  (snippets/wt-img.liquid)
+     Rendered from this section and from wt-bubble, both of which sit
+     inside .wt-home, so the shared tokens resolve for it.
+
+     The fit mode used to be interpolated straight into the inline
+     style; it is now a modifier class. Only 'cover' and 'contain'
+     have rules -- the two values the call sites use. A different
+     value would leave object-fit unset rather than passing through.
+
+     The base sets no object-fit, so the modifiers have no property
+     to fight over and need no compound selector.
+     ============================================================ */
+  .wt-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wt-img--cover {
+    object-fit: cover;
+  }
+
+  .wt-img--contain {
+    object-fit: contain;
+    padding: 8%;
+  }
+
+  /* Same idea as .wt-play__placeholder, but with a background, inner
+     padding and centred text, so it stays a separate rule. */
+  .wt-img__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 14px;
+    background: var(--wt-mist);
+    color: var(--wt-faint);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
 {% endstylesheet %}
