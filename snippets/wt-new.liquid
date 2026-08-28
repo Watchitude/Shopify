@@ -1,0 +1,25 @@
+{%- comment -%}
+  The Click-Key Blocks card, rendered twice on the home page: once in the
+  #new band under the hero, once again just above the endless bubble
+  band. One source rather than two copies that drift apart the first time
+  the copy or the price changes.
+
+  The product is re-assigned here rather than passed in because a snippet
+  cannot see variables assigned by the section -- p_ckb does not cross
+  the render boundary. Global objects do, which is what all_products is,
+  and so does the section object the settings below come from. This is
+  the same arrangement snippets/wt-bubble.liquid uses.
+{%- endcomment -%}
+{% assign ckb = all_products['click-key-blocks'] %}
+<article class="wt-new__card">
+  <div class="wt-new__media">{% if ckb.featured_image %}<img src="{{ ckb.featured_image | image_url: width: 800 }}" width="{{ ckb.featured_image.width }}" height="{{ ckb.featured_image.height }}" alt="{{ ckb.title }}" class="wt-new__img">{% else %}{% render 'wt-img', img: section.settings.new_image, label: 'Click-Key Blocks photo &mdash; SKU 740', fit: 'contain' %}{% endif %}</div>
+  <div class="wt-new__body">
+    <p class="wt-new__eyebrow">Just landed &middot; available now</p>
+    <h2 class="wt-new__title">click-key blocks</h2>
+    <p class="wt-new__copy">{{ section.settings.new_copy }}</p>
+  </div>
+  <div class="wt-new__buy">
+    <span class="wt-new__price">{{ ckb.price | money_without_trailing_zeros }}</span>
+    <a href="{{ ckb.url }}" class="wt-btn wt-btn--nowrap">Shop Click-Key Blocks</a>
+  </div>
+</article>

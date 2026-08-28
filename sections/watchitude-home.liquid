@@ -1,28 +1,36 @@
-<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
+<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
-    <article class="wt-hero__feature">
-      <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img">{% endif %}</div>
+    <article class="wt-hero__feature" data-wt-option="sushi">
+      <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% endif %}{% if ice_image != blank %}<img src="{{ ice_image | image_url: width: 1600 }}" width="{{ ice_image.width }}" height="{{ ice_image.height }}" alt="Knead That Ice Cream" class="wt-hero__img wt-hero__img--switch wt-hero__img--ice">{% endif %}{% if burger_image != blank %}<img src="{{ burger_image | image_url: width: 1600 }}" width="{{ burger_image.width }}" height="{{ burger_image.height }}" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% else %}<img src="{{ 'p03-x228.jpg' | asset_url }}" width="342" height="332" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% endif %}</div>
       <div class="wt-hero__overlay">
         <p class="wt-hero__eyebrow wt-hero__eyebrow--feature">Season 2 &middot; mystery box</p>
-        <h1 class="wt-hero__title">knead that sushi.</h1>
+        <h1 class="wt-hero__title">knead that <span class="wt-hero__title-word wt-hero__title-word--sushi">sushi.</span><span class="wt-hero__title-word wt-hero__title-word--ice">ice cream.</span><span class="wt-hero__title-word wt-hero__title-word--burger">burger.</span></h1>
         <p class="wt-hero__lead">Eight common styles, one rare chase. Chunky squishy plush in a sealed box &mdash; each box is a surprise!</p>
         <div class="wt-hero__actions">
           <a href="{{ p_sushi.url | default: knead_collection_url }}" class="wt-btn">Shop mystery boxes</a>
-          <span class="wt-hero__pill">Ice cream &mdash; Sept 15</span>
-          <span class="wt-hero__pill">Burger &mdash; October&nbsp;15</span>
+          <div class="wt-hero__pills">
+            <a href="{{ knead_collection_url }}" class="wt-hero__pill wt-hero__pill--active" data-wt-option="sushi">Sushi &mdash; available now</a>
+            {%- comment -%} Ice cream has no art of its own to fall back on, so with the setting empty it stays the plain, inert span it was: there is nothing to switch to. {%- endcomment -%}
+            {% if ice_image != blank %}<button type="button" class="wt-hero__pill" data-wt-option="ice">Ice cream &mdash; Sept&nbsp;15</button>{% else %}<span class="wt-hero__pill">Ice cream &mdash; Sept&nbsp;15</span>{% endif %}
+            <button type="button" class="wt-hero__pill" data-wt-option="burger">Burger &mdash; Oct&nbsp;15</button>
+          </div>
           <span class="wt-hero__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }} each</span>
         </div>
       </div>
     </article>
     <div class="wt-hero__side">
-      <a href="{{ routes.collections_url }}/endless-bubble" class="wt-hero__card">
-        <div class="wt-hero__media">{% if p_bubble.featured_image %}<img src="{{ p_bubble.featured_image | image_url: width: 900 }}" width="{{ p_bubble.featured_image.width }}" height="{{ p_bubble.featured_image.height }}" alt="{{ p_bubble.title }}" class="wt-hero__img">{% endif %}</div>
+      <article class="wt-hero__card" data-wt-option="full">
+        <div class="wt-hero__media"><img src="{{ 'p15-x1200.png' | asset_url }}" width="1200" height="1200" alt="Endless Bubble Wrap, full size" class="wt-hero__img wt-hero__img--switch wt-hero__img--full"><img src="{{ 'p14-x1116.png' | asset_url }}" width="1200" height="1200" alt="Endless Bubble 2Go blind bag" class="wt-hero__img wt-hero__img--switch wt-hero__img--2go"></div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Never runs out</p>
-          <h2 class="wt-hero__card-title">endless bubble</h2>
+          <h2 class="wt-hero__card-title"><a href="{{ routes.collections_url }}/endless-bubble" class="wt-hero__card-link">endless bubble</a></h2>
           <p class="wt-hero__card-copy">Two sizes &mdash; 2Go blind bag {{ p_2go.price | money_without_trailing_zeros | default: '$13.50' }}, full size {{ p_bubble.price | money_without_trailing_zeros | default: '$20' }}</p>
+          <div class="wt-hero__pills wt-hero__pills--compact">
+            <button type="button" class="wt-hero__pill wt-hero__pill--compact wt-hero__pill--active" data-wt-option="full">Full size</button>
+            <button type="button" class="wt-hero__pill wt-hero__pill--compact" data-wt-option="2go">2Go</button>
+          </div>
         </div>
-      </a>
+      </article>
       <a href="{{ routes.collections_url }}/tagd" class="wt-hero__card wt-hero__card--dark">
         <div class="wt-hero__media wt-hero__media--dim">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
@@ -36,18 +44,7 @@
 </section>
 {% if p_ckb != blank %}
 <section id="new" class="wt-section wt-new">
-  <article class="wt-new__card">
-    <div class="wt-new__media">{% if p_ckb.featured_image %}<img src="{{ p_ckb.featured_image | image_url: width: 800 }}" width="{{ p_ckb.featured_image.width }}" height="{{ p_ckb.featured_image.height }}" alt="{{ p_ckb.title }}" class="wt-new__img">{% else %}{% render 'wt-img', img: section.settings.new_image, label: 'Click-Key Blocks photo &mdash; SKU 740', fit: 'contain' %}{% endif %}</div>
-    <div class="wt-new__body">
-      <p class="wt-new__eyebrow">Just landed &middot; available now</p>
-      <h2 class="wt-new__title">click-key blocks</h2>
-      <p class="wt-new__copy">{{ section.settings.new_copy }}</p>
-    </div>
-    <div class="wt-new__buy">
-      <span class="wt-new__price">{{ p_ckb.price | money_without_trailing_zeros }}</span>
-      <a href="{{ p_ckb.url }}" class="wt-btn wt-btn--nowrap">Shop Click-Key Blocks</a>
-    </div>
-  </article>
+  {% render 'wt-new' %}
 </section>
 {% endif %}
 <section id="knead" class="wt-section wt-knead">
@@ -60,8 +57,8 @@
       <h2 class="wt-knead__title">nine to find. one is rare.</h2>
       <p class="wt-knead__body">Every flavour has eight common styles and one chase. In sushi that's Poppy, the special roll. Boxes are sealed, so the only way to know is to open one.</p>
       <div class="wt-knead__styles">
-        {% for image in p_sushi.images limit: 9 %}<div class="wt-knead__tile{% if forloop.last %} wt-knead__tile--chase{% endif %}"><img src="{{ image | image_url: width: 400 }}" width="{{ image.width }}" height="{{ image.height }}" alt="" class="wt-knead__tile-img"></div>{% endfor %}
-        <div class="wt-knead__chase"><span class="wt-knead__chase-name">Poppy</span><span class="wt-knead__chase-meta">the chase</span></div>
+        {% assign kt_characters = 'Ume, Kona, Colby, Yogi, Jet, Sakura, Suki, Jade, Poppy' | split: ', ' %}
+        {% for name in kt_characters %}<div class="wt-knead__tile"><img src="{{ name | downcase | prepend: 'kt-' | append: '.png' | asset_url }}" width="300" height="300" alt="{{ name }}" class="wt-knead__tile-img"></div>{% endfor %}
       </div>
       <div class="wt-knead__actions">
         <a href="{{ routes.collections_url }}/knead-that" class="wt-btn">Shop Knead That</a>
@@ -75,7 +72,17 @@
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.ice_image, label: 'Ice cream art', fit: 'contain' %}<span class="wt-flavour__badge">Sept 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Ice Cream</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.burger_image, label: 'Burger art', fit: 'contain' %}<span class="wt-flavour__badge">Oct 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Burger</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
   </div>
-</section> <section id="bubble" class="wt-bubble">
+</section> {%- comment -%}
+  The same card again, lower down the page. It carries no id: #new is
+  already taken by the band above, and a duplicate id is invalid and
+  would break any anchor pointing at it.
+{%- endcomment -%}
+{% if p_ckb != blank %}
+<section class="wt-section wt-new">
+  {% render 'wt-new' %}
+</section>
+{% endif %}
+<section id="bubble" class="wt-bubble">
   <div class="wt-section wt-bubble__inner">
     <div class="wt-bubble__head">
       <div>
@@ -175,6 +182,28 @@
     --wt-card-gap: 20px;
     --wt-btn-radius: 6px;
 
+    /* Scrim behind the feature overlay. */
+    --wt-hero-scrim: linear-gradient(
+      to top,
+      rgba(16, 16, 18, 0.92) 0%,
+      rgba(16, 16, 18, 0.62) 45%,
+      rgba(16, 16, 18, 0.28) 72%,
+      rgba(16, 16, 18, 0) 100%
+    );
+
+    /* The same ramp at 70% strength, for the two side cards. Their copy
+       is shorter and sits over less of the image than the feature's
+       does, so the full-strength scrim buried the art. Every stop is the
+       one above multiplied by 0.7; the geometry is deliberately
+       identical, so the two read as one treatment at two weights. */
+    --wt-hero-scrim-soft: linear-gradient(
+      to top,
+      rgba(16, 16, 18, 0.64) 0%,
+      rgba(16, 16, 18, 0.43) 45%,
+      rgba(16, 16, 18, 0.2) 72%,
+      rgba(16, 16, 18, 0) 100%
+    );
+
     font-family: var(--wt-font-body);
     color: var(--wt-ink);
     background: #fff;
@@ -222,12 +251,94 @@
     object-fit: cover;
   }
 
+  /* ---------- hero: image switcher ---------- */
+  /* Two blocks switch images this way: the feature's three flavours and
+     the endless bubble card's two sizes. The images stack in the block's
+     own .wt-hero__media and cross-fade on opacity -- nothing swaps src,
+     so a switch never waits on the network -- and each block names the
+     one showing in its own data-wt-option. The tag'd card carries no
+     such attribute, so its .wt-hero__img is untouched by all of this. */
+  .wt-hero__img--switch {
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  /* Two jobs in one rule for the ice cream shot. It is squarer than the
+     panel, so the shared cover blew it up until the cone was cropped;
+     sizing the element to the image instead -- full height, natural
+     width, centred -- fits the whole photo the way object-fit: contain
+     did. And that is also what puts the element's edges on the photo's
+     edges, so the clip-path below takes its 10px off the right of the
+     picture rather than off the white beside it. object-view-box would
+     crop the source in one line, but Firefox still does not support it.
+
+     A source wider than the panel would crop at the sides rather than
+     fit; the flavour shots so far are all squarer than that. */
+  .wt-hero__img--ice {
+    inset: 0 auto 0 50%;
+    width: auto;
+    height: 100%;
+    transform: translateX(-50%);
+    clip-path: inset(0 10px 0 0);
+  }
+
+  /* Cover fills the panel by definition, so pulling the sushi shot back
+     10% means it no longer reaches the edges: a 5% band of panel shows
+     all round. Scaling the element rather than padding it keeps the crop
+     exactly as it was framed, just smaller. */
+  .wt-hero__img--sushi {
+    transform: scale(0.9);
+  }
+
+  /* Both bubble sizes are square transparent cut-outs, so the shared
+     cover would crop the product's top and bottom against a landscape
+     card. Contain fits each one whole; the card's mist shows through
+     the transparency behind it. */
+  .wt-hero__img--full,
+  .wt-hero__img--2go {
+    object-fit: contain;
+  }
+
+  /* The burger placeholder is a 342px near-square, so cover would both
+     crop it and blow it up; contain at least keeps all of it on screen
+     until the real art arrives. */
+  .wt-hero__img--burger {
+    object-fit: contain;
+  }
+
+  /* One <h1> whose last word changes with the flavour. display, not
+     opacity: a hidden word has to be gone from the accessibility tree
+     too, or the heading reads as "knead that sushi ice cream burger". */
+  .wt-hero__title-word {
+    display: none;
+  }
+
+  .wt-hero__feature[data-wt-option='sushi'] .wt-hero__title-word--sushi,
+  .wt-hero__feature[data-wt-option='ice'] .wt-hero__title-word--ice,
+  .wt-hero__feature[data-wt-option='burger'] .wt-hero__title-word--burger {
+    display: inline;
+  }
+
+  .wt-hero__feature[data-wt-option='sushi'] .wt-hero__img--sushi,
+  .wt-hero__feature[data-wt-option='ice'] .wt-hero__img--ice,
+  .wt-hero__feature[data-wt-option='burger'] .wt-hero__img--burger,
+  .wt-hero__card[data-wt-option='full'] .wt-hero__img--full,
+  .wt-hero__card[data-wt-option='2go'] .wt-hero__img--2go {
+    opacity: 1;
+  }
+
   /* ---------- hero: feature panel ---------- */
+  /* White rather than the --wt-mist the other panels use: none of the
+     three flavour shots reaches the edges any more -- ice cream and
+     burger are contained, sushi is scaled back to 90% -- so the panel
+     shows around each one and has to be the white the photos are shot
+     on, or the seam shows. It is the same white for every flavour, which
+     is why this sits on the panel rather than on each state. */
   .wt-hero__feature {
     position: relative;
     border-radius: var(--wt-card-radius);
     overflow: hidden;
-    background: var(--wt-mist);
+    background: #fff;
     min-height: 560px;
     display: flex;
     flex-direction: column;
@@ -238,12 +349,7 @@
     position: relative;
     pointer-events: none;
     padding: 40px;
-    background: linear-gradient(
-      to top,
-      rgba(16, 16, 18, 0.92) 0%,
-      rgba(16, 16, 18, 0.75) 40%,
-      rgba(16, 16, 18, 0) 78%
-    );
+    background: var(--wt-hero-scrim);
   }
 
   .wt-hero__title {
@@ -255,6 +361,7 @@
     letter-spacing: -0.045em;
     text-transform: lowercase;
     color: #fff;
+    text-shadow: 0 1px 12px rgba(16, 16, 18, 0.5);
     max-width: 15ch;
   }
 
@@ -263,6 +370,7 @@
     font-size: 17px;
     line-height: 1.5;
     color: #fff;
+    text-shadow: 0 1px 12px rgba(16, 16, 18, 0.5);
     max-width: 46ch;
     opacity: 0.92;
   }
@@ -275,14 +383,54 @@
     pointer-events: auto;
   }
 
+  .wt-hero__pills {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* One class over three elements: <a> for Sushi, <button> for a flavour
+     that has art, <span> for one that does not. The resets are what keep
+     them looking identical whichever it is. */
   .wt-hero__pill {
     background: rgba(255, 255, 255, 0.14);
     color: #fff;
+    font-family: inherit;
     font-weight: 600;
     font-size: 16px;
+    line-height: inherit;
+    text-decoration: none;
     padding: 14px 24px;
     border-radius: var(--wt-btn-radius);
     border: 1px solid rgba(255, 255, 255, 0.55);
+    appearance: none;
+    -webkit-appearance: none;
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+  }
+
+  /* The attribute is the switcher's own hook, so this styles exactly the
+     pills that do something when clicked. */
+  .wt-hero__pill[data-wt-option] {
+    cursor: pointer;
+  }
+
+  .wt-hero__pill.wt-hero__pill--active {
+    background: #fff;
+    border-color: #fff;
+    color: var(--wt-ink);
+  }
+
+  .wt-hero__pill:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wt-hero__img--switch,
+    .wt-hero__pill {
+      transition: none;
+    }
   }
 
   .wt-hero__price {
@@ -307,6 +455,43 @@
     background: var(--wt-ink);
   }
 
+  /* The bubble card stopped being one big <a> when the pills went into
+     it: a button inside a link is not something a browser will parse.
+     The title's link is stretched across the whole card instead, so the
+     card still clicks through anywhere, and the accessible name stays
+     the words in the title rather than a wrapper full of everything.
+
+     pointer-events has to be handed back explicitly -- .wt-hero__card-
+     overlay turns it off for the whole overlay, which is what stops the
+     scrim from eating clicks. */
+  .wt-hero__card-link {
+    color: inherit;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+
+  .wt-hero__card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Same pills as the feature, sized down for a 270px card, and lifted
+     over the stretched link so a tap on one switches the image instead
+     of following the card. */
+  .wt-hero__pills.wt-hero__pills--compact {
+    position: relative;
+    z-index: 1;
+    gap: 8px;
+    margin-top: 14px;
+    pointer-events: auto;
+  }
+
+  .wt-hero__pill.wt-hero__pill--compact {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
   .wt-hero__card-overlay {
     position: relative;
     pointer-events: none;
@@ -314,12 +499,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    background: linear-gradient(
-      to top,
-      rgba(16, 16, 18, 0.92) 0%,
-      rgba(16, 16, 18, 0.78) 60%,
-      rgba(16, 16, 18, 0) 100%
-    );
+    background: var(--wt-hero-scrim-soft);
     width: 100%;
   }
 
@@ -349,6 +529,7 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #fff;
+    text-shadow: 0 1px 12px rgba(16, 16, 18, 0.5);
   }
 
   .wt-hero__eyebrow.wt-hero__eyebrow--feature {
@@ -356,16 +537,16 @@
   }
 
   /* ---------- shared: contain-fit media fill ---------- */
-  /* Six image hooks across five blocks with identical fill. Kept as
+  /* Five image hooks across four blocks with identical fill. Kept as
      separate class names so any one of them can diverge later, but
      sharing a single rule until one does.
 
      .wt-play__img is deliberately NOT here: it pads 10%, not 8%.
      .wt-knead__img is not here either: it fills with object-fit
-     cover, not contain. */
+     cover, not contain. Nor is .wt-knead__tile-img: the character
+     art arrives pre-framed, so it pads 0. */
   .wt-new__img,
   .wt-flavour__img,
-  .wt-knead__tile-img,
   .wt-tagd__img,
   .wt-tagd__card-img,
   .wt-bubble__img {
@@ -395,6 +576,10 @@
      "Just landed" band  (#new)
      Section padding matches the .wt-section defaults, so there is
      no --wt-section-pad-* override here.
+
+     The card markup lives in snippets/wt-new.liquid: the band is
+     rendered twice on this page, once here and once above #bubble, and
+     these rules serve both.
      ============================================================ */
   .wt-new {
     --wt-new-media-width: 340px;
@@ -623,8 +808,17 @@
     background: var(--wt-mist);
   }
 
-  .wt-knead__tile--chase {
-    border: 2px solid var(--wt-red);
+  /* The 300x300 character art is framed in the file itself, so it
+     fills the tile edge to edge instead of taking the shared 8% pad.
+     The height rule pairs with the width/height attributes: those
+     reserve the square before load, this one keeps it square after
+     the tile's width: 100% takes over. */
+  .wt-knead__tile-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .wt-knead__actions {
@@ -632,31 +826,6 @@
     gap: 12px;
     align-items: center;
     flex-wrap: wrap;
-  }
-
-  .wt-knead__chase {
-    aspect-ratio: 1;
-    border-radius: var(--wt-knead-tile-radius);
-    background: var(--wt-ink);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 6px;
-  }
-
-  .wt-knead__chase-name {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .wt-knead__chase-meta {
-    font-size: 10px;
-    color: var(--wt-faint);
   }
   /* ============================================================
      "Endless bubble wrap" band  (#bubble)
@@ -1163,8 +1332,8 @@
     text-transform: uppercase;
   }
 
-  /* Stops differ from the hero overlays (0.9/0.6 at 55%), so this is
-     its own gradient rather than a shared one. */
+  /* Shallower and two-stop where --wt-hero-scrim is four, so this is
+     its own gradient rather than the shared hero one. */
   .wt-play__overlay {
     position: absolute;
     left: 0;
@@ -1400,3 +1569,101 @@
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  /* Hero image switcher (#top). Drives both pill groups: the feature's
+     flavours and the endless bubble card's two sizes.
+
+     All the state is one attribute -- data-wt-option on whichever block
+     the pills sit in -- and the CSS does the rest: the cross-fade and the
+     active pill both key off it. So every handler here does the same one
+     thing, and nothing has to read the DOM to find out what is currently
+     showing.
+
+     Delegated from the document rather than bound to the pills: this
+     bundle is shared across sections and runs once, with no guarantee
+     the hero is in the DOM at the time, and a theme-editor re-render
+     replaces the pills without re-running it.
+
+     mouseout and focusout stand in for mouseleave and blur because only
+     the bubbling pair reaches a delegated listener; the relatedTarget
+     test in release() is what turns them back into "left the group". */
+  (function () {
+    var GROUP = '.wt-hero__pills';
+
+    function groupFrom(node) {
+      if (!node || typeof node.closest !== 'function') return null;
+      return node.closest(GROUP);
+    }
+
+    function pillFrom(node) {
+      if (!node || typeof node.closest !== 'function') return null;
+      return node.closest(GROUP + ' [data-wt-option]');
+    }
+
+    /* The root is whichever block carries the attribute -- the feature
+       panel or the bubble card. Climbing to it rather than naming it is
+       the whole of what makes one switcher serve both. */
+    function show(group, option) {
+      var root = group.closest('[data-wt-option]');
+      if (!root) return;
+
+      root.setAttribute('data-wt-option', option);
+
+      var pills = group.querySelectorAll('[data-wt-option]');
+      for (var i = 0; i < pills.length; i++) {
+        var isActive = pills[i].getAttribute('data-wt-option') === option;
+        pills[i].classList.toggle('wt-hero__pill--active', isActive);
+      }
+    }
+
+    /* The first pill is the default, so a group states its own fallback
+       instead of this file knowing that one starts on sushi and the
+       other on full size. */
+    function defaultOption(group) {
+      var first = group.querySelector('[data-wt-option]');
+      return first ? first.getAttribute('data-wt-option') : null;
+    }
+
+    /* Hover and keyboard focus are the same gesture as far as the hero is
+       concerned, so they share a handler. */
+    function activate(event) {
+      var pill = pillFrom(event.target);
+      if (!pill) return;
+      show(pill.closest(GROUP), pill.getAttribute('data-wt-option'));
+    }
+
+    function release(event) {
+      var group = groupFrom(event.target);
+      if (!group) return;
+
+      /* Moving between two pills never leaves the group. */
+      if (group.contains(event.relatedTarget)) return;
+
+      /* The pointer wandering off should not yank the image out from
+         under someone who tabbed to a pill and is still sitting on it. */
+      if (group.contains(document.activeElement)) return;
+
+      var fallback = defaultOption(group);
+      if (fallback) show(group, fallback);
+    }
+
+    document.addEventListener('mouseover', activate);
+    document.addEventListener('focusin', activate);
+    document.addEventListener('mouseout', release);
+    document.addEventListener('focusout', release);
+
+    /* Touch has no hover to switch on, so the tap has to do it. Sushi is a
+       real link to the collection and is left alone; every other pill is a
+       button with nowhere to go, so its default is swallowed -- on the
+       bubble card that is also what keeps the tap off the card's own
+       stretched link. */
+    document.addEventListener('click', function (event) {
+      var pill = pillFrom(event.target);
+      if (!pill || pill.tagName === 'A') return;
+
+      event.preventDefault();
+      show(pill.closest(GROUP), pill.getAttribute('data-wt-option'));
+    });
+  })();
+{% endjavascript %}
