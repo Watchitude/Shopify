@@ -1,4 +1,4 @@
-<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
+<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
     <article class="wt-hero__feature">
       <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" alt="Knead That Sushi" class="wt-hero__img">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" alt="{{ p_sushi.title }}" class="wt-hero__img">{% endif %}</div>
@@ -7,7 +7,7 @@
         <h1 class="wt-hero__title">knead that sushi.</h1>
         <p class="wt-hero__lead">Eight common styles, one rare chase. Chunky squishy plush in a sealed box &mdash; each box is a surprise!</p>
         <div class="wt-hero__actions">
-          <a href="{{ p_sushi.url | default: '/collections/knead-that' }}" class="wt-btn">Shop mystery boxes</a>
+          <a href="{{ p_sushi.url | default: knead_collection_url }}" class="wt-btn">Shop mystery boxes</a>
           <span class="wt-hero__pill">Ice cream &mdash; Sept 15</span>
           <span class="wt-hero__pill">Burger &mdash; October&nbsp;15</span>
           <span class="wt-hero__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }} each</span>
@@ -15,7 +15,7 @@
       </div>
     </article>
     <div class="wt-hero__side">
-      <a href="/collections/endless-bubble" class="wt-hero__card">
+      <a href="{{ routes.collections_url }}/endless-bubble" class="wt-hero__card">
         <div class="wt-hero__media">{% if p_bubble.featured_image %}<img src="{{ p_bubble.featured_image | image_url: width: 900 }}" alt="{{ p_bubble.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Never runs out</p>
@@ -23,7 +23,7 @@
           <p class="wt-hero__card-copy">Two sizes &mdash; 2Go blind bag {{ p_2go.price | money_without_trailing_zeros | default: '$13.50' }}, full size {{ p_bubble.price | money_without_trailing_zeros | default: '$20' }}</p>
         </div>
       </a>
-      <a href="/collections/tagd" class="wt-hero__card wt-hero__card--dark">
+      <a href="{{ routes.collections_url }}/tagd" class="wt-hero__card wt-hero__card--dark">
         <div class="wt-hero__media wt-hero__media--dim">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Works with Apple AirTag</p>
@@ -64,14 +64,14 @@
         <div class="wt-knead__chase"><span class="wt-knead__chase-name">Poppy</span><span class="wt-knead__chase-meta">the chase</span></div>
       </div>
       <div class="wt-knead__actions">
-        <a href="/collections/knead-that" class="wt-btn">Shop Knead That</a>
+        <a href="{{ routes.collections_url }}/knead-that" class="wt-btn">Shop Knead That</a>
       </div>
     </div>
   </div>
 </section> <section id="flavour" class="wt-section wt-flavour">
   <h3 class="wt-flavour__heading">Pick a flavour</h3>
   <div class="wt-flavour__grid">
-    <a href="{{ p_sushi.url | default: '/collections/knead-that' }}" class="wt-flavour__card"><div class="wt-flavour__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 700 }}" alt="{{ p_sushi.title }}" class="wt-flavour__img">{% endif %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Sushi &mdash; Season 2</span><span class="wt-flavour__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">9 styles &middot; 1 rare</span></a>
+    <a href="{{ p_sushi.url | default: knead_collection_url }}" class="wt-flavour__card"><div class="wt-flavour__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 700 }}" alt="{{ p_sushi.title }}" class="wt-flavour__img">{% endif %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Sushi &mdash; Season 2</span><span class="wt-flavour__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">9 styles &middot; 1 rare</span></a>
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.ice_image, label: 'Ice cream art', fit: 'contain' %}<span class="wt-flavour__badge">Sept 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Ice Cream</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.burger_image, label: 'Burger art', fit: 'contain' %}<span class="wt-flavour__badge">Oct 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Burger</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
   </div>
@@ -98,7 +98,7 @@
         <div class="wt-tagd__step"><span class="wt-tagd__step-num wt-tagd__step-num--accent">3</span><span class="wt-tagd__step-text">Find it in the Find My app when it goes missing.</span></div>
       </div>
       <div class="wt-tagd__actions">
-        <a href="/collections/tagd" class="wt-btn">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a>
+        <a href="{{ routes.collections_url }}/tagd" class="wt-btn">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a>
       </div>
     </div>
     <div class="wt-tagd__media">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>

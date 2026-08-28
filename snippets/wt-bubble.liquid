@@ -1,5 +1,6 @@
 {% assign b_full = all_products['endless-bubble-wrap-dark-blue'] %}
 {% assign b_2go = all_products['endless-bubble-2go-blind-bag'] %}
+{% assign bubble_collection_url = routes.collections_url | append: '/endless-bubble' %}
 <div class="wt-bubble__cards">
   <article class="wt-bubble__card">
     <div class="wt-bubble__media">{% if b_full.featured_image %}<img src="{{ b_full.featured_image | image_url: width: 900 }}" alt="{{ b_full.title }}" class="wt-bubble__img">{% endif %}</div>
@@ -17,7 +18,7 @@
         <span class="wt-bubble__swatch wt-bubble__swatch--green"></span>
         <span class="wt-bubble__swatch wt-bubble__swatch--violet"></span>
       </div>
-      <a href="/collections/endless-bubble" class="wt-bubble__cta">Shop full size</a>
+      <a href="{{ routes.collections_url }}/endless-bubble" class="wt-bubble__cta">Shop full size</a>
     </div>
   </article>
   <article class="wt-bubble__card">
@@ -36,7 +37,7 @@
         <span class="wt-bubble__swatch wt-bubble__swatch--yellow"></span>
         <span class="wt-bubble__swatch-note">+ glow</span>
       </div>
-      <a href="{{ b_2go.url | default: '/collections/endless-bubble' }}" class="wt-bubble__cta">Shop 2Go</a>
+      <a href="{{ b_2go.url | default: bubble_collection_url }}" class="wt-bubble__cta">Shop 2Go</a>
     </div>
   </article>
 </div>

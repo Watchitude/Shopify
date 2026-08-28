@@ -7,7 +7,7 @@
     {% assign play_subs = 'Knead That plush,Keys and blocks,Spinners and cubes,Rocket kites' | split: ',' %}
     {% for handle in play_handles %}
     {% assign col = collections[handle] %}
-    <a href="{{ col.url | default: '/collections/all' }}" class="wt-play__card">
+    <a href="{{ col.url | default: routes.all_products_collection_url }}" class="wt-play__card">
       <div class="wt-play__media">
         {% if col.products.first.featured_image %}<img src="{{ col.products.first.featured_image | image_url: width: 700 }}" alt="{{ col.title }}" class="wt-play__img">{% else %}<div class="wt-play__placeholder">Photo needed</div>{% endif %}
         <div class="wt-play__overlay">
