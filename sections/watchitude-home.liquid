@@ -169,6 +169,7 @@
     --wt-mist: #F4F4F5;
     --wt-line: #E2E2E4;
     --wt-muted: #5A5A61;
+    --wt-faint: #9a9aa2;
 
     --wt-card-radius: 14px;
     --wt-card-gap: 20px;
@@ -546,7 +547,6 @@
 
     --wt-knead-gap: 56px;
     --wt-knead-tile-radius: 8px;
-    --wt-knead-chase-meta: #9a9aa2;
   }
 
   .wt-knead__grid {
@@ -661,7 +661,7 @@
 
   .wt-knead__chase-meta {
     font-size: 10px;
-    color: var(--wt-knead-chase-meta);
+    color: var(--wt-faint);
   }
   /* ============================================================
      "Endless bubble wrap" band  (#bubble)
@@ -1082,5 +1082,115 @@
     font-size: 16px;
     padding: 14px 24px;
     border-radius: var(--wt-btn-radius);
+  }
+  /* ============================================================
+     "How do you want to play?" grid
+     (snippets/wt-play.liquid, rendered as #more)
+     The snippet is rendered only from this section file and lands
+     inside .wt-home, so its rules live here and the shared tokens
+     resolve for it.
+
+     Compound selector so the padding override outranks .wt-section
+     on specificity, not on source order.
+     ============================================================ */
+  .wt-section.wt-play {
+    --wt-section-pad-top: 72px; /* .wt-section default is 32px */
+
+    --wt-play-media-radius: 12px;
+  }
+
+  .wt-play__title {
+    margin: 0 0 8px;
+    font-family: var(--wt-font-display);
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+  }
+
+  .wt-play__lead {
+    margin: 0 0 28px;
+    font-size: 16px;
+    color: var(--wt-muted);
+  }
+
+  .wt-play__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .wt-play__card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .wt-play__media {
+    position: relative;
+    aspect-ratio: 4/5;
+    border-radius: var(--wt-play-media-radius);
+    overflow: hidden;
+    background: var(--wt-mist);
+  }
+
+  /* Padded 10%, not the 8% the other contain-fit images use, so this
+     deliberately does not join that shared rule. */
+  .wt-play__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10%;
+  }
+
+  .wt-play__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wt-faint);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Stops differ from the hero overlays (0.9/0.6 at 55%), so this is
+     its own gradient rather than a shared one. */
+  .wt-play__overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    background: linear-gradient(
+      to top,
+      rgba(16, 16, 18, 0.9) 0%,
+      rgba(16, 16, 18, 0.6) 55%,
+      rgba(16, 16, 18, 0) 100%
+    );
+  }
+
+  .wt-play__verb {
+    display: block;
+    font-family: var(--wt-font-display);
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: lowercase;
+    color: #fff;
+  }
+
+  .wt-play__sub {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: #fff;
+    opacity: 0.85;
   }
 {% endstylesheet %}
