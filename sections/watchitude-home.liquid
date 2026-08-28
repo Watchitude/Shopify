@@ -250,7 +250,7 @@
     margin: 0 0 14px;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 64px;
+    font-size: clamp(38px, 9vw, 64px);
     line-height: 1;
     letter-spacing: -0.045em;
     text-transform: lowercase;
@@ -327,7 +327,7 @@
     margin: 0 0 8px;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 34px;
+    font-size: clamp(24px, 5vw, 34px);
     line-height: 1;
     letter-spacing: -0.04em;
     text-transform: lowercase;
@@ -438,7 +438,7 @@
     margin: 0 0 10px;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 38px;
+    font-size: clamp(28px, 6vw, 38px);
     line-height: 1;
     letter-spacing: -0.04em;
     text-transform: lowercase;
@@ -461,7 +461,7 @@
 
   .wt-new__price {
     font-weight: 700;
-    font-size: 26px;
+    font-size: clamp(22px, 4vw, 26px);
     letter-spacing: -0.02em;
   }
 
@@ -594,7 +594,7 @@
     margin: 0 0 16px;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 52px;
+    font-size: clamp(32px, 7.5vw, 52px);
     line-height: 1;
     letter-spacing: -0.045em;
     text-transform: lowercase;
@@ -704,7 +704,7 @@
     margin: 0;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 52px;
+    font-size: clamp(32px, 7.5vw, 52px);
     line-height: 1;
     letter-spacing: -0.045em;
     text-transform: lowercase;
@@ -750,7 +750,7 @@
     margin: 0 0 16px;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 52px;
+    font-size: clamp(32px, 7.5vw, 52px);
     line-height: 1;
     letter-spacing: -0.045em;
     text-transform: lowercase;
@@ -911,7 +911,7 @@
     margin: 0 0 12px;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 40px;
+    font-size: clamp(30px, 6.5vw, 40px);
     line-height: 1;
     letter-spacing: -0.04em;
     text-transform: lowercase;
@@ -1085,7 +1085,7 @@
     margin: 0 0 8px;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 36px;
+    font-size: clamp(27px, 6vw, 36px);
     line-height: 1;
     letter-spacing: -0.04em;
     text-transform: lowercase;
@@ -1161,7 +1161,7 @@
     display: block;
     font-family: var(--wt-font-display);
     font-weight: 700;
-    font-size: 28px;
+    font-size: clamp(21px, 5vw, 28px);
     line-height: 1;
     letter-spacing: -0.04em;
     text-transform: lowercase;
@@ -1232,10 +1232,142 @@
      repeat that compound form or it will lose the cascade.
      ============================================================ */
   @media (max-width: 767px) {
-    /* The desktop track list starts with a hard 340px, which alone
-       overflows a 375px viewport's content box. Stacking removes it. */
-    .wt-new__card {
+    /* ---------- section rhythm ----------
+       Each compound desktop override has to be repeated in its
+       compound form; a plain .wt-section here would lose to them. */
+    .wt-home {
+      --wt-card-gap: 12px;
+    }
+
+    .wt-section {
+      --wt-section-pad-x: 20px;
+      --wt-section-pad-top: 24px;
+    }
+
+    .wt-section.wt-flavour {
+      --wt-section-pad-top: 28px;
+      --wt-flavour-gap: 12px;
+    }
+
+    .wt-section.wt-knead {
+      --wt-section-pad-top: 40px;
+      --wt-knead-gap: 28px;
+    }
+
+    .wt-section.wt-tagd {
+      --wt-section-pad-top: 40px;
+      --wt-tagd-gap: 28px;
+    }
+
+    .wt-section.wt-play {
+      --wt-section-pad-top: 40px;
+    }
+
+    .wt-section.wt-trust {
+      --wt-section-pad-top: 40px;
+      --wt-section-pad-bottom: 40px;
+    }
+
+    .wt-section.wt-bubble__inner {
+      --wt-section-pad-top: 40px;
+      --wt-section-pad-bottom: 40px;
+    }
+
+    .wt-section.wt-newsletter__inner {
+      --wt-section-pad-top: 40px;
+      --wt-section-pad-bottom: 40px;
+    }
+
+    .wt-new {
+      --wt-new-gap: 20px;
+    }
+
+    /* ---------- content grids: single column ----------
+       .wt-new__card matters most: its desktop track list starts with
+       a hard 340px, which overflows a 375px viewport on its own.
+       .wt-knead__styles is deliberately absent -- it stays at five
+       across, reading as a strip rather than a stack. */
+    .wt-hero__grid,
+    .wt-new__card,
+    .wt-knead__grid,
+    .wt-tagd__grid,
+    .wt-trust__grid,
+    .wt-bubble__cards {
       grid-template-columns: 1fr;
+    }
+
+    /* ---------- product grids: two columns ---------- */
+    .wt-flavour__grid,
+    .wt-tagd__row,
+    .wt-play__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* ---------- gaps that are literal, not tokenised ---------- */
+    .wt-trust__grid {
+      gap: 28px;
+      padding-top: 28px;
+    }
+
+    .wt-bubble__head {
+      gap: 20px;
+    }
+
+    .wt-bubble__cards {
+      gap: 16px;
+    }
+
+    .wt-play__grid {
+      gap: 12px;
+    }
+
+    .wt-tagd__row {
+      gap: 10px;
+    }
+
+    /* ---------- roomy padding inside cards and overlays ---------- */
+    .wt-hero__overlay {
+      padding: 24px;
+    }
+
+    .wt-hero__card-overlay {
+      padding: 20px;
+    }
+
+    .wt-bubble__body {
+      padding: 20px;
+    }
+
+    .wt-play__overlay {
+      padding: 14px;
+    }
+
+    /* The desktop padding here is asymmetric because the card is a
+       three-column row. Stacked, the media sits edge to edge and the
+       text below it needs padding on both sides instead. */
+    .wt-new__body {
+      padding: 20px 20px 0;
+    }
+
+    .wt-new__buy {
+      padding: 0 20px 20px;
+      justify-items: start;
+    }
+
+    /* ---------- fixed heights ---------- */
+    .wt-hero__feature {
+      min-height: 380px;
+    }
+
+    .wt-hero__card {
+      min-height: 200px;
+    }
+
+    /* A 300px floor leaves the field stranded beside a wrapped
+       button; let it fill the row instead. */
+    .wt-newsletter__input {
+      min-width: 0;
+      width: 100%;
     }
   }
 {% endstylesheet %}
