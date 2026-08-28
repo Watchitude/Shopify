@@ -109,7 +109,23 @@
     <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
     {% endfor %}
   </div>
-</section> {% render 'wt-play' %} <section style="max-width:1400px;margin:0 auto;padding:64px 32px"> <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;border-top:1px solid #E2E2E4;padding-top:40px"> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Tested and certified kid-safe</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Every product we make is safety tested and certified. Test reports and CPCs on file.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Orders over $20 ship free</h3><p style="margin:0;font-size:15px;line-height:1.6;color:#5A5A61">Two fidgets clear it. So does one watch.</p></div> <div><h3 style="margin:0 0 8px;font-size:17px;font-weight:600">Find a local reseller</h3><p style="margin:0 0 8px;font-size:15px;line-height:1.6;color:#5A5A61">Prefer to shop in person? We're carried in stores nationwide.</p><a href="/pages/find-a-store" style="font-size:15px;font-weight:600;color:#D71920">Find a store</a></div> </div> </section> <section style="background:#F4F4F5"> <div style="max-width:900px;margin:0 auto;padding:64px 32px;text-align:center"> <h2 style="margin:0 0 12px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.04em;text-transform:lowercase">new drops, first look</h2> <p style="margin:0 0 24px;font-size:16px;color:#5A5A61">New fidgets land a few times a year and sell through fast.</p> {% form 'customer' %} {% if form.posted_successfully? %}<p style="margin:0;font-size:16px;font-weight:600;color:#101012">Thanks &mdash; you're on the list.</p>{% else %} <input type="hidden" name="contact[tags]" value="newsletter"> <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"> <input type="email" name="contact[email]" placeholder="Email" required style="font-family:'Archivo',sans-serif;font-size:16px;padding:14px 16px;border:1px solid #E2E2E4;border-radius:6px;min-width:300px;background:#fff"> <button type="submit" style="font-family:'Archivo',sans-serif;background:#D71920;color:#fff;border:none;font-weight:600;font-size:16px;padding:14px 26px;border-radius:6px;cursor:pointer">Subscribe</button> </div> {% endif %} {% endform %} </div> </section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "header", "content": "Just landed band" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
+</section> {% render 'wt-play' %} <section id="trust" class="wt-section wt-trust">
+  <div class="wt-trust__grid">
+    <div>
+      <h3 class="wt-trust__title">Tested and certified kid-safe</h3>
+      <p class="wt-trust__copy">Every product we make is safety tested and certified. Test reports and CPCs on file.</p>
+    </div>
+    <div>
+      <h3 class="wt-trust__title">Orders over $20 ship free</h3>
+      <p class="wt-trust__copy">Two fidgets clear it. So does one watch.</p>
+    </div>
+    <div>
+      <h3 class="wt-trust__title">Find a local reseller</h3>
+      <p class="wt-trust__copy wt-trust__copy--spaced">Prefer to shop in person? We're carried in stores nationwide.</p>
+      <a href="/pages/find-a-store" class="wt-trust__link">Find a store</a>
+    </div>
+  </div>
+</section> <section style="background:#F4F4F5"> <div style="max-width:900px;margin:0 auto;padding:64px 32px;text-align:center"> <h2 style="margin:0 0 12px;font-family:'Jost','Century Gothic',Futura,sans-serif;font-weight:700;font-size:40px;line-height:1;letter-spacing:-.04em;text-transform:lowercase">new drops, first look</h2> <p style="margin:0 0 24px;font-size:16px;color:#5A5A61">New fidgets land a few times a year and sell through fast.</p> {% form 'customer' %} {% if form.posted_successfully? %}<p style="margin:0;font-size:16px;font-weight:600;color:#101012">Thanks &mdash; you're on the list.</p>{% else %} <input type="hidden" name="contact[tags]" value="newsletter"> <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"> <input type="email" name="contact[email]" placeholder="Email" required style="font-family:'Archivo',sans-serif;font-size:16px;padding:14px 16px;border:1px solid #E2E2E4;border-radius:6px;min-width:300px;background:#fff"> <button type="submit" style="font-family:'Archivo',sans-serif;background:#D71920;color:#fff;border:none;font-weight:600;font-size:16px;padding:14px 26px;border-radius:6px;cursor:pointer">Subscribe</button> </div> {% endif %} {% endform %} </div> </section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "header", "content": "Just landed band" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
 
 {% stylesheet %}
   /* ============================================================
@@ -824,5 +840,47 @@
   .wt-tagd__card-name {
     font-size: 14px;
     font-weight: 500;
+  }
+  /* ============================================================
+     Trust row  (#trust)
+     Compound selector on the section so the padding override
+     outranks .wt-section on specificity, not on source order.
+     ============================================================ */
+  .wt-section.wt-trust {
+    --wt-section-pad-top: 64px;    /* .wt-section default is 32px */
+    --wt-section-pad-bottom: 64px; /* .wt-section default is 8px */
+  }
+
+  .wt-trust__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    border-top: 1px solid var(--wt-line);
+    padding-top: 40px;
+  }
+
+  .wt-trust__title {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .wt-trust__copy {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--wt-muted);
+  }
+
+  /* Compound so it beats the base rule's margin shorthand on
+     specificity rather than on source order. */
+  .wt-trust__copy.wt-trust__copy--spaced {
+    margin-bottom: 8px;
+  }
+
+  .wt-trust__link {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--wt-red);
   }
 {% endstylesheet %}
