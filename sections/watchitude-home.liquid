@@ -672,6 +672,11 @@
      ============================================================ */
   .wt-bubble {
     --wt-bubble-swatch-size: 26px;
+    /* The 2Go card's image swatches run smaller than the full-size
+       card's colour dots: eighteen of them have to wrap into the
+       same body width that six dots used to fill on one line. */
+    --wt-bubble-swatch-img-size: 22px;
+    --wt-bubble-swatch-img-gap: 6px;
 
     background: var(--wt-mist);
     margin-top: 64px;
@@ -1035,15 +1040,40 @@
     box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--wt-line);
   }
 
+  /* Six modifiers, one per dot on the full-size card, which is now the
+     only card using them. --ink, --orange and --yellow went with the
+     2Go card's dots when it moved to image swatches. */
   .wt-bubble__swatch--red    { background: var(--wt-red); }
-  .wt-bubble__swatch--ink    { background: var(--wt-ink); }
   .wt-bubble__swatch--pink   { background: #E0218A; }
   .wt-bubble__swatch--sky    { background: #00A3E0; }
   .wt-bubble__swatch--blue   { background: #1C4FD8; }
   .wt-bubble__swatch--green  { background: #2FA84F; }
   .wt-bubble__swatch--violet { background: #7A4FD8; }
-  .wt-bubble__swatch--orange { background: #F07000; }
-  .wt-bubble__swatch--yellow { background: #EFD400; }
+
+  /* ---------- bubble: image swatches (2Go) ----------
+     Scoped to the 2Go row rather than folded into the base, so the
+     full-size card keeps its 26px dots, its 8px gap and its single
+     unwrapped line. Only this row changes height. */
+  .wt-bubble__swatches--images {
+    flex-wrap: wrap;
+    gap: var(--wt-bubble-swatch-img-gap);
+  }
+
+  /* img.<class> outranks the plain .wt-bubble__swatch base above, so
+     these land on the 2Go images without touching the spans.
+
+     The height here is the author rule the width/height attributes
+     need: 96x96 attributes with only a CSS width would have the
+     browser derive the height from the intrinsic ratio, which is the
+     bug the two logos hit. Both axes are pinned, so there is nothing
+     to derive. */
+  img.wt-bubble__swatch {
+    display: block;
+    width: var(--wt-bubble-swatch-img-size);
+    height: var(--wt-bubble-swatch-img-size);
+    object-fit: cover;
+    border-radius: 50%;
+  }
 
   .wt-bubble__swatch-note {
     display: inline-flex;
@@ -1336,6 +1366,13 @@
 
     .wt-bubble__body {
       padding: 20px;
+    }
+
+    /* Token, not a rule override: the card body loses 8px of padding
+       on each side here, so the eighteen swatches need the tighter
+       gutter to keep the same number of rows. */
+    .wt-bubble {
+      --wt-bubble-swatch-img-gap: 4px;
     }
 
     .wt-play__overlay {

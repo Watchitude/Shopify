@@ -29,12 +29,29 @@
         <span class="wt-bubble__price">{{ b_2go.price | money_without_trailing_zeros | default: '$13.50' }}</span>
       </div>
       <p class="wt-bubble__copy">Keychain size with a carabiner. Blind bag &mdash; the color is the surprise. Halloween and holiday displays available.</p>
-      <div class="wt-bubble__swatches">
-        <span class="wt-bubble__swatch wt-bubble__swatch--ink"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--orange"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--violet"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--green"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--yellow"></span>
+      {%- comment -%}
+        The swatches are decorative: each carries alt="" and the row as a
+        whole is labelled instead, so a screen reader hears the count once
+        rather than eighteen unnamed images. role="img" is what makes the
+        label stick -- aria-label on a bare div is not reliably exposed --
+        and it also folds the "+ glow" note into the same announcement.
+      {%- endcomment -%}
+      <div
+        class="wt-bubble__swatches wt-bubble__swatches--images"
+        role="img"
+        aria-label="18 colors, plus glow"
+      >
+        {%- for i in (1..18) -%}
+          {%- assign n = i | prepend: '0' | slice: -2, 2 -%}
+          <img
+            src="{{ 'wt-2go-' | append: n | append: '.png' | asset_url }}"
+            width="96"
+            height="96"
+            alt=""
+            loading="lazy"
+            class="wt-bubble__swatch"
+          >
+        {%- endfor -%}
         <span class="wt-bubble__swatch-note">+ glow</span>
       </div>
       <a href="{{ b_2go.url | default: bubble_collection_url }}" class="wt-bubble__cta">Shop 2Go</a>
