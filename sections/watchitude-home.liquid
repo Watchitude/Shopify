@@ -68,7 +68,7 @@
       </div>
     </div>
   </div>
-</section> <section class="wt-section wt-flavour">
+</section> <section id="flavour" class="wt-section wt-flavour">
   <h3 class="wt-flavour__heading">Pick a flavour</h3>
   <div class="wt-flavour__grid">
     <a href="{{ p_sushi.url | default: '/collections/knead-that' }}" class="wt-flavour__card"><div class="wt-flavour__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 700 }}" alt="{{ p_sushi.title }}" class="wt-flavour__img">{% endif %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Sushi &mdash; Season 2</span><span class="wt-flavour__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">9 styles &middot; 1 rare</span></a>
