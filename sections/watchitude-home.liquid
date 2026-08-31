@@ -63,19 +63,25 @@
           <h2 class="wt-hero__card-title"><a href="{{ tagd_hero_products.first.url | default: tagd_collection_url }}" class="wt-hero__card-link" data-wt-card-link>tag'd 2</a></h2>
           <p class="wt-hero__card-copy">A slap watch with a pocket &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</p>
           {% if tagd_hero_products.size > 1 %}<p class="wt-hero__style">{%- for product in tagd_hero_products limit: 9 -%}<span class="wt-hero__style-word wt-hero__style-word--{{ forloop.index0 }}">{{ product.title | split: ' - ' | first | escape }}</span>{%- endfor -%}</p>
-          <div class="wt-hero__pills wt-hero__pills--compact wt-hero__pills--dots">
-            {%- for product in tagd_hero_products limit: 9 -%}
-            <button type="button" class="wt-hero__pill wt-hero__pill--dot{% if forloop.first %} wt-hero__pill--active{% endif %}" data-wt-option="{{ forloop.index0 }}" data-wt-url="{{ product.url }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ product.title | escape }}"></button>
-            {%- endfor -%}
-          </div>
           {%- comment -%}
-            The same offer #knead makes under its nine character tiles,
-            in the same words and the same button: nine styles shown,
-            one way to see the rest. It matters more here than it does
-            there, because the card's own link stopped going to the
-            collection when it started going to the watch.
+            Dots and button on the card's last line, which is why they
+            are wrapped rather than stacked: the row is what puts one at
+            each end of it.
+
+            The button is the same offer #knead makes under its nine
+            character tiles, in the same words and the same button. It
+            matters more here than it does there, because the card's own
+            link stopped going to the collection when it started going
+            to the watch.
           {%- endcomment -%}
-          <div class="wt-hero__actions"><a href="{{ tagd_collection_url }}" class="wt-btn wt-btn--compact">Shop Tag'd</a></div>{% endif %}
+          <div class="wt-hero__controls">
+            <div class="wt-hero__pills wt-hero__pills--compact wt-hero__pills--dots">
+              {%- for product in tagd_hero_products limit: 9 -%}
+              <button type="button" class="wt-hero__pill wt-hero__pill--dot{% if forloop.first %} wt-hero__pill--active{% endif %}" data-wt-option="{{ forloop.index0 }}" data-wt-url="{{ product.url }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ product.title | escape }}"></button>
+              {%- endfor -%}
+            </div>
+            <a href="{{ tagd_collection_url }}" class="wt-btn wt-btn--compact">Shop Tag'd</a>
+          </div>{% endif %}
         </div>
         {%- comment -%}
           Sibling of the overlay rather than a child of it, so it can sit
@@ -549,15 +555,38 @@
     background-clip: content-box;
   }
 
-  /* Lifted over .wt-hero__card-link::after for the reason the dots are,
-     and handed pointer-events back from the overlay for the reason the
-     title link is: without both, this reads as part of the card and
-     goes wherever the card goes. */
-  .wt-hero__actions {
+  /* Dots at one end of the card's last line, button at the other.
+
+     Lifted over .wt-hero__card-link::after and handed pointer-events
+     back from the overlay, both of which the dot row used to do for
+     itself -- the row it now sits in does it for the pair, so a click on
+     either stays where it landed instead of following the card.
+
+     margin-left on the button rather than justify-content on the row:
+     the two agree while everything fits on one line, and only the margin
+     keeps the button to the right once nine dots and a button no longer
+     do. */
+  .wt-hero__controls {
     position: relative;
     z-index: 1;
     pointer-events: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
     margin-top: 14px;
+  }
+
+  .wt-hero__controls .wt-btn {
+    margin-left: auto;
+  }
+
+  /* The dots bring the 14px they need when they follow the copy
+     directly, as they do on the bubble card. In here the row above owns
+     that gap, so they give it back. Compound selector so it outranks
+     .wt-hero__pills--compact on specificity, not on source order. */
+  .wt-hero__controls .wt-hero__pills.wt-hero__pills--compact {
+    margin-top: 0;
   }
 
   /* The same button as #knead's, sized for a 270px card -- the drop from
@@ -737,10 +766,10 @@
     color: #fff;
   }
 
-  /* The dots carry their own 14px when they follow the copy directly,
-     as they do on the bubble card. Under the name that is one gap too
-     many, so it is taken back here. */
-  .wt-hero__style + .wt-hero__pills {
+  /* The controls carry 14px of their own, which under the style name is
+     one gap too many, so it is taken back here. The dot row used to be
+     what followed the name; it is the row around it now. */
+  .wt-hero__style + .wt-hero__controls {
     margin-top: 8px;
   }
 
