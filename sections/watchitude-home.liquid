@@ -41,18 +41,41 @@
         slide is written out to match it.
       {%- endcomment -%}
       {% assign tagd_hero_products = collections['tagd'].products %}
+      {% assign tagd_collection_url = routes.collections_url | append: '/tagd' %}
       <article class="wt-hero__card wt-hero__card--dark" data-wt-option="0">
         <div class="wt-hero__media wt-hero__media--dim">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}">{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Works with Apple AirTag</p>
-          <h2 class="wt-hero__card-title"><a href="{{ routes.collections_url }}/tagd" class="wt-hero__card-link">tag'd 2</a></h2>
+          {%- comment -%}
+            The link is the style on show, not the collection it came
+            from: the card is a picture of one watch, and clicking a
+            picture of one watch should land on that watch. The dots
+            carry the url of theirs and the switcher moves it here, so
+            it follows the photo through all nine.
+
+            Rendered with the first product's url rather than left for
+            the script to fill in, so the card is already pointing
+            somewhere true before any of this runs -- and falls back to
+            the collection if the collection is empty, which is the same
+            thing the media does one line up. "Shop Tag'd" below is what
+            now carries the job this link used to do.
+          {%- endcomment -%}
+          <h2 class="wt-hero__card-title"><a href="{{ tagd_hero_products.first.url | default: tagd_collection_url }}" class="wt-hero__card-link" data-wt-card-link>tag'd 2</a></h2>
           <p class="wt-hero__card-copy">A slap watch with a pocket &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</p>
           {% if tagd_hero_products.size > 1 %}<p class="wt-hero__style">{%- for product in tagd_hero_products limit: 9 -%}<span class="wt-hero__style-word wt-hero__style-word--{{ forloop.index0 }}">{{ product.title | split: ' - ' | first | escape }}</span>{%- endfor -%}</p>
           <div class="wt-hero__pills wt-hero__pills--compact wt-hero__pills--dots">
             {%- for product in tagd_hero_products limit: 9 -%}
-            <button type="button" class="wt-hero__pill wt-hero__pill--dot{% if forloop.first %} wt-hero__pill--active{% endif %}" data-wt-option="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ product.title | escape }}"></button>
+            <button type="button" class="wt-hero__pill wt-hero__pill--dot{% if forloop.first %} wt-hero__pill--active{% endif %}" data-wt-option="{{ forloop.index0 }}" data-wt-url="{{ product.url }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ product.title | escape }}"></button>
             {%- endfor -%}
-          </div>{% endif %}
+          </div>
+          {%- comment -%}
+            The same offer #knead makes under its nine character tiles,
+            in the same words and the same button: nine styles shown,
+            one way to see the rest. It matters more here than it does
+            there, because the card's own link stopped going to the
+            collection when it started going to the watch.
+          {%- endcomment -%}
+          <div class="wt-hero__actions"><a href="{{ tagd_collection_url }}" class="wt-btn wt-btn--compact">Shop Tag'd</a></div>{% endif %}
         </div>
         {%- comment -%}
           Sibling of the overlay rather than a child of it, so it can sit
@@ -524,6 +547,26 @@
   .wt-hero__pill.wt-hero__pill--dot.wt-hero__pill--active {
     background-color: #fff;
     background-clip: content-box;
+  }
+
+  /* Lifted over .wt-hero__card-link::after for the reason the dots are,
+     and handed pointer-events back from the overlay for the reason the
+     title link is: without both, this reads as part of the card and
+     goes wherever the card goes. */
+  .wt-hero__actions {
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+    margin-top: 14px;
+  }
+
+  /* The same button as #knead's, sized for a 270px card -- the drop from
+     16px to 14px is the one .wt-hero__pill--compact already makes for
+     the same reason. */
+  .wt-btn.wt-btn--compact {
+    display: inline-block;
+    font-size: 14px;
+    padding: 11px 18px;
   }
 
   /* ---------- tag'd hero: the next-style caret ----------
@@ -1861,8 +1904,10 @@
       root.setAttribute('data-wt-option', option);
 
       var pills = group.querySelectorAll('[data-wt-option]');
+      var active = null;
       for (var i = 0; i < pills.length; i++) {
         var isActive = pills[i].getAttribute('data-wt-option') === option;
+        if (isActive) active = pills[i];
         pills[i].classList.toggle('wt-hero__pill--active', isActive);
 
         /* Only the pills that ship the attribute get it maintained --
@@ -1873,6 +1918,15 @@
           pills[i].setAttribute('aria-pressed', isActive ? 'true' : 'false');
         }
       }
+
+      /* Only the tag'd dots ship a url, because only that card is nine
+         separate products behind one picture. The flavour and bubble
+         cards are one product each and keep the link they rendered
+         with, so the absence of the attribute is the whole condition --
+         nothing here needs to know which card it is looking at. */
+      var url = active && active.getAttribute('data-wt-url');
+      var link = url && root.querySelector('[data-wt-card-link]');
+      if (link) link.setAttribute('href', url);
     }
 
     /* The first pill is the default, so a group states its own fallback
