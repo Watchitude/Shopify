@@ -54,6 +54,17 @@
             {%- endfor -%}
           </div>{% endif %}
         </div>
+        {%- comment -%}
+          Sibling of the overlay rather than a child of it, so it can sit
+          against the card's right edge instead of inside the 28px the
+          copy is inset by. Which also keeps it clear of the overlay's
+          pointer-events: none, and lets it paint after the stretched
+          card link -- both of which the dots have to solve for
+          themselves further down the stylesheet.
+
+          Same guard as the dots: one style is nothing to cycle.
+        {%- endcomment -%}
+        {% if tagd_hero_products.size > 1 %}<button type="button" class="wt-hero__next" data-wt-next aria-label="Next style"></button>{% endif %}
       </article>
     </div>
   </div>
@@ -515,9 +526,70 @@
     background-clip: content-box;
   }
 
+  /* ---------- tag'd hero: the next-style caret ----------
+     Against the card's right edge and centred on the photo, where a
+     carousel arrow is looked for, rather than tacked onto the end of the
+     dot row. The dots say which of the nine is showing; this only says
+     "another one", so it does not need to sit among them.
+
+     z-index over .wt-hero__card-link::after, which is stretched across
+     the whole card: without it a click here would follow the card to the
+     collection instead of turning the watch over. The dots buy the same
+     lift a few rules up. */
+  .wt-hero__next {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: background-color 200ms ease, border-color 200ms ease;
+  }
+
+  /* The chevron itself: two borders of an empty box, turned 45 degrees.
+     It is drawn rather than set as a character because the glyph that
+     would do it varies by font, and this card's font stack is a
+     webfont with a system fallback -- the fallback would move it.
+
+     Turning a square leaves its ink right of the box's centre, so the
+     box is nudged back by the 2px the border adds. */
+  .wt-hero__next::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    margin-left: -2px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  .wt-hero__next:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: #fff;
+  }
+
+  .wt-hero__next:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .wt-hero__img--switch,
-    .wt-hero__pill {
+    .wt-hero__pill,
+    .wt-hero__next {
       transition: none;
     }
   }
@@ -1811,6 +1883,23 @@
       return first ? first.getAttribute('data-wt-option') : null;
     }
 
+    /* Hover is a preview and a click is a choice, and only the second
+       survives the pointer leaving. Without the difference the tag'd
+       caret would be pointless: it advances the card, and then brushing
+       the dot row on the way past would drop it back to the first style.
+
+       Kept on the group as an attribute so nothing has to be initialised
+       -- a group that has never been clicked simply has none, and falls
+       back to the first pill exactly as before. */
+    function committed(group) {
+      return group.getAttribute('data-wt-committed') || defaultOption(group);
+    }
+
+    function commit(group, option) {
+      group.setAttribute('data-wt-committed', option);
+      show(group, option);
+    }
+
     /* Hover and keyboard focus are the same gesture as far as the hero is
        concerned, so they share a handler. */
     function activate(event) {
@@ -1830,7 +1919,7 @@
          under someone who tabbed to a pill and is still sitting on it. */
       if (group.contains(document.activeElement)) return;
 
-      var fallback = defaultOption(group);
+      var fallback = committed(group);
       if (fallback) show(group, fallback);
     }
 
@@ -1849,7 +1938,41 @@
       if (!pill || pill.tagName === 'A') return;
 
       event.preventDefault();
-      show(pill.closest(GROUP), pill.getAttribute('data-wt-option'));
+      commit(pill.closest(GROUP), pill.getAttribute('data-wt-option'));
+    });
+
+    /* The tag'd card's caret. It has no option of its own -- it reads
+       the one the card is showing and takes the next, wrapping at the
+       end, so nine styles need one button and no numbering.
+
+       It asks the pills for the order rather than counting products:
+       they are already the list, in the order the card draws them. */
+    document.addEventListener('click', function (event) {
+      if (!event.target || typeof event.target.closest !== 'function') return;
+
+      var caret = event.target.closest('[data-wt-next]');
+      if (!caret) return;
+
+      event.preventDefault();
+
+      var root = caret.closest('[data-wt-option]');
+      var group = root && root.querySelector(GROUP);
+      if (!group) return;
+
+      var options = group.querySelectorAll('[data-wt-option]');
+      if (!options.length) return;
+
+      var current = root.getAttribute('data-wt-option');
+      var index = 0;
+      for (var i = 0; i < options.length; i++) {
+        if (options[i].getAttribute('data-wt-option') === current) {
+          index = i;
+          break;
+        }
+      }
+
+      var following = options[(index + 1) % options.length];
+      commit(group, following.getAttribute('data-wt-option'));
     });
   })();
 
