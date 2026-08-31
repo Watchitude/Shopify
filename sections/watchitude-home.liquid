@@ -1370,6 +1370,37 @@
     height: var(--wt-bubble-swatch-img-size);
     object-fit: cover;
     border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  /* Nothing in the row says it is hoverable until the pointer is on it,
+     so the hover has to carry the whole affordance: the swatch lifts out
+     of the row and takes a white ring, at the same beat as the photo
+     above it changes. The two landing together is what reads as one
+     gesture rather than two unrelated things moving.
+
+     position/z-index are here and not in the base rule because they only
+     matter while lifted: the grown swatch has to sit over its
+     neighbours, and at the 4px phone gap it certainly overlaps them. A
+     later sibling would otherwise paint on top of it. */
+  img.wt-bubble__swatch:hover {
+    position: relative;
+    z-index: 1;
+    transform: scale(1.35);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0, 0, 0, 0.18);
+  }
+
+  /* The ring stays -- it is the part that says which swatch is showing,
+     and it does not move. Only the growing is dropped. */
+  @media (prefers-reduced-motion: reduce) {
+    img.wt-bubble__swatch {
+      transition: none;
+    }
+
+    img.wt-bubble__swatch:hover {
+      transform: none;
+    }
   }
 
   /* Close to .wt-btn but inline-block with 14px/24px padding, so it
@@ -1802,6 +1833,101 @@
 
       event.preventDefault();
       show(pill.closest(GROUP), pill.getAttribute('data-wt-option'));
+    });
+  })();
+
+  /* 2Go colour swatches (#bubble). Hovering a swatch puts that colour's
+     bag in the card photo above it; leaving the row puts the default
+     back.
+
+     Nothing like the hero switcher above, and deliberately so. There the
+     state is an attribute and the CSS cross-fades between images that
+     are all already in the DOM, which is affordable at two or six. At
+     eighteen it is not, so the photo is one <img> and this swaps its
+     src. The trade is a possible blink on a colour's first showing,
+     which is what warm() buys back: the first time a pointer touches the
+     row, every colour is fetched into the browser cache, and by the time
+     it has crossed the first swatch the rest are already there.
+
+     Delegated from the document for the same reasons as the hero: shared
+     bundle, no guarantee the card is in the DOM yet, and a theme-editor
+     re-render replaces the row without re-running this. */
+  (function () {
+    var ROW = '[data-wt-2go-swatches]';
+    var SWATCH = ROW + ' [data-wt-2go-photo]';
+    var warmed = [];
+
+    function rowFrom(node) {
+      if (!node || typeof node.closest !== 'function') return null;
+      return node.closest(ROW);
+    }
+
+    function show(row, src) {
+      var card = row.closest('.wt-bubble__card');
+      var img = card && card.querySelector('.wt-bubble__img');
+
+      /* No src means the card fell back to the theme-setting photo,
+         which is a different element and not ours to swap. */
+      if (!img || !src) return;
+      if (img.getAttribute('src') === src) return;
+
+      /* Only the src moves. The alt names the product, not the colour,
+         and the product is the same one in all eighteen photos -- the
+         colours have no names to put there, which is the whole point of
+         a blind bag. */
+      img.setAttribute('src', src);
+    }
+
+    /* Once per row, and only on the first pointer that reaches it: a
+       visitor who never goes near the swatches never pays for this. */
+    function warm(row) {
+      if (warmed.indexOf(row) !== -1) return;
+      warmed.push(row);
+
+      var swatches = row.querySelectorAll('[data-wt-2go-photo]');
+      for (var i = 0; i < swatches.length; i++) {
+        var preload = new Image();
+        preload.src = swatches[i].getAttribute('data-wt-2go-photo');
+      }
+    }
+
+    function activate(event) {
+      var row = rowFrom(event.target);
+      if (!row) return;
+
+      warm(row);
+
+      var swatch = event.target.closest(SWATCH);
+      if (swatch) show(row, swatch.getAttribute('data-wt-2go-photo'));
+    }
+
+    function release(event) {
+      var row = rowFrom(event.target);
+      if (!row) return;
+
+      /* Moving between two swatches never leaves the row. */
+      if (row.contains(event.relatedTarget)) return;
+
+      var card = row.closest('.wt-bubble__card');
+      var img = card && card.querySelector('.wt-bubble__img');
+      if (img) show(row, img.getAttribute('data-wt-2go-default'));
+    }
+
+    document.addEventListener('mouseover', activate);
+    document.addEventListener('mouseout', release);
+
+    /* Touch has no hover, so the tap has to do it, and there is no
+       matching "off" gesture to put the default back -- the colour that
+       was tapped stays up until another one is. Which is the right way
+       round for a row of colours: on a phone it behaves like a picker,
+       and the swatches are plain images with nothing to navigate to, so
+       there is no default to swallow. */
+    document.addEventListener('click', function (event) {
+      var row = rowFrom(event.target);
+      if (!row) return;
+
+      var swatch = event.target.closest(SWATCH);
+      if (swatch) show(row, swatch.getAttribute('data-wt-2go-photo'));
     });
   })();
 {% endjavascript %}

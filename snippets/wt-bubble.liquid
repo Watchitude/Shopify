@@ -21,8 +21,22 @@
       <a href="{{ routes.collections_url }}/endless-bubble" class="wt-bubble__cta">Shop full size</a>
     </div>
   </article>
-  <article class="wt-bubble__card">
-    <div class="wt-bubble__media">{% if b_2go.featured_image %}<img src="{{ b_2go.featured_image | image_url: width: 900 }}" width="{{ b_2go.featured_image.width }}" height="{{ b_2go.featured_image.height }}" alt="{{ b_2go.title }}" class="wt-bubble__img">{% else %}{% render 'wt-img', img: section.settings.twogo_image, label: '2Go blind bag photo', fit: 'contain' %}{% endif %}</div>
+  <article class="wt-bubble__card wt-bubble__card--2go">
+    {%- comment -%}
+      One <img> whose src the swatch row swaps, not eighteen stacked and
+      cross-faded the way the hero does it. At this count the hero's
+      pattern would pull every colour down before the card is even
+      scrolled to; here nothing but the default is fetched until someone
+      reaches for a swatch, and the row warms the rest on first contact.
+
+      data-wt-2go-default is what the row restores to on the way out, so
+      the JS never has to know whether that default came from the product
+      photo or the theme setting.
+    {%- endcomment -%}
+    {%- if b_2go.featured_image -%}
+      {%- assign twogo_default = b_2go.featured_image | image_url: width: 900 -%}
+    {%- endif -%}
+    <div class="wt-bubble__media">{% if b_2go.featured_image %}<img src="{{ twogo_default }}" width="{{ b_2go.featured_image.width }}" height="{{ b_2go.featured_image.height }}" alt="{{ b_2go.title }}" class="wt-bubble__img" data-wt-2go-default="{{ twogo_default }}">{% else %}{% render 'wt-img', img: section.settings.twogo_image, label: '2Go blind bag photo', fit: 'contain' %}{% endif %}</div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
         <h3 class="wt-bubble__name">2Go blind bag</h3>
@@ -34,11 +48,26 @@
         whole is labelled instead, so a screen reader hears the count once
         rather than eighteen unnamed images. role="img" is what makes the
         label stick -- aria-label on a bare div is not reliably exposed.
+
+        Hovering one shows that colour's bag in the card photo above.
+        They stay decorative images rather than becoming eighteen
+        buttons: the bag is a blind bag, so no colour is a thing you can
+        pick or buy, and the swap adds nothing a screen reader could act
+        on. Anyone not using a pointer keeps the default photo, which is
+        the same thing the row said before it could be hovered.
+
+        wt-2go-bag-NN is the same colour as wt-2go-NN by construction --
+        the pairs were matched off the packaging, and NN is the only
+        thing tying them together, so the two sets have to be renamed
+        together. Their source files, in order 01..18:
+        1116 1119 1125 1123 1129 1132 1134 1135 1127
+        1120 1121 1130 1117 1133 1131 1118 1124 1122
       {%- endcomment -%}
       <div
         class="wt-bubble__swatches wt-bubble__swatches--images"
         role="img"
         aria-label="18 colors"
+        data-wt-2go-swatches
       >
         {%- for i in (1..18) -%}
           {%- assign n = i | prepend: '0' | slice: -2, 2 -%}
@@ -49,6 +78,7 @@
             alt=""
             loading="lazy"
             class="wt-bubble__swatch"
+            data-wt-2go-photo="{{ 'wt-2go-bag-' | append: n | append: '.png' | asset_url }}"
           >
         {%- endfor -%}
       </div>
