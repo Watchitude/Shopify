@@ -63,6 +63,16 @@
   {% render 'wt-new' %}
 </section>
 {% endif %}
+{%- comment -%}
+  Sits here rather than down by #trust, where it used to: it is the
+  only band on the page that sorts the catalogue instead of selling one
+  thing, so it reads as a way in to everything below it. Left at the
+  bottom it was a summary of a page the visitor had already scrolled.
+
+  It is not inside the p_ckb guard above -- the two are unrelated, and
+  the play grid stands on its own if the Click-Key band is absent.
+{%- endcomment -%}
+{% render 'wt-play' %}
 <section id="knead" class="wt-section wt-knead">
   <div class="wt-knead__grid">
     <div class="wt-knead__frame">
@@ -132,7 +142,7 @@
     <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
     {% endfor %}
   </div>
-</section> {% render 'wt-play' %} <section id="trust" class="wt-section wt-trust">
+</section> <section id="trust" class="wt-section wt-trust">
   <div class="wt-trust__grid">
     <div>
       <h3 class="wt-trust__title">Tested and certified kid-safe</h3>
