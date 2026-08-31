@@ -9,10 +9,24 @@
 {% assign bubble_full_colours = 'red,pink,sky,blue,green,violet' | split: ',' %}
 <div class="wt-bubble__cards">
   <article class="wt-bubble__card wt-bubble__card--full">
-    {%- if b_full.featured_image -%}
-      {%- assign full_default = b_full.featured_image | image_url: width: 900 -%}
-    {%- endif -%}
-    <div class="wt-bubble__media">{% if b_full.featured_image %}<img src="{{ full_default }}" width="{{ b_full.featured_image.width }}" height="{{ b_full.featured_image.height }}" alt="{{ b_full.title }}" class="wt-bubble__img" data-wt-photo-default="{{ full_default }}">{% endif %}</div>
+    {%- comment -%}
+      The card opens on the first colour in the row rather than on the
+      product's own photo. The dots are what the card is for, so the
+      picture they change should be one of theirs from the start: the
+      first hover then swaps like for like, instead of jumping out of a
+      catalogue shot that no dot can get back to.
+
+      .first is the same colour the row draws first, so the opening
+      picture and the leftmost dot cannot drift apart.
+
+      The alt is written out rather than taken from the product, whose
+      title is "Endless Bubble Wrap - Dark Blue": a colour in the alt is
+      wrong the moment a dot is hovered, and it was already wrong of a
+      card that opens on red. It matches the hero's wording for the same
+      product. The 2Go card does the same, for the same reason.
+    {%- endcomment -%}
+    {%- assign full_default = 'wt-bubble-full-' | append: bubble_full_colours.first | append: '.png' | asset_url -%}
+    <div class="wt-bubble__media"><img src="{{ full_default }}" width="1200" height="1200" alt="Endless Bubble Wrap, full size" class="wt-bubble__img" data-wt-photo-default="{{ full_default }}"></div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
         <h3 class="wt-bubble__name">Full size</h3>
@@ -57,13 +71,16 @@
       reaches for a swatch, and the row warms the rest on first contact.
 
       data-wt-photo-default is what the row restores to on the way out,
-      so the JS never has to know whether that default came from the
-      product photo or the theme setting.
+      so the JS reads the opening picture off the markup rather than
+      carrying its own idea of which colour is first.
+
+      That opening picture is colour 01, the same one the row draws
+      first, for the reason the full-size card gives above. 01 is
+      spelled out here because the row builds its names from a 1..18
+      range and there is no first name to ask for.
     {%- endcomment -%}
-    {%- if b_2go.featured_image -%}
-      {%- assign twogo_default = b_2go.featured_image | image_url: width: 900 -%}
-    {%- endif -%}
-    <div class="wt-bubble__media">{% if b_2go.featured_image %}<img src="{{ twogo_default }}" width="{{ b_2go.featured_image.width }}" height="{{ b_2go.featured_image.height }}" alt="{{ b_2go.title }}" class="wt-bubble__img" data-wt-photo-default="{{ twogo_default }}">{% else %}{% render 'wt-img', img: section.settings.twogo_image, label: '2Go blind bag photo', fit: 'contain' %}{% endif %}</div>
+    {%- assign twogo_default = 'wt-2go-bag-01.png' | asset_url -%}
+    <div class="wt-bubble__media"><img src="{{ twogo_default }}" width="1200" height="1200" alt="Endless Bubble 2Go blind bag" class="wt-bubble__img" data-wt-photo-default="{{ twogo_default }}"></div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
         <h3 class="wt-bubble__name">2Go blind bag</h3>
