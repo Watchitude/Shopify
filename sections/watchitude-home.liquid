@@ -31,14 +31,30 @@
           </div>
         </div>
       </article>
-      <a href="{{ routes.collections_url }}/tagd" class="wt-hero__card wt-hero__card--dark">
-        <div class="wt-hero__media wt-hero__media--dim">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
+      {%- comment -%}
+        The dots carry each product's name, and the photos behind them are
+        alt="", so a screen reader hears the nine names once from the
+        controls rather than nine times from images that are all the same
+        watch. Sighted readers get the same name from the line above the
+        dots, which swaps with them. Nine is the whole tag'd collection
+        and the cap the product row in #tagd uses; the CSS that shows a
+        slide is written out to match it.
+      {%- endcomment -%}
+      {% assign tagd_hero_products = collections['tagd'].products %}
+      <article class="wt-hero__card wt-hero__card--dark" data-wt-option="0">
+        <div class="wt-hero__media wt-hero__media--dim">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}">{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Works with Apple AirTag</p>
-          <h2 class="wt-hero__card-title">tag'd 2</h2>
+          <h2 class="wt-hero__card-title"><a href="{{ routes.collections_url }}/tagd" class="wt-hero__card-link">tag'd 2</a></h2>
           <p class="wt-hero__card-copy">A slap watch with a pocket &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</p>
+          {% if tagd_hero_products.size > 1 %}<p class="wt-hero__style">{%- for product in tagd_hero_products limit: 9 -%}<span class="wt-hero__style-word wt-hero__style-word--{{ forloop.index0 }}">{{ product.title | split: ' - ' | first | escape }}</span>{%- endfor -%}</p>
+          <div class="wt-hero__pills wt-hero__pills--compact wt-hero__pills--dots">
+            {%- for product in tagd_hero_products limit: 9 -%}
+            <button type="button" class="wt-hero__pill wt-hero__pill--dot{% if forloop.first %} wt-hero__pill--active{% endif %}" data-wt-option="{{ forloop.index0 }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="{{ product.title | escape }}"></button>
+            {%- endfor -%}
+          </div>{% endif %}
         </div>
-      </a>
+      </article>
     </div>
   </div>
 </section>
@@ -112,7 +128,7 @@
   </div>
   {% assign tagd_col = collections['tagd'] %}
   <div class="wt-tagd__row">
-    {% for product in tagd_col.products limit: 6 %}
+    {% for product in tagd_col.products limit: 9 %}
     <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
     {% endfor %}
   </div>
@@ -319,6 +335,44 @@
     display: inline;
   }
 
+  /* One pair per slide, capped at the nine the loops render -- nine
+     being the whole tag'd collection today. An index cannot be matched
+     between parent and child in CSS the way a name can, and Liquid is
+     not rendered inside a stylesheet tag, so these cannot be generated
+     from the collection the way the dots are. A tenth style needs a
+     tenth pair here and a tenth in the block below it. */
+  .wt-hero__card[data-wt-option='0'] .wt-hero__img--tagd-0,
+  .wt-hero__card[data-wt-option='1'] .wt-hero__img--tagd-1,
+  .wt-hero__card[data-wt-option='2'] .wt-hero__img--tagd-2,
+  .wt-hero__card[data-wt-option='3'] .wt-hero__img--tagd-3,
+  .wt-hero__card[data-wt-option='4'] .wt-hero__img--tagd-4,
+  .wt-hero__card[data-wt-option='5'] .wt-hero__img--tagd-5,
+  .wt-hero__card[data-wt-option='6'] .wt-hero__img--tagd-6,
+  .wt-hero__card[data-wt-option='7'] .wt-hero__img--tagd-7,
+  .wt-hero__card[data-wt-option='8'] .wt-hero__img--tagd-8 {
+    opacity: 1;
+  }
+
+  /* The style name under the dots, swapped the same way and for the
+     same reason as the flavour word in the feature's heading: display
+     rather than opacity, so the eight names that are not showing are
+     out of the accessibility tree rather than merely invisible. */
+  .wt-hero__style-word {
+    display: none;
+  }
+
+  .wt-hero__card[data-wt-option='0'] .wt-hero__style-word--0,
+  .wt-hero__card[data-wt-option='1'] .wt-hero__style-word--1,
+  .wt-hero__card[data-wt-option='2'] .wt-hero__style-word--2,
+  .wt-hero__card[data-wt-option='3'] .wt-hero__style-word--3,
+  .wt-hero__card[data-wt-option='4'] .wt-hero__style-word--4,
+  .wt-hero__card[data-wt-option='5'] .wt-hero__style-word--5,
+  .wt-hero__card[data-wt-option='6'] .wt-hero__style-word--6,
+  .wt-hero__card[data-wt-option='7'] .wt-hero__style-word--7,
+  .wt-hero__card[data-wt-option='8'] .wt-hero__style-word--8 {
+    display: inline;
+  }
+
   .wt-hero__feature[data-wt-option='sushi'] .wt-hero__img--sushi,
   .wt-hero__feature[data-wt-option='ice'] .wt-hero__img--ice,
   .wt-hero__feature[data-wt-option='burger'] .wt-hero__img--burger,
@@ -426,6 +480,31 @@
     outline-offset: 3px;
   }
 
+  /* A dot is a pill with the label taken out: six product names would
+     never fit a 270px card. The 22px box with 6px of padding is what
+     gives a 10px dot a hit area worth tapping -- background-clip is what
+     keeps the paint on the inner 10px. Which also means the rules below
+     set background-color, never the background shorthand, since the
+     shorthand would reset the clip back to the border box. */
+  .wt-hero__pills.wt-hero__pills--dots {
+    gap: 10px;
+  }
+
+  .wt-hero__pill.wt-hero__pill--dot {
+    width: 22px;
+    height: 22px;
+    padding: 6px;
+    border: 0;
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-clip: content-box;
+  }
+
+  .wt-hero__pill.wt-hero__pill--dot.wt-hero__pill--active {
+    background-color: #fff;
+    background-clip: content-box;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .wt-hero__img--switch,
     .wt-hero__pill {
@@ -519,6 +598,25 @@
     font-size: 15px;
     color: #fff;
     opacity: 0.92;
+  }
+
+  /* The name of whichever style is showing, between the copy and the
+     dots that change it. Full white against the card-copy's 0.92, so
+     the line that moves reads as the live one and the pitch above it
+     stays the quieter of the two. */
+  .wt-hero__style {
+    position: relative;
+    margin: 12px 0 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  /* The dots carry their own 14px when they follow the copy directly,
+     as they do on the bubble card. Under the name that is one gap too
+     many, so it is taken back here. */
+  .wt-hero__style + .wt-hero__pills {
+    margin-top: 8px;
   }
 
   /* ---------- shared: eyebrow + primary button ---------- */
@@ -992,9 +1090,13 @@
   }
 
   /* ---------- tag'd: collection row ---------- */
+  /* Nine styles, nine columns, one row. At the section's full 1400px
+     that is a 134px card, which is enough for a watch face and a name,
+     and puts the whole collection in one glance -- the point of the row
+     in the first place. */
   .wt-tagd__row {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     gap: 16px;
     margin-top: 36px;
   }
@@ -1016,6 +1118,32 @@
   .wt-tagd__card-name {
     font-size: 14px;
     font-weight: 500;
+  }
+
+  /* Below the full width, nine columns stop being cards and start being
+     stamps -- and nine wraps to a ragged last row at every column count
+     narrow enough to fit. So the row becomes a swipeable strip instead:
+     same markup, same order, fixed-width cards, and the cut-off card at
+     the right edge is what says there is more to the left and right.
+     This is the only breakpoint between here and the 767px one, which
+     leaves the strip in place on phones rather than re-gridding it. */
+  @media (max-width: 1099px) {
+    .wt-tagd__row {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 150px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      /* Room under the cards for the scrollbar the strip now needs, so
+         it lands between the row and the section below it rather than
+         on top of the names. */
+      padding-bottom: 8px;
+    }
+
+    .wt-tagd__card {
+      scroll-snap-align: start;
+    }
   }
   /* ============================================================
      Trust row  (#trust)
@@ -1488,8 +1616,10 @@
     }
 
     /* ---------- product grids: two columns ---------- */
+    /* The tag'd row is not here: it turned into a swipeable strip at
+       1099px and stays one down here, where two columns would be four
+       rows and an orphan. */
     .wt-flavour__grid,
-    .wt-tagd__row,
     .wt-play__grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -1614,6 +1744,14 @@
       for (var i = 0; i < pills.length; i++) {
         var isActive = pills[i].getAttribute('data-wt-option') === option;
         pills[i].classList.toggle('wt-hero__pill--active', isActive);
+
+        /* Only the pills that ship the attribute get it maintained --
+           the tag'd dots, whose white fill is the only thing that says
+           which style is showing. The labelled pills elsewhere say it in
+           words, so they are left as plain buttons. */
+        if (pills[i].hasAttribute('aria-pressed')) {
+          pills[i].setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        }
       }
     }
 
