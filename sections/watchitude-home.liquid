@@ -1370,21 +1370,28 @@
     height: var(--wt-bubble-swatch-img-size);
     object-fit: cover;
     border-radius: 50%;
+  }
+
+  /* ---------- bubble: swatch hover (both cards) ----------
+     Nothing in either row says it is hoverable until the pointer is on
+     one, so the hover has to carry the whole affordance: the swatch
+     lifts out of the row and takes a white ring, at the same beat as the
+     photo above it changes. The two landing together is what reads as
+     one gesture rather than two unrelated things moving.
+
+     On the base class, so the full-size dots and the 2Go images get the
+     same cue from one rule. It is only the sizing above that had to
+     separate them. */
+  .wt-bubble__swatch {
     cursor: pointer;
     transition: transform 0.12s ease, box-shadow 0.12s ease;
   }
 
-  /* Nothing in the row says it is hoverable until the pointer is on it,
-     so the hover has to carry the whole affordance: the swatch lifts out
-     of the row and takes a white ring, at the same beat as the photo
-     above it changes. The two landing together is what reads as one
-     gesture rather than two unrelated things moving.
-
-     position/z-index are here and not in the base rule because they only
-     matter while lifted: the grown swatch has to sit over its
+  /* position/z-index are here and not in the rule above because they
+     only matter while lifted: the grown swatch has to sit over its
      neighbours, and at the 4px phone gap it certainly overlaps them. A
      later sibling would otherwise paint on top of it. */
-  img.wt-bubble__swatch:hover {
+  .wt-bubble__swatch:hover {
     position: relative;
     z-index: 1;
     transform: scale(1.35);
@@ -1394,11 +1401,11 @@
   /* The ring stays -- it is the part that says which swatch is showing,
      and it does not move. Only the growing is dropped. */
   @media (prefers-reduced-motion: reduce) {
-    img.wt-bubble__swatch {
+    .wt-bubble__swatch {
       transition: none;
     }
 
-    img.wt-bubble__swatch:hover {
+    .wt-bubble__swatch:hover {
       transform: none;
     }
   }
@@ -1836,25 +1843,30 @@
     });
   })();
 
-  /* 2Go colour swatches (#bubble). Hovering a swatch puts that colour's
-     bag in the card photo above it; leaving the row puts the default
-     back.
+  /* Colour swatches on both bubble cards (#bubble). Hovering one puts
+     that colour in the card photo above it; leaving the row puts the
+     default back. It serves the full-size card's six named dots and the
+     2Go card's eighteen photographed ones without knowing which is
+     which -- a row states its colours in the markup, and the card it is
+     answering for is whichever one it sits in.
 
      Nothing like the hero switcher above, and deliberately so. There the
      state is an attribute and the CSS cross-fades between images that
-     are all already in the DOM, which is affordable at two or six. At
-     eighteen it is not, so the photo is one <img> and this swaps its
-     src. The trade is a possible blink on a colour's first showing,
-     which is what warm() buys back: the first time a pointer touches the
-     row, every colour is fetched into the browser cache, and by the time
-     it has crossed the first swatch the rest are already there.
+     are all already in the DOM, which is affordable at two or six. Over
+     both rows here it is twenty-four, so the photo is one <img> and this
+     swaps its src. The trade is a possible blink on a colour's first
+     showing, which is what warm() buys back: the first time a pointer
+     touches a row, that row's colours are fetched into the browser
+     cache, and by the time it has crossed the first swatch the rest are
+     already there. A visitor who hovers one card never pays for the
+     other.
 
      Delegated from the document for the same reasons as the hero: shared
      bundle, no guarantee the card is in the DOM yet, and a theme-editor
      re-render replaces the row without re-running this. */
   (function () {
-    var ROW = '[data-wt-2go-swatches]';
-    var SWATCH = ROW + ' [data-wt-2go-photo]';
+    var ROW = '[data-wt-swatches]';
+    var SWATCH = ROW + ' [data-wt-photo]';
     var warmed = [];
 
     function rowFrom(node) {
@@ -1871,10 +1883,9 @@
       if (!img || !src) return;
       if (img.getAttribute('src') === src) return;
 
-      /* Only the src moves. The alt names the product, not the colour,
-         and the product is the same one in all eighteen photos -- the
-         colours have no names to put there, which is the whole point of
-         a blind bag. */
+      /* Only the src moves. The alt names the product, and the product
+         is the same one in every photo the row offers -- the colours it
+         names are named in the row's own label, not here. */
       img.setAttribute('src', src);
     }
 
@@ -1884,10 +1895,10 @@
       if (warmed.indexOf(row) !== -1) return;
       warmed.push(row);
 
-      var swatches = row.querySelectorAll('[data-wt-2go-photo]');
+      var swatches = row.querySelectorAll('[data-wt-photo]');
       for (var i = 0; i < swatches.length; i++) {
         var preload = new Image();
-        preload.src = swatches[i].getAttribute('data-wt-2go-photo');
+        preload.src = swatches[i].getAttribute('data-wt-photo');
       }
     }
 
@@ -1898,7 +1909,7 @@
       warm(row);
 
       var swatch = event.target.closest(SWATCH);
-      if (swatch) show(row, swatch.getAttribute('data-wt-2go-photo'));
+      if (swatch) show(row, swatch.getAttribute('data-wt-photo'));
     }
 
     function release(event) {
@@ -1910,7 +1921,7 @@
 
       var card = row.closest('.wt-bubble__card');
       var img = card && card.querySelector('.wt-bubble__img');
-      if (img) show(row, img.getAttribute('data-wt-2go-default'));
+      if (img) show(row, img.getAttribute('data-wt-photo-default'));
     }
 
     document.addEventListener('mouseover', activate);
@@ -1927,7 +1938,7 @@
       if (!row) return;
 
       var swatch = event.target.closest(SWATCH);
-      if (swatch) show(row, swatch.getAttribute('data-wt-2go-photo'));
+      if (swatch) show(row, swatch.getAttribute('data-wt-photo'));
     });
   })();
 {% endjavascript %}

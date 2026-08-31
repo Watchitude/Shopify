@@ -1,22 +1,49 @@
 {% assign b_full = all_products['endless-bubble-wrap-dark-blue'] %}
 {% assign b_2go = all_products['endless-bubble-2go-blind-bag'] %}
 {% assign bubble_collection_url = routes.collections_url | append: '/endless-bubble' %}
+{%- comment -%}
+  Order is the order the dots are drawn in, and each name is both the
+  modifier that colours the dot and the asset that photographs it, so a
+  colour is added or reordered here and nowhere else.
+{%- endcomment -%}
+{% assign bubble_full_colours = 'red,pink,sky,blue,green,violet' | split: ',' %}
 <div class="wt-bubble__cards">
-  <article class="wt-bubble__card">
-    <div class="wt-bubble__media">{% if b_full.featured_image %}<img src="{{ b_full.featured_image | image_url: width: 900 }}" width="{{ b_full.featured_image.width }}" height="{{ b_full.featured_image.height }}" alt="{{ b_full.title }}" class="wt-bubble__img">{% endif %}</div>
+  <article class="wt-bubble__card wt-bubble__card--full">
+    {%- if b_full.featured_image -%}
+      {%- assign full_default = b_full.featured_image | image_url: width: 900 -%}
+    {%- endif -%}
+    <div class="wt-bubble__media">{% if b_full.featured_image %}<img src="{{ full_default }}" width="{{ b_full.featured_image.width }}" height="{{ b_full.featured_image.height }}" alt="{{ b_full.title }}" class="wt-bubble__img" data-wt-photo-default="{{ full_default }}">{% endif %}</div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
         <h3 class="wt-bubble__name">Full size</h3>
         <span class="wt-bubble__price">{{ b_full.price | money_without_trailing_zeros | default: '$20' }}</span>
       </div>
       <p class="wt-bubble__copy">Six colors, silicone, dishwasher-safe. The one that lives on the coffee table.</p>
-      <div class="wt-bubble__swatches">
-        <span class="wt-bubble__swatch wt-bubble__swatch--red"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--pink"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--sky"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--blue"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--green"></span>
-        <span class="wt-bubble__swatch wt-bubble__swatch--violet"></span>
+      {%- comment -%}
+        Hovering a dot shows that colour in the card photo above, the
+        same gesture the 2Go row below answers to.
+
+        The row is labelled and the dots are not, for the same reason as
+        the 2Go row: six unnamed empty spans would be six unnamed
+        announcements, and the label says in one line what they say six
+        times. Unlike the 2Go colours these do have names, so the label
+        can name them -- which is as far as this goes. They are not
+        buttons: each colour is its own product, and a control that
+        changes a picture but does not take you to the product it names
+        would be a worse promise than the plain dot it replaced.
+      {%- endcomment -%}
+      <div
+        class="wt-bubble__swatches"
+        role="img"
+        aria-label="Six colors: red, pink, sky, blue, green, violet"
+        data-wt-swatches
+      >
+        {%- for colour in bubble_full_colours -%}
+        <span
+          class="wt-bubble__swatch wt-bubble__swatch--{{ colour }}"
+          data-wt-photo="{{ 'wt-bubble-full-' | append: colour | append: '.png' | asset_url }}"
+        ></span>
+        {%- endfor -%}
       </div>
       <a href="{{ routes.collections_url }}/endless-bubble" class="wt-bubble__cta">Shop full size</a>
     </div>
@@ -29,14 +56,14 @@
       scrolled to; here nothing but the default is fetched until someone
       reaches for a swatch, and the row warms the rest on first contact.
 
-      data-wt-2go-default is what the row restores to on the way out, so
-      the JS never has to know whether that default came from the product
-      photo or the theme setting.
+      data-wt-photo-default is what the row restores to on the way out,
+      so the JS never has to know whether that default came from the
+      product photo or the theme setting.
     {%- endcomment -%}
     {%- if b_2go.featured_image -%}
       {%- assign twogo_default = b_2go.featured_image | image_url: width: 900 -%}
     {%- endif -%}
-    <div class="wt-bubble__media">{% if b_2go.featured_image %}<img src="{{ twogo_default }}" width="{{ b_2go.featured_image.width }}" height="{{ b_2go.featured_image.height }}" alt="{{ b_2go.title }}" class="wt-bubble__img" data-wt-2go-default="{{ twogo_default }}">{% else %}{% render 'wt-img', img: section.settings.twogo_image, label: '2Go blind bag photo', fit: 'contain' %}{% endif %}</div>
+    <div class="wt-bubble__media">{% if b_2go.featured_image %}<img src="{{ twogo_default }}" width="{{ b_2go.featured_image.width }}" height="{{ b_2go.featured_image.height }}" alt="{{ b_2go.title }}" class="wt-bubble__img" data-wt-photo-default="{{ twogo_default }}">{% else %}{% render 'wt-img', img: section.settings.twogo_image, label: '2Go blind bag photo', fit: 'contain' %}{% endif %}</div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
         <h3 class="wt-bubble__name">2Go blind bag</h3>
@@ -67,7 +94,7 @@
         class="wt-bubble__swatches wt-bubble__swatches--images"
         role="img"
         aria-label="18 colors"
-        data-wt-2go-swatches
+        data-wt-swatches
       >
         {%- for i in (1..18) -%}
           {%- assign n = i | prepend: '0' | slice: -2, 2 -%}
@@ -78,7 +105,7 @@
             alt=""
             loading="lazy"
             class="wt-bubble__swatch"
-            data-wt-2go-photo="{{ 'wt-2go-bag-' | append: n | append: '.png' | asset_url }}"
+            data-wt-photo="{{ 'wt-2go-bag-' | append: n | append: '.png' | asset_url }}"
           >
         {%- endfor -%}
       </div>
