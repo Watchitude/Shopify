@@ -277,6 +277,7 @@
     --wt-font-display: 'Jost', 'Century Gothic', Futura, sans-serif;
 
     --wt-red: #D71920;
+    --wt-red-dark: #B3151B; /* --wt-red at 84%, the button hover shade */
     --wt-ink: #101012;
     --wt-mist: #F4F4F5;
     --wt-line: #E2E2E4;
@@ -862,6 +863,73 @@
 
   .wt-btn--nowrap {
     white-space: nowrap;
+  }
+
+  /* ---------- shared: red button hover ---------- */
+  /* The three red buttons in one rule. They are separate classes
+     because their padding differs -- .wt-btn sits at 15px, the
+     newsletter submit at 14px, the bubble cta at 14px/24px -- and each
+     rule above says so. None of that changes what a pointer on one
+     should do, so the answer to that is written once.
+
+     Nothing else needs adding here: .wt-btn--compact and the copy of
+     .wt-btn inside .wt-hero__controls are both .wt-btn with the sizing
+     changed, so they are already in.
+
+     The lift is the .wt-bubble__swatch gesture at button scale -- rise
+     and take a shadow -- but at the 200ms the pills and the caret use
+     rather than the swatch's 0.12s. A 40px dot growing by a third
+     wants to be quick; a button moving 2px at the same speed reads as
+     a flinch.
+
+     Red shadow rather than black because these buttons land on three
+     grounds: white, --wt-mist, and the tag'd card's photo. A black
+     shadow disappears against the last one, and a tint of the button's
+     own colour reads on all three.
+
+     :focus-visible gets the same treatment, so the gesture is not
+     something only a pointer can see. */
+  .wt-btn,
+  .wt-newsletter__submit,
+  .wt-bubble__cta {
+    transition: background-color 200ms ease, transform 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .wt-btn:is(:hover, :focus-visible),
+  .wt-newsletter__submit:is(:hover, :focus-visible),
+  .wt-bubble__cta:is(:hover, :focus-visible) {
+    background: var(--wt-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(215, 25, 32, 0.32);
+  }
+
+  /* Pressed puts it back on the ground, under the pointer that pushed
+     it. Without this the button stays lifted through the click and the
+     press has no moment of its own. */
+  .wt-btn:active,
+  .wt-newsletter__submit:active,
+  .wt-bubble__cta:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* The darkening stays -- it is the part that says the button is under
+     the pointer. Only the moving is dropped, the same trade the
+     swatches make. */
+  @media (prefers-reduced-motion: reduce) {
+    .wt-btn,
+    .wt-newsletter__submit,
+    .wt-bubble__cta {
+      transition: background-color 200ms ease;
+    }
+
+    .wt-btn:is(:hover, :focus-visible),
+    .wt-newsletter__submit:is(:hover, :focus-visible),
+    .wt-bubble__cta:is(:hover, :focus-visible) {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
   /* ============================================================
