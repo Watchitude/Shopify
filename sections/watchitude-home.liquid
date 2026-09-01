@@ -1,4 +1,4 @@
-<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
+<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
     <article class="wt-hero__feature" data-wt-option="sushi">
       <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% endif %}{% if ice_image != blank %}<img src="{{ ice_image | image_url: width: 1600 }}" width="{{ ice_image.width }}" height="{{ ice_image.height }}" alt="Knead That Ice Cream" class="wt-hero__img wt-hero__img--switch wt-hero__img--ice">{% endif %}{% if burger_image != blank %}<img src="{{ burger_image | image_url: width: 1600 }}" width="{{ burger_image.width }}" height="{{ burger_image.height }}" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% else %}<img src="{{ 'p03-x228.jpg' | asset_url }}" width="342" height="332" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% endif %}</div>
@@ -123,7 +123,7 @@
 </section>
 {% if p_ckb != blank %}
 <section id="new" class="wt-section wt-new">
-  {% render 'wt-new' %}
+  {% render 'wt-new', handle: 'click-key-blocks', title: 'click-key blocks', cta: 'Shop Click-Key Blocks', copy: section.settings.new_copy, fallback_image: section.settings.new_image, fallback_label: 'Click-Key Blocks photo &mdash; SKU 740' %}
 </section>
 {% endif %}
 {%- comment -%}
@@ -162,13 +162,23 @@
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.burger_image, label: 'Burger art', fit: 'contain' %}<span class="wt-flavour__badge">Oct 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Burger</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
   </div>
 </section> {%- comment -%}
-  The same card again, lower down the page. It carries no id: #new is
-  already taken by the band above, and a duplicate id is invalid and
-  would break any anchor pointing at it.
+  The same card lower down the page, carrying Sushi Blocks (SKU 565)
+  rather than the Click-Key Blocks the band above sells -- one layout,
+  two products, which is what the card was made parameterisable for.
+
+  It carries no id because nothing links to it, not because one was
+  unavailable: #new belongs to the band above and this is a different
+  product, so a second id would be valid if an anchor ever needed one.
+
+  Its own guard rather than the p_ckb one it used to share. The two
+  bands are separate products now, and either can be absent -- Sushi
+  Blocks in particular is not on the Online Store channel yet, so
+  all_products returns blank for it and this band simply does not
+  render until it is published.
 {%- endcomment -%}
-{% if p_ckb != blank %}
+{% if p_sushi_blocks != blank %}
 <section class="wt-section wt-new">
-  {% render 'wt-new' %}
+  {% render 'wt-new', handle: 'sushi-blocks-2pk-blind-bag', title: 'sushi blocks', cta: 'Shop Sushi Blocks', copy: section.settings.sushi_copy, fallback_image: section.settings.sushi_image, fallback_label: 'Sushi Blocks photo &mdash; SKU 565' %}
 </section>
 {% endif %}
 <section id="bubble" class="wt-bubble">
@@ -251,7 +261,7 @@
       {% endif %}
     {% endform %}
   </div>
-</section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "header", "content": "Just landed band" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
+</section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "image_picker", "id": "sushi_image", "label": "Sushi Blocks (SKU 565)" }, { "type": "header", "content": "Just landed bands" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." }, { "type": "textarea", "id": "sushi_copy", "label": "Sushi Blocks description", "default": "Magnetic blocks that snap into rolls, towers, and a sushi train as long as the floor. Forty-eight to collect, two to a bag, and one of them is rare." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
 
 {% stylesheet %}
   /* ============================================================

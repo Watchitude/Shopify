@@ -1,25 +1,40 @@
 {%- comment -%}
-  The Click-Key Blocks card, rendered twice on the home page: once in the
-  #new band under the hero, once again just above the endless bubble
-  band. One source rather than two copies that drift apart the first time
-  the copy or the price changes.
+  The "just landed" card, rendered twice on the home page with a
+  different product each time: Click-Key Blocks in the #new band under
+  the hero, Sushi Blocks again just above the endless bubble band. One
+  source rather than two copies that drift apart the first time the
+  layout changes.
 
-  The product is re-assigned here rather than passed in because a snippet
-  cannot see variables assigned by the section -- p_ckb does not cross
-  the render boundary. Global objects do, which is what all_products is,
-  and so does the section object the settings below come from. This is
-  the same arrangement snippets/wt-bubble.liquid uses.
+  Everything that differs between the two comes in as a parameter --
+  handle, title, cta, copy and the fallback photo -- so the snippet
+  knows the shape of the card and nothing about either product. The
+  product itself is looked up here from the handle rather than passed
+  in, because a snippet cannot see variables assigned by the section:
+  p_ckb does not cross the render boundary. Global objects do, which is
+  what all_products is. This is the same arrangement
+  snippets/wt-bubble.liquid uses.
+
+  The caller passes section.settings for copy and fallback_image, which
+  keeps both of those editable per band in the theme editor and keeps
+  this file from knowing which setting belongs to which product.
 {%- endcomment -%}
-{% assign ckb = all_products['click-key-blocks'] %}
+{% assign new_product = all_products[handle] %}
 <article class="wt-new__card">
-  <div class="wt-new__media">{% if ckb.featured_image %}<img src="{{ ckb.featured_image | image_url: width: 800 }}" width="{{ ckb.featured_image.width }}" height="{{ ckb.featured_image.height }}" alt="{{ ckb.title }}" class="wt-new__img">{% else %}{% render 'wt-img', img: section.settings.new_image, label: 'Click-Key Blocks photo &mdash; SKU 740', fit: 'contain' %}{% endif %}</div>
+  <div class="wt-new__media">{% if new_product.featured_image %}<img src="{{ new_product.featured_image | image_url: width: 800 }}" width="{{ new_product.featured_image.width }}" height="{{ new_product.featured_image.height }}" alt="{{ new_product.title }}" class="wt-new__img">{% else %}{% render 'wt-img', img: fallback_image, label: fallback_label, fit: 'contain' %}{% endif %}</div>
   <div class="wt-new__body">
-    <p class="wt-new__eyebrow">Just landed &middot; available now</p>
-    <h2 class="wt-new__title">click-key blocks</h2>
-    <p class="wt-new__copy">{{ section.settings.new_copy }}</p>
+    {%- comment -%}
+      "available now" is read off the product rather than written into
+      the eyebrow, because the band sits next to a Shop button and the
+      two have to agree. A sold-out or unstocked product says "coming
+      soon" instead, which is the word the flavour cards in #flavour
+      already use for something that is not buyable yet.
+    {%- endcomment -%}
+    <p class="wt-new__eyebrow">Just landed &middot; {% if new_product.available %}available now{% else %}coming soon{% endif %}</p>
+    <h2 class="wt-new__title">{{ title }}</h2>
+    <p class="wt-new__copy">{{ copy }}</p>
   </div>
   <div class="wt-new__buy">
-    <span class="wt-new__price">{{ ckb.price | money_without_trailing_zeros }}</span>
-    <a href="{{ ckb.url }}" class="wt-btn wt-btn--nowrap">Shop Click-Key Blocks</a>
+    <span class="wt-new__price">{{ new_product.price | money_without_trailing_zeros }}</span>
+    <a href="{{ new_product.url }}" class="wt-btn wt-btn--nowrap">{{ cta }}</a>
   </div>
 </article>
