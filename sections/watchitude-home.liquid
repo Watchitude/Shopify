@@ -42,8 +42,31 @@
       {%- endcomment -%}
       {% assign tagd_hero_products = collections['tagd'].products %}
       {% assign tagd_collection_url = routes.collections_url | append: '/tagd' %}
+      {%- comment -%}
+        The nine tag'd photos are all 1000x1000 with the watch dead
+        centre, so the frames already line up -- but the watch is not
+        shot at one size inside them. Measured off the face, the discs
+        run from 256px (Pink Icing) to 278px (Army Camo) on a 900px
+        render: a 9% spread, which is what makes the watch jump a little
+        as the slides cross-fade rather than sit still.
+
+        A correction per photo, scaling each one up until its face
+        matches the largest. Up rather than down on purpose: cover
+        already fills the card exactly, so anything under 1 would pull
+        the photo off the card's edges and show a band of mist round it,
+        the way the sushi shot's 0.9 does deliberately. The straps run
+        off the corners anyway, so the extra crop costs nothing.
+
+        Keyed on handle, not on position: the slide CSS below has to go
+        by index and breaks if the collection is reordered, but these
+        numbers belong to particular photographs and would be actively
+        wrong on the wrong one. A style not listed here scales by 1,
+        which is the right default for a new photo shot to any size --
+        it just will not be corrected until someone measures it.
+      {%- endcomment -%}
+      {%- assign tagd_scales = 'milky-way-tag-d-2-by-watchitude:1.049,army-camo-tag-d-2-by-watchitude:1,master-builder-tag-d-2-by-watchitude:1.069,score-tag-d-2-by-watchitude:1.071,heart-balloons-tag-d-2-by-watchitude:1.069,wings-tag-d-2-by-watchitude:1.082,pink-icing-tag-d-2-by-watchitude:1.086,unicorn-love-tag-d-2-by-watchitude:1.069,over-the-rainbow-tag-d-2-by-watchitude:1.045' | split: ',' -%}
       <article class="wt-hero__card wt-hero__card--dark" data-wt-option="0">
-        <div class="wt-hero__media wt-hero__media--dim">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}">{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
+        <div class="wt-hero__media wt-hero__media--dim">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == product.handle -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Works with Apple AirTag</p>
           {%- comment -%}
