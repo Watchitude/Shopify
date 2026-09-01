@@ -1,0 +1,36 @@
+{%- comment -%}
+  One card in the #blocks band, rendered once per flavour. The band is
+  two products -- Sushi Blocks (SKU 565) and Ice Cream Blocks (SKU 568)
+  -- that are the same kinetic fidget in different foods, so they share
+  a heading and a shape and differ only in photo, name, price and copy.
+
+  Everything that differs comes in as a parameter. The product is looked
+  up here from the handle rather than passed in, because a snippet
+  cannot see variables the section assigned. Same arrangement as
+  snippets/wt-new.liquid, for the same reason.
+
+  Shaped like the bubble cards rather than the wide wt-new card: photo
+  on top, then name and price on one line, copy, and the button. Two of
+  those sit side by side at the width one wt-new card needs.
+{%- endcomment -%}
+{% assign blocks_product = all_products[handle] %}
+<article class="wt-blocks__card">
+  <div class="wt-blocks__media">{% if blocks_product.featured_image %}<img src="{{ blocks_product.featured_image | image_url: width: 800 }}" width="{{ blocks_product.featured_image.width }}" height="{{ blocks_product.featured_image.height }}" alt="{{ blocks_product.title }}" class="wt-blocks__img">{% else %}{% render 'wt-img', img: fallback_image, label: fallback_label, fit: 'contain' %}{% endif %}</div>
+  <div class="wt-blocks__body">
+    <div class="wt-blocks__row">
+      <h3 class="wt-blocks__name">{{ name }}</h3>
+      <span class="wt-blocks__price">{{ blocks_product.price | money_without_trailing_zeros }}</span>
+    </div>
+    {%- comment -%}
+      The band eyebrow says "just landed" for both cards, so a card that
+      cannot actually be bought has to say so itself -- the stacked
+      bands it replaced each carried their own availability in the
+      eyebrow, and that promise should not be lost to the merge. Only
+      the unbuyable case prints: "available now" under every card that
+      is simply in stock would be noise on a page that says it once.
+    {%- endcomment -%}
+    {% unless blocks_product.available %}<span class="wt-blocks__meta">Coming soon</span>{% endunless %}
+    <p class="wt-blocks__copy">{{ copy }}</p>
+    <a href="{{ blocks_product.url }}" class="wt-blocks__cta">{{ cta }}</a>
+  </div>
+</article>

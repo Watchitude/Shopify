@@ -1,4 +1,4 @@
-<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
+<link rel="preconnect" href="https://fonts.googleapis.com"> <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Jost:wght@500;600;700&display=swap"> {% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_ice_blocks = all_products['ice-cream-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
     <article class="wt-hero__feature" data-wt-option="sushi">
       <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% endif %}{% if ice_image != blank %}<img src="{{ ice_image | image_url: width: 1600 }}" width="{{ ice_image.width }}" height="{{ ice_image.height }}" alt="Knead That Ice Cream" class="wt-hero__img wt-hero__img--switch wt-hero__img--ice">{% endif %}{% if burger_image != blank %}<img src="{{ burger_image | image_url: width: 1600 }}" width="{{ burger_image.width }}" height="{{ burger_image.height }}" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% else %}<img src="{{ 'p03-x228.jpg' | asset_url }}" width="342" height="332" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% endif %}</div>
@@ -162,23 +162,36 @@
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.burger_image, label: 'Burger art', fit: 'contain' %}<span class="wt-flavour__badge">Oct 15</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Burger</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
   </div>
 </section> {%- comment -%}
-  The same card lower down the page, carrying Sushi Blocks (SKU 565)
-  rather than the Click-Key Blocks the band above sells -- one layout,
-  two products, which is what the card was made parameterisable for.
+  Sushi Blocks (SKU 565) and Ice Cream Blocks (SKU 568): the same
+  kinetic fidget in two foods, at two SKUs, sharing one heading and
+  sitting side by side.
 
-  It carries no id because nothing links to it, not because one was
-  unavailable: #new belongs to the band above and this is a different
-  product, so a second id would be valid if an anchor ever needed one.
+  They had a full-width band each and read as the same thing said
+  twice. The pair now uses the shape #bubble already uses for two
+  related products -- a head, then a two-column grid of cards --
+  rather than the wide wt-new card, which is built to carry one
+  product across the page and does not halve. Each card still keeps
+  its own photo, price and button, because these are two things a
+  visitor buys separately.
 
-  Its own guard rather than the p_ckb one it used to share. The two
-  bands are separate products now, and either can be absent -- Sushi
-  Blocks in particular is not on the Online Store channel yet, so
-  all_products returns blank for it and this band simply does not
-  render until it is published.
+  Three guards, not one. The band appears if either product does, and
+  each card appears only with its own product, so a flavour that is
+  not on the Online Store channel drops out and leaves the other
+  standing rather than taking the heading down with it.
 {%- endcomment -%}
-{% if p_sushi_blocks != blank %}
-<section class="wt-section wt-new">
-  {% render 'wt-new', handle: 'sushi-blocks-2pk-blind-bag', title: 'sushi blocks', cta: 'Shop Sushi Blocks', copy: section.settings.sushi_copy, fallback_image: section.settings.sushi_image, fallback_label: 'Sushi Blocks photo &mdash; SKU 565' %}
+{% if p_sushi_blocks != blank or p_ice_blocks != blank %}
+<section id="blocks" class="wt-section wt-blocks">
+  <div class="wt-blocks__head">
+    <div>
+      <p class="wt-blocks__eyebrow">Just landed</p>
+      <h2 class="wt-blocks__title">blocks</h2>
+    </div>
+    <p class="wt-blocks__lead">{{ section.settings.blocks_lead }}</p>
+  </div>
+  <div class="wt-blocks__cards">
+    {% if p_sushi_blocks != blank %}{% render 'wt-blocks-card', handle: 'sushi-blocks-2pk-blind-bag', name: 'Sushi', cta: 'Shop Sushi Blocks', copy: section.settings.sushi_copy, fallback_image: section.settings.sushi_image, fallback_label: 'Sushi Blocks photo &mdash; SKU 565' %}{% endif %}
+    {% if p_ice_blocks != blank %}{% render 'wt-blocks-card', handle: 'ice-cream-blocks-2pk-blind-bag', name: 'Ice cream', cta: 'Shop Ice Cream Blocks', copy: section.settings.ice_blocks_copy, fallback_image: section.settings.ice_blocks_image, fallback_label: 'Ice Cream Blocks photo &mdash; SKU 568' %}{% endif %}
+  </div>
 </section>
 {% endif %}
 <section id="bubble" class="wt-bubble">
@@ -261,7 +274,7 @@
       {% endif %}
     {% endform %}
   </div>
-</section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "image_picker", "id": "sushi_image", "label": "Sushi Blocks (SKU 565)" }, { "type": "header", "content": "Just landed bands" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." }, { "type": "textarea", "id": "sushi_copy", "label": "Sushi Blocks description", "default": "Magnetic blocks that snap into rolls, towers, and a sushi train as long as the floor. Forty-eight to collect, two to a bag, and one of them is rare." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
+</section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "image_picker", "id": "sushi_image", "label": "Sushi Blocks (SKU 565)" }, { "type": "image_picker", "id": "ice_blocks_image", "label": "Ice Cream Blocks (SKU 568)" }, { "type": "header", "content": "Just landed bands" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." }, { "type": "textarea", "id": "sushi_copy", "label": "Sushi Blocks description", "default": "Magnetic blocks that snap into rolls, towers, and a sushi train as long as the floor. Forty-eight to collect, two to a bag, and one of them is rare." }, { "type": "textarea", "id": "blocks_lead", "label": "Blocks band intro", "default": "Collectible kinetic blocks \u2014 twist them, click them, stack them. Two to a sealed bag, so what you get is a surprise." }, { "type": "textarea", "id": "ice_blocks_copy", "label": "Ice Cream Blocks description", "default": "The same blocks in scoops and cones — twist them, click them, stack them into a sundae. Eighteen flavours to collect, two to a bag, and the bag is sealed." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
 
 {% stylesheet %}
   /* ============================================================
@@ -852,7 +865,8 @@
   .wt-new__img,
   .wt-flavour__img,
   .wt-tagd__card-img,
-  .wt-bubble__img {
+  .wt-bubble__img,
+  .wt-blocks__img {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -901,14 +915,16 @@
      something only a pointer can see. */
   .wt-btn,
   .wt-newsletter__submit,
-  .wt-bubble__cta {
+  .wt-bubble__cta,
+  .wt-blocks__cta {
     transition: background-color 200ms ease, transform 200ms ease,
       box-shadow 200ms ease;
   }
 
   .wt-btn:is(:hover, :focus-visible),
   .wt-newsletter__submit:is(:hover, :focus-visible),
-  .wt-bubble__cta:is(:hover, :focus-visible) {
+  .wt-bubble__cta:is(:hover, :focus-visible),
+  .wt-blocks__cta:is(:hover, :focus-visible) {
     background: var(--wt-red-dark);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(215, 25, 32, 0.32);
@@ -919,7 +935,8 @@
      press has no moment of its own. */
   .wt-btn:active,
   .wt-newsletter__submit:active,
-  .wt-bubble__cta:active {
+  .wt-bubble__cta:active,
+  .wt-blocks__cta:active {
     transform: translateY(0);
     box-shadow: none;
   }
@@ -930,13 +947,15 @@
   @media (prefers-reduced-motion: reduce) {
     .wt-btn,
     .wt-newsletter__submit,
-    .wt-bubble__cta {
+    .wt-bubble__cta,
+    .wt-blocks__cta {
       transition: background-color 200ms ease;
     }
 
     .wt-btn:is(:hover, :focus-visible),
     .wt-newsletter__submit:is(:hover, :focus-visible),
-    .wt-bubble__cta:is(:hover, :focus-visible) {
+    .wt-bubble__cta:is(:hover, :focus-visible),
+    .wt-blocks__cta:is(:hover, :focus-visible) {
       transform: none;
       box-shadow: none;
     }
@@ -948,8 +967,9 @@
      no --wt-section-pad-* override here.
 
      The card markup lives in snippets/wt-new.liquid: the band is
-     rendered twice on this page, once here and once above #bubble, and
-     these rules serve both.
+     rendered once on this page now, in the #new band under the hero.
+     It kept its parameters when the two blocks bands it also served
+     merged into #blocks and took a card shape of their own.
      ============================================================ */
   .wt-new {
     --wt-new-media-width: 340px;
@@ -970,7 +990,8 @@
   /* .wt-bubble__media shares this rule exactly (see the bubble card
      block below). */
   .wt-new__media,
-  .wt-bubble__media {
+  .wt-bubble__media,
+  .wt-blocks__media {
     position: relative;
     aspect-ratio: 16/11;
     background: var(--wt-mist);
@@ -1094,6 +1115,7 @@
     letter-spacing: -0.015em;
   }
 
+  .wt-blocks__meta,
   .wt-flavour__meta {
     font-size: 13px;
     color: var(--wt-muted);
@@ -1198,6 +1220,62 @@
     flex-wrap: wrap;
   }
   /* ============================================================
+     "Blocks" band  (#blocks)
+     Almost nothing of its own. The band is the head-plus-two-cards
+     shape #bubble already had, so every rule it needs is one it joins
+     rather than restates -- head, eyebrow, title, lead, cards, card,
+     media, img, body, row, name, price, copy and cta, plus the meta
+     line it borrows from the flavour cards. What is left is the two
+     ways it differs: it keeps the page white where #bubble carries a
+     mist tint, because the two bands are neighbours and a second tint
+     would run them together, and it takes the deeper top padding the
+     other headed bands use.
+
+     Compound selector so the padding override outranks .wt-section on
+     specificity, not on source order.
+     ============================================================ */
+  .wt-section.wt-blocks {
+    --wt-section-pad-top: 72px; /* .wt-section default is 32px */
+  }
+
+  /* Sits between the name/price line and the copy, so it reads as a
+     note on the price rather than a line of the description. */
+  .wt-blocks__meta {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* The two buttons line up whatever sits above them. #bubble lives
+     with its pair at different heights, and can: its two cards are a
+     different size, a different price and a different length of copy,
+     so nobody reads them as a matched pair. These two are the same
+     product in two foods at the same price, close enough that a
+     button an inch out reads as a mistake -- and the Coming soon line
+     appears on one card and not the other, so they start out uneven
+     by construction.
+
+     Which is why the shared card and body rules are joined but not
+     the whole of it: the card and its body become columns, and the
+     button takes up whatever slack is left. align-self keeps the
+     button its own width, since a flex item would otherwise stretch
+     the full width of the body. */
+  .wt-blocks__card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wt-blocks__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wt-blocks__cta {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+
+  /* ============================================================
      "Endless bubble wrap" band  (#bubble)
      Full-bleed tint: the <section> spans the full width and carries
      the background, while .wt-bubble__inner holds the usual
@@ -1226,6 +1304,7 @@
     --wt-section-pad-bottom: 64px;
   }
 
+  .wt-blocks__head,
   .wt-bubble__head {
     display: flex;
     justify-content: space-between;
@@ -1235,6 +1314,7 @@
     margin-bottom: 32px;
   }
 
+  .wt-blocks__eyebrow,
   .wt-bubble__eyebrow {
     margin: 0 0 12px;
     font-size: 12px;
@@ -1244,6 +1324,7 @@
     color: var(--wt-red);
   }
 
+  .wt-blocks__title,
   .wt-bubble__title {
     margin: 0;
     font-family: var(--wt-font-display);
@@ -1254,6 +1335,7 @@
     text-transform: lowercase;
   }
 
+  .wt-blocks__lead,
   .wt-bubble__lead {
     margin: 0;
     font-size: 17px;
@@ -1618,12 +1700,14 @@
      match existing rules exactly and are joined to those selector
      lists above instead of being duplicated.
      ============================================================ */
+  .wt-blocks__cards,
   .wt-bubble__cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
   }
 
+  .wt-blocks__card,
   .wt-bubble__card {
     background: #fff;
     border: 1px solid var(--wt-line);
@@ -1631,10 +1715,12 @@
     overflow: hidden;
   }
 
+  .wt-blocks__body,
   .wt-bubble__body {
     padding: 26px;
   }
 
+  .wt-blocks__row,
   .wt-bubble__row {
     display: flex;
     justify-content: space-between;
@@ -1643,6 +1729,7 @@
     margin-bottom: 8px;
   }
 
+  .wt-blocks__name,
   .wt-bubble__name {
     margin: 0;
     font-size: 22px;
@@ -1650,12 +1737,14 @@
     letter-spacing: -0.008em;
   }
 
+  .wt-blocks__price,
   .wt-bubble__price {
     font-weight: 700;
     font-size: 20px;
     letter-spacing: -0.015em;
   }
 
+  .wt-blocks__copy,
   .wt-bubble__copy {
     margin: 0 0 18px;
     font-size: 15px;
@@ -1754,6 +1843,7 @@
 
   /* Close to .wt-btn but inline-block with 14px/24px padding, so it
      stays a separate rule rather than .wt-btn plus overrides. */
+  .wt-blocks__cta,
   .wt-bubble__cta {
     display: inline-block;
     background: var(--wt-red);
@@ -1991,7 +2081,8 @@
     .wt-knead__grid,
     .wt-tagd__grid,
     .wt-trust__grid,
-    .wt-bubble__cards {
+    .wt-bubble__cards,
+    .wt-blocks__cards {
       grid-template-columns: 1fr;
     }
 
@@ -2010,10 +2101,12 @@
       padding-top: 28px;
     }
 
+    .wt-blocks__head,
     .wt-bubble__head {
       gap: 20px;
     }
 
+    .wt-blocks__cards,
     .wt-bubble__cards {
       gap: 16px;
     }
@@ -2035,6 +2128,7 @@
       padding: 20px;
     }
 
+    .wt-blocks__body,
     .wt-bubble__body {
       padding: 20px;
     }
