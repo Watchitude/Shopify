@@ -183,6 +183,7 @@
     {% render 'wt-bubble' %}
   </div>
 </section> <section id="tagd" class="wt-section wt-tagd">
+  {% assign tagd_col = collections['tagd'] %}
   <div class="wt-tagd__grid">
     <div>
       <p class="wt-tagd__eyebrow">Works with Apple AirTag</p>
@@ -197,9 +198,24 @@
         <a href="{{ routes.collections_url }}/tagd" class="wt-btn">Shop Tag'd &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</a>
       </div>
     </div>
-    <div class="wt-tagd__media">{% if p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>
+    {%- comment -%}
+      The same nine photos the row below is built from, stacked and
+      cross-faded, so hovering a style in the row shows it here at size.
+      Requested at width 900 rather than the 1200 the single photo used:
+      that is the width the hero asks for, so the nine URLs are the nine
+      the hero already fetched and the band adds no download at all.
+
+      alt="" for the same reason the hero's are empty -- the row below is
+      nine links that each carry the style's name in both text and alt,
+      so naming them again here would read the collection out twice.
+
+      The scale corrections come with them. Cover crops rather than fits,
+      but it does not change that the watch is shot at nine sizes, and a
+      swap that lands on a different-sized watch is exactly the jump the
+      hero was fixed for -- more visible here, at this size.
+    {%- endcomment -%}
+    <div class="wt-tagd__media">{% if tagd_col.products.size > 0 %}{% for product in tagd_col.products limit: 9 %}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == product.handle -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-tagd__img wt-tagd__img--switch wt-tagd__img--{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>
   </div>
-  {% assign tagd_col = collections['tagd'] %}
   <div class="wt-tagd__row">
     {% for product in tagd_col.products limit: 9 %}
     <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
@@ -819,10 +835,11 @@
      .wt-play__img is deliberately NOT here: it pads 10%, not 8%.
      .wt-knead__img is not here either: it fills with object-fit
      cover, not contain. Nor is .wt-knead__tile-img: the character
-     art arrives pre-framed, so it pads 0. */
+     art arrives pre-framed, so it pads 0. Nor .wt-tagd__img, which
+     covers its panel -- .wt-tagd__card-img, the thumbnail of the same
+     photograph, still fits and pads and so is still here. */
   .wt-new__img,
   .wt-flavour__img,
-  .wt-tagd__img,
   .wt-tagd__card-img,
   .wt-bubble__img {
     position: absolute;
@@ -1264,6 +1281,76 @@
     overflow: hidden;
     background: var(--wt-ink);
     aspect-ratio: 4/3;
+  }
+
+  /* Cover, where every other photo in this stylesheet that sits on a
+     panel is contained. The photos are square and the panel is 4/3, so
+     fitting one left a third of the panel's width as bare --wt-ink
+     either side of a small white square. Covering fills it: the crop
+     takes about 12% off the top and bottom of the square, which is
+     strap rather than watch -- the straps already run off the corners
+     of the frame -- and the panel's ink stops showing at all.
+
+     Which is why the ink stays on .wt-tagd__media above rather than
+     coming out: it is what the corners paint against while the nine
+     photos decode, and what the fallback single photo still sits on. */
+  .wt-tagd__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---------- tag'd: hover preview ---------- */
+  /* Hovering a style in the row shows it in the panel. Done in CSS
+     rather than through the hero's switcher because there is no state
+     to keep: the hero's pills have to tell a hover apart from a click,
+     since a click there picks a style and has to survive the pointer
+     leaving, but a click here is a link and just goes to the product.
+     So the pointer is the whole of it, and :has lets the panel read a
+     row that comes after it in the DOM.
+
+     Index-keyed like the hero's slides, and fragile the same way -- a
+     tenth style needs a tenth pair -- but harmless if the collection is
+     reordered: nth-child(n) and --n both count the same collection in
+     the same order, so they move together. */
+  .wt-tagd__img--switch {
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+
+  .wt-tagd__img--0 {
+    opacity: 1;
+  }
+
+  /* Gated on a real pointer. iOS treats the first tap on something with
+     hover styles as the hover and the second as the click, which would
+     cost the row's links a tap for a preview a touch device cannot see
+     the point of. Keyboards come with pointers, so :focus-visible is
+     inside the gate too and still reaches the people who need it. */
+  @media (hover: hover) {
+    .wt-tagd:has(.wt-tagd__card:is(:hover, :focus-visible)) .wt-tagd__img--0 {
+      opacity: 0;
+    }
+
+    .wt-tagd:has(.wt-tagd__card:nth-child(1):is(:hover, :focus-visible)) .wt-tagd__img--0,
+    .wt-tagd:has(.wt-tagd__card:nth-child(2):is(:hover, :focus-visible)) .wt-tagd__img--1,
+    .wt-tagd:has(.wt-tagd__card:nth-child(3):is(:hover, :focus-visible)) .wt-tagd__img--2,
+    .wt-tagd:has(.wt-tagd__card:nth-child(4):is(:hover, :focus-visible)) .wt-tagd__img--3,
+    .wt-tagd:has(.wt-tagd__card:nth-child(5):is(:hover, :focus-visible)) .wt-tagd__img--4,
+    .wt-tagd:has(.wt-tagd__card:nth-child(6):is(:hover, :focus-visible)) .wt-tagd__img--5,
+    .wt-tagd:has(.wt-tagd__card:nth-child(7):is(:hover, :focus-visible)) .wt-tagd__img--6,
+    .wt-tagd:has(.wt-tagd__card:nth-child(8):is(:hover, :focus-visible)) .wt-tagd__img--7,
+    .wt-tagd:has(.wt-tagd__card:nth-child(9):is(:hover, :focus-visible)) .wt-tagd__img--8 {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wt-tagd__img--switch {
+      transition: none;
+    }
   }
 
   /* ---------- tag'd: collection row ---------- */
