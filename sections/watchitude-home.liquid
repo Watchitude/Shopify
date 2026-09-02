@@ -448,6 +448,19 @@
     display: inline;
   }
 
+  /* The floor under the tag'd slides, for the reason the #tagd band
+     gives at .wt-tagd__img--switch: without it the mist behind this
+     card shows through the middle of every cross-fade and the picture
+     greys for an instant.
+
+     Only --tagd-0, and only because these cover. The flavour and
+     bubble slides in this same switcher are contained and do not fill
+     their panels, so a floor under them would show around the edges of
+     the slide fading in above. They keep the plain cross-fade. */
+  .wt-hero__img--tagd-0 {
+    opacity: 1;
+  }
+
   /* One pair per slide, capped at the nine the loops render -- nine
      being the whole tag'd collection today. An index cannot be matched
      between parent and child in CSS the way a name can, and Liquid is
@@ -1499,11 +1512,26 @@
      cost the row's links a tap for a preview a touch device cannot see
      the point of. Keyboards come with pointers, so :focus-visible is
      inside the gate too and still reaches the people who need it. */
-  @media (hover: hover) {
-    .wt-tagd:has(.wt-tagd__card:is(:hover, :focus-visible)) .wt-tagd__img--0 {
-      opacity: 0;
-    }
+  /* The first photo is never switched off, and that is what stops the
+     panel flashing through a swap. Two photos cross-fading on opacity
+     are each about half transparent in the middle of it, so together
+     they cover about three quarters and the ink behind them shows in
+     the quarter that is left -- a grey wash across the picture, once
+     per hover.
 
+     Leaving the first one at full opacity underneath gives the stack a
+     floor. The hovered photo fades in over it rather than into a gap,
+     and because every one of these covers the panel outright there is
+     never a moment when anything but photograph is visible. The
+     hovered photo paints later in DOM order, so it wins once it is
+     opaque, and the first photo is only ever seen when it is the one
+     being hovered.
+
+     This works because the tag'd photos cover. It would not work for
+     the contained photos elsewhere in the hero, which do not fill
+     their panels -- a floor under those would stay visible around the
+     edges of whatever faded in on top. */
+  @media (hover: hover) {
     .wt-tagd:has(.wt-tagd__card:nth-child(1):is(:hover, :focus-visible)) .wt-tagd__img--0,
     .wt-tagd:has(.wt-tagd__card:nth-child(2):is(:hover, :focus-visible)) .wt-tagd__img--1,
     .wt-tagd:has(.wt-tagd__card:nth-child(3):is(:hover, :focus-visible)) .wt-tagd__img--2,
