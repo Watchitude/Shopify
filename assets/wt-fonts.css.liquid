@@ -1,0 +1,63 @@
+/* ============================================================
+   Archivo and Jost, served from the Shopify CDN.
+
+   These used to be two link tags to fonts.googleapis.com, one pair
+   copied into sections/watchitude-home.liquid and another into
+   sections/watchitude-header.liquid. Three things were wrong with
+   that: the request went to a third party on every page load, it was
+   duplicated in two files that could drift apart, and because both
+   copies lived in section files the tags rendered in the document
+   body -- so the font CSS was fetched late and text painted in the
+   fallback first. This file is loaded from the document head in
+   layout/theme.liquid instead, once, for every page.
+
+   No angle brackets anywhere in this comment on purpose: theme-check
+   parses a .css.liquid file for markup as well as Liquid, and a bare
+   head or body written as a tag in prose reads to it as an element
+   that is opened and never closed.
+
+   One file per family, not one per weight. Both faces are variable
+   fonts: Google serves a single woff2 covering the whole 100-900
+   weight axis, and the four Archivo weights in the old request were
+   four @font-face rules pointing at that same file. Declaring the
+   axis once gets every weight the theme uses -- Archivo at 400, 500,
+   600 and 700, Jost at 700 -- out of 61KB total, and any weight added
+   later comes free.
+
+   Latin subset only, which is the range the old request resolved to
+   as well. It covers Latin-1, the general punctuation block the copy
+   leans on for em dashes and curly quotes, and the currency and
+   arrow marks. A language needing Cyrillic, Greek or Vietnamese
+   would need its subset added here.
+
+   font-display: swap, so text paints immediately in the fallback and
+   swaps when the face arrives rather than hanging invisible. The
+   fallback stacks are on --wt-font-body and --wt-font-display in
+   sections/watchitude-home.liquid, chosen to be close in metrics.
+
+   Both families are SIL Open Font License 1.1, per the METADATA.pb
+   in google/fonts. The license travels with the font: if these are
+   ever shipped anywhere but this theme, the OFL text goes with them.
+   ============================================================ */
+
+@font-face {
+  font-display: swap;
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('{{ "wt-archivo-var-latin.woff2" | asset_url }}') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('{{ "wt-jost-var-latin.woff2" | asset_url }}') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
