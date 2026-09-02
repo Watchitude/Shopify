@@ -1225,11 +1225,12 @@
      shape #bubble already had, so every rule it needs is one it joins
      rather than restates -- head, eyebrow, title, lead, cards, card,
      media, img, body, row, name, price, copy and cta, plus the meta
-     line it borrows from the flavour cards. What is left is the two
-     ways it differs: it keeps the page white where #bubble carries a
-     mist tint, because the two bands are neighbours and a second tint
-     would run them together, and it takes the deeper top padding the
-     other headed bands use.
+     line it borrows from the flavour cards. What is left is the
+     deeper top padding the other headed bands use, and the buttons
+     lining up below. This band was written white while #bubble still
+     carried a mist tint, on the grounds that two tinted neighbours
+     would run together; #bubble is white now too, so the two bands
+     differ in nothing but their content.
 
      Compound selector so the padding override outranks .wt-section on
      specificity, not on source order.
@@ -1277,9 +1278,22 @@
 
   /* ============================================================
      "Endless bubble wrap" band  (#bubble)
-     Full-bleed tint: the <section> spans the full width and carries
-     the background, while .wt-bubble__inner holds the usual
-     .wt-section measure and padding.
+     White, like every other product band on the page. It used to be a
+     full-bleed mist tint -- the <section> spanning the full width and
+     carrying the background, .wt-bubble__inner holding the usual
+     .wt-section measure and padding -- which left it the only product
+     band with a ground of its own.
+
+     Its spacing came off with the tint. 64px of padding top and
+     bottom plus a 64px margin above were what kept the cards clear of
+     the tint's edges; on white they were just a hole. The band now
+     takes the same 72px top and default bottom as #tagd, #play and
+     #blocks, so it sits in the rhythm the other headed bands keep.
+
+     The two-element split is what is left over. .wt-bubble paints
+     nothing now and stays only to carry the swatch tokens; collapsing
+     it into one element, the way #tagd and #blocks are single
+     elements, is a tidy-up this change did not need to make.
 
      The padding override is written as .wt-section.wt-bubble__inner
      so it outranks .wt-section on specificity, not on source order.
@@ -1294,14 +1308,10 @@
        same body width that six dots used to fill on one line. */
     --wt-bubble-swatch-img-size: 22px;
     --wt-bubble-swatch-img-gap: 6px;
-
-    background: var(--wt-mist);
-    margin-top: 64px;
   }
 
   .wt-section.wt-bubble__inner {
-    --wt-section-pad-top: 64px;
-    --wt-section-pad-bottom: 64px;
+    --wt-section-pad-top: 72px; /* .wt-section default is 32px */
   }
 
   .wt-blocks__head,
@@ -2059,7 +2069,6 @@
 
     .wt-section.wt-bubble__inner {
       --wt-section-pad-top: 40px;
-      --wt-section-pad-bottom: 40px;
     }
 
     .wt-section.wt-newsletter__inner {
