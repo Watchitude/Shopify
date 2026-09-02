@@ -64,9 +64,10 @@
         which is the right default for a new photo shot to any size --
         it just will not be corrected until someone measures it.
       {%- endcomment -%}
+      {%- assign tagd_cutouts = 'milky-way,army-camo,master-builder,score,heart-balloons,wings,pink-icing,unicorn-love,over-the-rainbow' | split: ',' -%}
       {%- assign tagd_scales = 'milky-way-tag-d-2-by-watchitude:1.049,army-camo-tag-d-2-by-watchitude:1,master-builder-tag-d-2-by-watchitude:1.069,score-tag-d-2-by-watchitude:1.071,heart-balloons-tag-d-2-by-watchitude:1.069,wings-tag-d-2-by-watchitude:1.082,pink-icing-tag-d-2-by-watchitude:1.086,unicorn-love-tag-d-2-by-watchitude:1.069,over-the-rainbow-tag-d-2-by-watchitude:1.045' | split: ',' -%}
       <article class="wt-hero__card wt-hero__card--dark" data-wt-option="0">
-        <div class="wt-hero__media wt-hero__media--dim">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == product.handle -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
+        <div class="wt-hero__media">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == product.handle -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}{%- assign tagd_slug = product.handle | split: '-tag-d-2' | first -%}{% if tagd_cutouts contains tagd_slug %}<img src="{{ 'wt-tagd-' | append: tagd_slug | append: '.png' | asset_url }}" width="494" height="716" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--cut wt-hero__img--tagd-{{ forloop.index0 }}">{% else %}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endif %}{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Works with Apple AirTag</p>
           {%- comment -%}
@@ -368,8 +369,29 @@
     inset: 0;
   }
 
-  .wt-hero__media--dim {
-    opacity: 0.85;
+  /* Cut-outs, not photographs. The tag'd slides are transparent PNGs of
+     the watch with nothing behind it, so the card's ink is the
+     background by design and there is no photo edge to hide -- which
+     is what finally makes the panel's zoom a free choice rather than
+     something pinned to whatever cover happens to need.
+
+     Contained, not covering: cover would crop a cut-out the way it
+     cropped the square shots, which is the problem we came here to
+     solve. Held right of centre so the copy down the left side has
+     clear ink under it, and inset a little top and bottom so the
+     watch does not touch the card edge.
+
+     They come from the same source as the catalogue shots but are
+     pixel-registered with each other, so nothing moves between styles
+     and none of them needs the size correction the square shots do.
+
+     Compound selector so it outranks .wt-hero__img's cover on
+     specificity, not on source order -- this rule sits above that one,
+     where .wt-hero__media--dim used to be. */
+  .wt-hero__img.wt-hero__img--cut {
+    object-fit: contain;
+    object-position: 86% 50%;
+    padding: 22px 0;
   }
 
   .wt-hero__img {
@@ -448,18 +470,14 @@
     display: inline;
   }
 
-  /* The floor under the tag'd slides, for the reason the #tagd band
-     gives at .wt-tagd__img--switch: without it the mist behind this
-     card shows through the middle of every cross-fade and the picture
-     greys for an instant.
-
-     Only --tagd-0, and only because these cover. The flavour and
-     bubble slides in this same switcher are contained and do not fill
-     their panels, so a floor under them would show around the edges of
-     the slide fading in above. They keep the plain cross-fade. */
-  .wt-hero__img--tagd-0 {
-    opacity: 1;
-  }
+  /* No floor under the tag'd slides any more. It was there because
+     the square shots covered the card, so a cross-fade that dipped
+     below full opacity let the card show through as a wash. A cut-out
+     covers nothing: the card is meant to show around it, and the only
+     thing a floor would do is hold a second watch behind the first and
+     bleed Milky Way's bands into every swap. The slides are
+     registered, so a plain cross-fade moves nothing and reads as one
+     band pattern dissolving into another. */
 
   /* One pair per slide, capped at the nine the loops render -- nine
      being the whole tag'd collection today. An index cannot be matched
