@@ -84,7 +84,7 @@
             now carries the job this link used to do.
           {%- endcomment -%}
           <h2 class="wt-hero__card-title"><a href="{{ tagd_hero_products.first.url | default: tagd_collection_url }}" class="wt-hero__card-link" data-wt-card-link>tag'd 2</a></h2>
-          <p class="wt-hero__card-copy">A slap watch with a pocket &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</p>
+          <p class="wt-hero__card-copy">A kids' watch with an AirTag pocket &mdash; {{ p_tagd.price | money_without_trailing_zeros | default: '$30' }}</p>
           {% if tagd_hero_products.size > 1 %}<p class="wt-hero__style">{%- for product in tagd_hero_products limit: 9 -%}<span class="wt-hero__style-word wt-hero__style-word--{{ forloop.index0 }}">{{ product.title | split: ' - ' | first | escape }}</span>{%- endfor -%}</p>
           {%- comment -%}
             Dots and button on the card's last line, which is why they
@@ -211,10 +211,10 @@
     <div>
       <p class="wt-tagd__eyebrow">Works with Apple AirTag</p>
       <h2 class="wt-tagd__title">tag'd 2</h2>
-      <p class="wt-tagd__body">A slap watch with a pocket for an AirTag, so you can find it on the bus, at school, or wherever it ended up. Kids set the time themselves. AirTag sold separately.</p>
+      <p class="wt-tagd__body">A kids' watch with a pocket for an AirTag, so you can find it on the bus, at school, or wherever it ended up. Kids set the time themselves. AirTag sold separately.</p>
       <div class="wt-tagd__steps">
         <div class="wt-tagd__step"><span class="wt-tagd__step-num">1</span><span class="wt-tagd__step-text">Drop an AirTag into the pocket on the band.</span></div>
-        <div class="wt-tagd__step"><span class="wt-tagd__step-num">2</span><span class="wt-tagd__step-text">Slap it on. One size, no buckles, no help needed.</span></div>
+        <div class="wt-tagd__step"><span class="wt-tagd__step-num">2</span><span class="wt-tagd__step-text">Clasp it on. One size fits all, in soft silicone.</span></div>
         <div class="wt-tagd__step"><span class="wt-tagd__step-num wt-tagd__step-num--accent">3</span><span class="wt-tagd__step-text">Find it in the Find My app when it goes missing.</span></div>
       </div>
       <div class="wt-tagd__actions">
