@@ -25,7 +25,7 @@
       card that opens on red. It matches the hero's wording for the same
       product. The 2Go card does the same, for the same reason.
     {%- endcomment -%}
-    {%- assign full_default = 'wt-bubble-full-' | append: bubble_full_colours.first | append: '.png' | asset_url -%}
+    {%- assign full_default = 'wt-bubble-full-' | append: bubble_full_colours.first | append: '.jpg' | asset_url -%}
     <div class="wt-bubble__media"><img src="{{ full_default }}" width="1200" height="1200" alt="Endless Bubble Wrap, full size" class="wt-bubble__img" data-wt-photo-default="{{ full_default }}"></div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
@@ -55,7 +55,7 @@
         {%- for colour in bubble_full_colours -%}
         <span
           class="wt-bubble__swatch wt-bubble__swatch--{{ colour }}"
-          data-wt-photo="{{ 'wt-bubble-full-' | append: colour | append: '.png' | asset_url }}"
+          data-wt-photo="{{ 'wt-bubble-full-' | append: colour | append: '.jpg' | asset_url }}"
         ></span>
         {%- endfor -%}
       </div>
@@ -79,7 +79,7 @@
       spelled out here because the row builds its names from a 1..18
       range and there is no first name to ask for.
     {%- endcomment -%}
-    {%- assign twogo_default = 'wt-2go-bag-01.png' | asset_url -%}
+    {%- assign twogo_default = 'wt-2go-bag-01.jpg' | asset_url -%}
     <div class="wt-bubble__media"><img src="{{ twogo_default }}" width="1200" height="1200" alt="Endless Bubble 2Go blind bag" class="wt-bubble__img" data-wt-photo-default="{{ twogo_default }}"></div>
     <div class="wt-bubble__body">
       <div class="wt-bubble__row">
@@ -101,11 +101,17 @@
         the same thing the row said before it could be hovered.
 
         wt-2go-bag-NN is the same colour as wt-2go-NN by construction --
-        the pairs were matched off the packaging, and NN is the only
-        thing tying them together, so the two sets have to be renamed
-        together. Their source files, in order 01..18:
-        1116 1119 1125 1123 1129 1132 1134 1135 1127
-        1120 1121 1130 1117 1133 1131 1118 1124 1122
+        NN is the only thing tying them together, so the two sets have
+        to be renamed together. Both come from the white-web shoot of
+        2026-09-04, which photographed all 18 colours three times: hung
+        at an angle, flat front-on, and macro. The card takes the
+        front-on frame, the chip takes the macro of the same colour, and
+        the colours were matched to the NN they replace by eye. The
+        source numbers in that set, in order 01..18:
+        card  035 021 031 032 030 022 025 024 019
+              033 026 023 034 028 036 027 029 020
+        chip  050 051 040 041 053 046 049 039 045
+              038 048 043 052 054 037 042 047 044
       {%- endcomment -%}
       <div
         class="wt-bubble__swatches wt-bubble__swatches--images"
@@ -116,13 +122,13 @@
         {%- for i in (1..18) -%}
           {%- assign n = i | prepend: '0' | slice: -2, 2 -%}
           <img
-            src="{{ 'wt-2go-' | append: n | append: '.png' | asset_url }}"
+            src="{{ 'wt-2go-' | append: n | append: '.jpg' | asset_url }}"
             width="96"
             height="96"
             alt=""
             loading="lazy"
             class="wt-bubble__swatch"
-            data-wt-photo="{{ 'wt-2go-bag-' | append: n | append: '.png' | asset_url }}"
+            data-wt-photo="{{ 'wt-2go-bag-' | append: n | append: '.jpg' | asset_url }}"
           >
         {%- endfor -%}
       </div>

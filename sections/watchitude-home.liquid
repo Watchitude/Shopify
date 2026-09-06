@@ -19,8 +19,8 @@
       </div>
     </article>
     <div class="wt-hero__side">
-      <article class="wt-hero__card" data-wt-option="full">
-        <div class="wt-hero__media"><img src="{{ 'p15-x1200.png' | asset_url }}" width="1200" height="1200" alt="Endless Bubble Wrap, full size" class="wt-hero__img wt-hero__img--switch wt-hero__img--full"><img src="{{ 'p14-x1116.png' | asset_url }}" width="1200" height="1200" alt="Endless Bubble 2Go blind bag" class="wt-hero__img wt-hero__img--switch wt-hero__img--2go"></div>
+      <article class="wt-hero__card wt-hero__card--photo" data-wt-option="full">
+        <div class="wt-hero__media"><img src="{{ 'wt-bubble-full-pink.jpg' | asset_url }}" width="1200" height="1200" alt="Endless Bubble Wrap, full size" class="wt-hero__img wt-hero__img--switch wt-hero__img--full"><img src="{{ 'wt-2go-bag-01.jpg' | asset_url }}" width="1200" height="1200" alt="Endless Bubble 2Go blind bag" class="wt-hero__img wt-hero__img--switch wt-hero__img--2go"></div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Never runs out</p>
           <h2 class="wt-hero__card-title"><a href="{{ routes.collections_url }}/endless-bubble" class="wt-hero__card-link">endless bubble</a></h2>
@@ -441,10 +441,11 @@
     transform: scale(0.9);
   }
 
-  /* Both bubble sizes are square transparent cut-outs, so the shared
+  /* Both bubble sizes are square photos on a white sweep, so the shared
      cover would crop the product's top and bottom against a landscape
-     card. Contain fits each one whole; the card's mist shows through
-     the transparency behind it. */
+     card. Contain fits each one whole, and the card is white behind
+     them (see .wt-hero__card--photo) so the sweep and the card are the
+     same ground -- there is no edge where one becomes the other. */
   .wt-hero__img--full,
   .wt-hero__img--2go {
     object-fit: contain;
@@ -778,8 +779,46 @@
     text-decoration: none;
   }
 
+  /* The cut-outs are dark watches on a transparent PNG, and flat
+     --wt-ink left them sitting on a black rectangle with no depth. Two
+     layers instead: a brand-red bloom rising from the bottom-left
+     corner, over an ink ramp that is warmest at the top-left and coldest
+     at the bottom-right, so the bloom has somewhere to fade into.
+
+     The bloom is deliberately parked at 12% from the left -- the watch
+     sits centre-right, so the red reads as light behind it rather than
+     a wash over it. Darkest point is the bottom-right, which is where
+     --wt-hero-scrim-soft is heaviest, so the overlay copy keeps the
+     same contrast it had on flat black.
+
+     Three stops rather than two: a straight fade from the hot core died
+     back to ink about a third of the way across, which is what made the
+     first pass read as a small glow in a corner. The middle stop holds
+     the bloom at half strength out to 40%, so it crosses most of the
+     card before it lets go. */
   .wt-hero__card.wt-hero__card--dark {
-    background: var(--wt-ink);
+    background:
+      radial-gradient(
+        155% 120% at 12% 100%,
+        #B0151D 0%,
+        rgba(150, 18, 25, 0.55) 40%,
+        rgba(110, 16, 22, 0) 84%
+      ),
+      linear-gradient(
+        155deg,
+        #23161A 0%,
+        #101012 58%,
+        #0A0A0C 100%
+      );
+  }
+
+  /* The one card whose art is photographed rather than cut out. Its
+     images carry the studio's white sweep with them, so the card has to
+     be white too: --wt-mist behind a white photo reads as a grey mat
+     round a white square, which is the seam contain would otherwise
+     put on every side. */
+  .wt-hero__card.wt-hero__card--photo {
+    background: #fff;
   }
 
   /* The bubble card stopped being one big <a> when the pills went into
