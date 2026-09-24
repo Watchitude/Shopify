@@ -1,4 +1,4 @@
-{% assign b_full = all_products['endless-bubble-wrap-dark-blue'] %}
+{% assign b_full = all_products['endless-bubble-wrap'] %}{% if b_full.id == blank %}{% assign b_full = all_products['endless-bubble-wrap-dark-blue'] %}{% endif %}
 {% assign b_2go = all_products['endless-bubble-2go-blind-bag'] %}
 {% assign bubble_collection_url = routes.collections_url | append: '/endless-bubble' %}
 {%- comment -%}

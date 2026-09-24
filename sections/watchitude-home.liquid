@@ -1,4 +1,4 @@
-{% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_ice_blocks = all_products['ice-cream-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
+{% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_ice_blocks = all_products['ice-cream-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap'] %}{% if p_bubble.id == blank %}{% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %}{% endif %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['tagd-2'] %}{% if p_tagd.id == blank %}{% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %}{% endif %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
     <article class="wt-hero__feature" data-wt-option="sushi">
       <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% endif %}{% if ice_image != blank %}<img src="{{ ice_image | image_url: width: 1600 }}" width="{{ ice_image.width }}" height="{{ ice_image.height }}" alt="Knead That Ice Cream" class="wt-hero__img wt-hero__img--switch wt-hero__img--ice">{% endif %}{% if burger_image != blank %}<img src="{{ burger_image | image_url: width: 1600 }}" width="{{ burger_image.width }}" height="{{ burger_image.height }}" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% else %}<img src="{{ 'p03-x228.jpg' | asset_url }}" width="342" height="332" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% endif %}</div>
@@ -40,7 +40,15 @@
         and the cap the product row in #tagd uses; the CSS that shows a
         slide is written out to match it.
       {%- endcomment -%}
-      {% assign tagd_hero_products = collections['tagd'].products %}
+      {%- comment -%}
+        Tag'd 2 is one product with a Design option per watch. The loops
+        below read only url, title and featured_image, which a variant
+        has as well as a product, so the hero and #tagd run over the
+        variants unchanged. The collection is the fallback for the one
+        style per product the store had before the merge.
+      {%- endcomment -%}
+      {% assign tagd_master = all_products['tagd-2'] %}
+      {% if tagd_master.variants.size > 1 %}{% assign tagd_hero_products = tagd_master.variants %}{% else %}{% assign tagd_hero_products = collections['tagd'].products %}{% endif %}
       {% assign tagd_collection_url = routes.collections_url | append: '/tagd' %}
       {%- comment -%}
         The nine tag'd photos are all 1000x1000 with the watch dead
@@ -57,17 +65,18 @@
         the way the sushi shot's 0.9 does deliberately. The straps run
         off the corners anyway, so the extra crop costs nothing.
 
-        Keyed on handle, not on position: the slide CSS below has to go
-        by index and breaks if the collection is reordered, but these
+        Keyed on style -- the handle before the merge, the Design
+        value after, both reduced to the same slug -- not on position:
+        the slide CSS below has to go by index and breaks if the collection is reordered, but these
         numbers belong to particular photographs and would be actively
         wrong on the wrong one. A style not listed here scales by 1,
         which is the right default for a new photo shot to any size --
         it just will not be corrected until someone measures it.
       {%- endcomment -%}
       {%- assign tagd_cutouts = 'milky-way,army-camo,master-builder,score,heart-balloons,wings,pink-icing,unicorn-love,over-the-rainbow' | split: ',' -%}
-      {%- assign tagd_scales = 'milky-way-tag-d-2-by-watchitude:1.049,army-camo-tag-d-2-by-watchitude:1,master-builder-tag-d-2-by-watchitude:1.069,score-tag-d-2-by-watchitude:1.071,heart-balloons-tag-d-2-by-watchitude:1.069,wings-tag-d-2-by-watchitude:1.082,pink-icing-tag-d-2-by-watchitude:1.086,unicorn-love-tag-d-2-by-watchitude:1.069,over-the-rainbow-tag-d-2-by-watchitude:1.045' | split: ',' -%}
+      {%- assign tagd_scales = 'milky-way:1.049,army-camo:1,master-builder:1.069,score:1.071,heart-balloons:1.069,wings:1.082,pink-icing:1.086,unicorn-love:1.069,over-the-rainbow:1.045' | split: ',' -%}
       <article class="wt-hero__card wt-hero__card--dark" data-wt-option="0">
-        <div class="wt-hero__media">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == product.handle -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}{%- assign tagd_slug = product.handle | split: '-tag-d-2' | first -%}{% if tagd_cutouts contains tagd_slug %}<img src="{{ 'wt-tagd-' | append: tagd_slug | append: '.png' | asset_url }}" width="494" height="716" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--cut wt-hero__img--tagd-{{ forloop.index0 }}">{% else %}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endif %}{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
+        <div class="wt-hero__media">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}{%- if product.handle -%}{%- assign tagd_slug = product.handle | split: '-tag-d-2' | first -%}{%- else -%}{%- assign tagd_slug = product.title | handleize -%}{%- endif -%}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == tagd_slug -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}{% if tagd_cutouts contains tagd_slug %}<img src="{{ 'wt-tagd-' | append: tagd_slug | append: '.png' | asset_url }}" width="494" height="716" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--cut wt-hero__img--tagd-{{ forloop.index0 }}">{% else %}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-hero__img wt-hero__img--switch wt-hero__img--tagd-{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endif %}{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 900 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-hero__img">{% endif %}</div>
         <div class="wt-hero__card-overlay">
           <p class="wt-hero__eyebrow">Works with Apple AirTag</p>
           {%- comment -%}
@@ -207,7 +216,6 @@
     {% render 'wt-bubble' %}
   </div>
 </section> <section id="tagd" class="wt-section wt-tagd">
-  {% assign tagd_col = collections['tagd'] %}
   <div class="wt-tagd__grid">
     <div>
       <p class="wt-tagd__eyebrow">Works with Apple AirTag</p>
@@ -238,10 +246,10 @@
       swap that lands on a different-sized watch is exactly the jump the
       hero was fixed for -- more visible here, at this size.
     {%- endcomment -%}
-    <div class="wt-tagd__media">{% if tagd_col.products.size > 0 %}{% for product in tagd_col.products limit: 9 %}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == product.handle -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-tagd__img wt-tagd__img--switch wt-tagd__img--{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>
+    <div class="wt-tagd__media">{% if tagd_hero_products.size > 0 %}{% for product in tagd_hero_products limit: 9 %}{%- if product.handle -%}{%- assign tagd_slug = product.handle | split: '-tag-d-2' | first -%}{%- else -%}{%- assign tagd_slug = product.title | handleize -%}{%- endif -%}{%- assign tagd_scale = '1' -%}{%- for pair in tagd_scales -%}{%- assign kv = pair | split: ':' -%}{%- if kv[0] == tagd_slug -%}{%- assign tagd_scale = kv[1] -%}{%- endif -%}{%- endfor -%}<img src="{{ product.featured_image | image_url: width: 900 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="" class="wt-tagd__img wt-tagd__img--switch wt-tagd__img--{{ forloop.index0 }}"{% unless tagd_scale == '1' %} style="transform: scale({{ tagd_scale }})"{% endunless %}>{% endfor %}{% elsif p_tagd.featured_image %}<img src="{{ p_tagd.featured_image | image_url: width: 1200 }}" width="{{ p_tagd.featured_image.width }}" height="{{ p_tagd.featured_image.height }}" alt="{{ p_tagd.title }}" class="wt-tagd__img">{% endif %}</div>
   </div>
   <div class="wt-tagd__row">
-    {% for product in tagd_col.products limit: 9 %}
+    {% for product in tagd_hero_products limit: 9 %}
     <a href="{{ product.url }}" class="wt-tagd__card"><div class="wt-tagd__card-media"><img src="{{ product.featured_image | image_url: width: 500 }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" alt="{{ product.title }}" class="wt-tagd__card-img"></div><span class="wt-tagd__card-name">{{ product.title | split: ' - ' | first }}</span></a>
     {% endfor %}
   </div>
