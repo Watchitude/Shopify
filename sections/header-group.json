@@ -15,8 +15,8 @@
       "type": "watchitude-header",
       "settings": {
         "logo": "shopify://shop_images/WatLogo.png",
-        "show_announcement": true,
-        "announcement_text": "Orders over $900000 ship free"
+        "show_announcement": false,
+        "announcement_text": "Orders over $50 ship free"
       }
     }
   },
