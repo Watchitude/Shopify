@@ -1,4 +1,4 @@
-{% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_ice_blocks = all_products['ice-cream-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap'] %}{% if p_bubble.id == blank %}{% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %}{% endif %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['tagd-2'] %}{% if p_tagd.id == blank %}{% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %}{% endif %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
+{% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ice = all_products['knead-that-ice-cream-chunky-squishy-plush-blind-box'] %}{% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_ice_blocks = all_products['ice-cream-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap'] %}{% if p_bubble.id == blank %}{% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %}{% endif %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['tagd-2'] %}{% if p_tagd.id == blank %}{% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %}{% endif %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
     <article class="wt-hero__feature" data-wt-option="sushi">
       <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% endif %}{% if ice_image != blank %}<img src="{{ ice_image | image_url: width: 1600 }}" width="{{ ice_image.width }}" height="{{ ice_image.height }}" alt="Knead That Ice Cream" class="wt-hero__img wt-hero__img--switch wt-hero__img--ice">{% endif %}{% if burger_image != blank %}<img src="{{ burger_image | image_url: width: 1600 }}" width="{{ burger_image.width }}" height="{{ burger_image.height }}" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% else %}<img src="{{ 'p03-x228.jpg' | asset_url }}" width="342" height="332" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% endif %}</div>
@@ -10,9 +10,9 @@
           <a href="{{ p_sushi.url | default: knead_collection_url }}" class="wt-btn">Shop mystery boxes</a>
           <div class="wt-hero__pills">
             <a href="{{ knead_collection_url }}" class="wt-hero__pill wt-hero__pill--active" data-wt-option="sushi">Sushi &mdash; available now</a>
-            {%- comment -%} Ice cream has no art of its own to fall back on, so with the setting empty it stays the plain, inert span it was: there is nothing to switch to. {%- endcomment -%}
-            {% if ice_image != blank %}<button type="button" class="wt-hero__pill" data-wt-option="ice">Ice cream &mdash; Sept&nbsp;15</button>{% else %}<span class="wt-hero__pill">Ice cream &mdash; Sept&nbsp;15</span>{% endif %}
-            <button type="button" class="wt-hero__pill" data-wt-option="burger">Burger &mdash; Oct&nbsp;15</button>
+            {%- comment -%} Ice cream is on sale, so like Sushi it is a real link; with no art set it drops the switcher attribute, as there is nothing to switch to. {%- endcomment -%}
+            <a href="{{ p_ice.url | default: knead_collection_url }}" class="wt-hero__pill"{% if ice_image != blank %} data-wt-option="ice"{% endif %}>Ice cream &mdash; available now</a>
+            <button type="button" class="wt-hero__pill" data-wt-option="burger">Burger &mdash; Oct&nbsp;21</button>
           </div>
           <span class="wt-hero__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }} each</span>
         </div>
@@ -168,7 +168,6 @@
   <h3 class="wt-flavour__heading">Pick a flavour</h3>
   <div class="wt-flavour__grid">
     <a href="{{ p_sushi.url | default: knead_collection_url }}" class="wt-flavour__card"><div class="wt-flavour__media">{% if p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 700 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-flavour__img">{% endif %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Sushi &mdash; Season 2</span><span class="wt-flavour__price">{{ p_sushi.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">9 styles &middot; 1 rare</span></a>
-    {% assign p_ice = all_products['knead-that-ice-cream-chunky-squishy-plush-blind-box'] %}
     <a href="{{ p_ice.url | default: knead_collection_url }}" class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.ice_image, label: 'Ice cream art', fit: 'contain' %}</div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Ice Cream</span><span class="wt-flavour__price">{{ p_ice.price | money_without_trailing_zeros | default: '$20' }}</span></div><span class="wt-flavour__meta">Available now</span></a>
     <div class="wt-flavour__card"><div class="wt-flavour__media">{% render 'wt-img', img: section.settings.burger_image, label: 'Burger art', fit: 'contain' %}<span class="wt-flavour__badge">Oct 21</span></div><div class="wt-flavour__row"><span class="wt-flavour__name">Knead That Burger</span><span class="wt-flavour__price">$20</span></div><span class="wt-flavour__meta">Coming soon</span></div>
   </div>
@@ -2396,8 +2395,8 @@
     document.addEventListener('mouseout', release);
     document.addEventListener('focusout', release);
 
-    /* Touch has no hover to switch on, so the tap has to do it. Sushi is a
-       real link to the collection and is left alone; every other pill is a
+    /* Touch has no hover to switch on, so the tap has to do it. Sushi and
+       ice cream are real links and are left alone; every other pill is a
        button with nowhere to go, so its default is swallowed -- on the
        bubble card that is also what keeps the tap off the card's own
        stretched link. */
