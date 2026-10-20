@@ -1,4 +1,13 @@
-{% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ice = all_products['knead-that-ice-cream-chunky-squishy-plush-blind-box'] %}{% assign p_burger = all_products['knead-that-burger-chunky-squishy-plush-blind-box'] %}{% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_ice_blocks = all_products['ice-cream-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap'] %}{% if p_bubble.id == blank %}{% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %}{% endif %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['tagd-2'] %}{% if p_tagd.id == blank %}{% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %}{% endif %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> <section id="top" class="wt-section wt-hero">
+{% assign p_sushi = all_products['knead-that-sushi-chunky-squishy-plush-blind-box'] %} {% assign p_ice = all_products['knead-that-ice-cream-chunky-squishy-plush-blind-box'] %}{% assign p_burger = all_products['knead-that-burger-chunky-squishy-plush-blind-box'] %}{% assign p_ckb = all_products['click-key-blocks'] %} {% assign p_sushi_blocks = all_products['sushi-blocks-2pk-blind-bag'] %} {% assign p_ice_blocks = all_products['ice-cream-blocks-2pk-blind-bag'] %} {% assign p_bubble = all_products['endless-bubble-wrap'] %}{% if p_bubble.id == blank %}{% assign p_bubble = all_products['endless-bubble-wrap-dark-blue'] %}{% endif %} {% assign p_2go = all_products['endless-bubble-2go-blind-bag'] %} {% assign p_tagd = all_products['tagd-2'] %}{% if p_tagd.id == blank %}{% assign p_tagd = all_products['milky-way-tag-d-2-by-watchitude'] %}{% endif %} {% assign knead_collection_url = routes.collections_url | append: '/knead-that' %} {% assign ice_image = section.settings.ice_image %} {% assign burger_image = section.settings.burger_image %} <div class="wt-home"> {%- comment -%} Black Friday band: on by itself for the sale window (shop time, US Eastern), matching the two automatic discounts. The setting can force it on for a preview, or off. {%- endcomment -%}{%- assign wt_now = 'now' | date: '%Y%m%d%H%M' | plus: 0 -%}{%- assign wt_sale_on = false -%}{%- if wt_now >= 202611200000 and wt_now <= 202612012359 -%}{%- assign wt_sale_on = true -%}{%- endif -%}{%- if section.settings.sale_banner == 'always' -%}{%- assign wt_sale_on = true -%}{%- elsif section.settings.sale_banner == 'never' -%}{%- assign wt_sale_on = false -%}{%- endif -%}{%- if wt_sale_on -%}
+<aside class="wt-sale" aria-label="Black Friday sale">
+  <div class="wt-sale__inner">
+    <p class="wt-sale__eyebrow">Black Friday &middot; through Cyber Monday, Dec 1</p>
+    <p class="wt-sale__title"><span>15% off everything.</span> <span>25% off orders $50+.</span></p>
+    <p class="wt-sale__note">Taken off automatically at checkout &mdash; no code needed.</p>
+    <a href="{{ routes.all_products_collection_url }}" class="wt-sale__btn">Shop the sale</a>
+  </div>
+</aside>
+{%- endif %} <section id="top" class="wt-section wt-hero">
   <div class="wt-hero__grid">
     <article class="wt-hero__feature" data-wt-option="sushi">
       <div class="wt-hero__media">{% if section.settings.hero_image != blank %}<img src="{{ section.settings.hero_image | image_url: width: 1600 }}" width="{{ section.settings.hero_image.width }}" height="{{ section.settings.hero_image.height }}" alt="Knead That Sushi" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% elsif p_sushi.featured_image %}<img src="{{ p_sushi.featured_image | image_url: width: 1600 }}" width="{{ p_sushi.featured_image.width }}" height="{{ p_sushi.featured_image.height }}" alt="{{ p_sushi.title }}" class="wt-hero__img wt-hero__img--switch wt-hero__img--sushi">{% endif %}{% if ice_image != blank %}<img src="{{ ice_image | image_url: width: 1600 }}" width="{{ ice_image.width }}" height="{{ ice_image.height }}" alt="Knead That Ice Cream" class="wt-hero__img wt-hero__img--switch wt-hero__img--ice">{% endif %}{% if burger_image != blank %}<img src="{{ burger_image | image_url: width: 1600 }}" width="{{ burger_image.width }}" height="{{ burger_image.height }}" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% else %}<img src="{{ 'p03-x228.jpg' | asset_url }}" width="342" height="332" alt="Knead That Burger" class="wt-hero__img wt-hero__img--switch wt-hero__img--burger">{% endif %}</div>
@@ -283,9 +292,68 @@
       {% endif %}
     {% endform %}
   </div>
-</section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "image_picker", "id": "sushi_image", "label": "Sushi Blocks (SKU 565)" }, { "type": "image_picker", "id": "ice_blocks_image", "label": "Ice Cream Blocks (SKU 568)" }, { "type": "header", "content": "Just landed bands" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." }, { "type": "textarea", "id": "sushi_copy", "label": "Sushi Blocks description", "default": "Magnetic blocks that snap into rolls, towers, and a sushi train as long as the floor. Forty-eight to collect, two to a bag, and one of them is rare." }, { "type": "textarea", "id": "blocks_lead", "label": "Blocks band intro", "default": "Collectible kinetic blocks \u2014 twist them, click them, stack them. Two to a sealed bag, so what you get is a surprise." }, { "type": "textarea", "id": "ice_blocks_copy", "label": "Ice Cream Blocks description", "default": "The same blocks in scoops and cones — twist them, click them, stack them into a sundae. Eighteen flavours to collect, two to a bag, and the bag is sealed." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
+</section> </div> {% schema %} { "name": "Watchitude home", "settings": [ { "type": "header", "content": "Black Friday banner" }, { "type": "select", "id": "sale_banner", "label": "Show the sale banner", "options": [ { "value": "auto", "label": "Automatically, Nov 20 – Dec 1" }, { "value": "always", "label": "Always (preview)" }, { "value": "never", "label": "Never" } ], "default": "auto", "info": "Matches the automatic Black Friday discounts: 15% off everything, 25% off orders $50+." }, { "type": "header", "content": "Photos still needed" }, { "type": "image_picker", "id": "hero_image", "label": "Hero image (defaults to sushi product photo)" }, { "type": "image_picker", "id": "ice_image", "label": "Knead That Ice Cream art" }, { "type": "image_picker", "id": "burger_image", "label": "Knead That Burger art" }, { "type": "image_picker", "id": "twogo_image", "label": "Endless Bubble 2Go (falls back to product photo)" }, { "type": "image_picker", "id": "new_image", "label": "Click-Key Blocks (SKU 740)" }, { "type": "image_picker", "id": "sushi_image", "label": "Sushi Blocks (SKU 565)" }, { "type": "image_picker", "id": "ice_blocks_image", "label": "Ice Cream Blocks (SKU 568)" }, { "type": "header", "content": "Just landed bands" }, { "type": "textarea", "id": "new_copy", "label": "Click-Key Blocks description", "default": "Clicky mechanical keys you can pull apart and snap back together. Quiet enough for the classroom, loud enough to be worth it." }, { "type": "textarea", "id": "sushi_copy", "label": "Sushi Blocks description", "default": "Magnetic blocks that snap into rolls, towers, and a sushi train as long as the floor. Forty-eight to collect, two to a bag, and one of them is rare." }, { "type": "textarea", "id": "blocks_lead", "label": "Blocks band intro", "default": "Collectible kinetic blocks \u2014 twist them, click them, stack them. Two to a sealed bag, so what you get is a surprise." }, { "type": "textarea", "id": "ice_blocks_copy", "label": "Ice Cream Blocks description", "default": "The same blocks in scoops and cones — twist them, click them, stack them into a sundae. Eighteen flavours to collect, two to a bag, and the bag is sealed." } ], "presets": [{ "name": "Watchitude home" }] } {% endschema %}
 
 {% stylesheet %}
+  /* Black Friday band above the hero. Red ground, white type, so the
+     button inverts to white with red text. */
+  .wt-sale {
+    background: var(--wt-red, #D71920);
+    color: #fff;
+  }
+  .wt-sale__inner {
+    max-width: var(--wt-section-max, 1400px);
+    margin: 0 auto;
+    padding: 18px var(--wt-section-pad-x, 32px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 24px;
+    text-align: center;
+  }
+  .wt-sale__eyebrow {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    flex-basis: 100%;
+  }
+  .wt-sale__title {
+    margin: 0;
+    font-family: var(--wt-font-display, sans-serif);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .wt-sale__title span { white-space: nowrap; }
+  .wt-sale__note {
+    margin: 0;
+    font-size: 15px;
+    opacity: 0.9;
+  }
+  .wt-sale__btn {
+    background: #fff;
+    color: var(--wt-red, #D71920);
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: var(--wt-btn-radius, 6px);
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+  .wt-sale__btn:hover,
+  .wt-sale__btn:focus-visible {
+    background: var(--wt-ink, #101012);
+    color: #fff;
+  }
+  @media (max-width: 749px) {
+    .wt-sale__inner { padding: 14px 16px; }
+    .wt-sale__title { font-size: 22px; }
+    .wt-sale__title span { white-space: normal; }
+  }
+
   /* ============================================================
      Watchitude home
      Tunable tokens live here. Adjust these, not the rules below.
