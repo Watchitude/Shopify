@@ -272,11 +272,6 @@
       <h3 class="wt-trust__title">Orders over $50 ship free</h3>
       <p class="wt-trust__copy">Two fidgets clear it. So does one watch.</p>
     </div>
-    <div>
-      <h3 class="wt-trust__title">Find a local reseller</h3>
-      <p class="wt-trust__copy wt-trust__copy--spaced">Prefer to shop in person? We're carried in stores nationwide.</p>
-      <a href="/pages/find-a-store" class="wt-trust__link">Find a store</a>
-    </div>
   </div>
 </section> <section id="newsletter" class="wt-newsletter">
   <div class="wt-section wt-newsletter__inner">
@@ -1752,7 +1747,7 @@
 
   .wt-trust__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
     border-top: 1px solid var(--wt-line);
     padding-top: 40px;
@@ -1771,17 +1766,6 @@
     color: var(--wt-muted);
   }
 
-  /* Compound so it beats the base rule's margin shorthand on
-     specificity rather than on source order. */
-  .wt-trust__copy.wt-trust__copy--spaced {
-    margin-bottom: 8px;
-  }
-
-  .wt-trust__link {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--wt-red);
-  }
   /* ============================================================
      Newsletter band  (#newsletter)
      Full-bleed tint like #bubble: the <section> spans the full width
