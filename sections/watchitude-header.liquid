@@ -21,11 +21,63 @@
     <a href="{{ routes.collections_url }}/{{ handle }}" class="{{ link_class }}">{{ label }}</a>
   {%- endfor -%}
 {%- endcapture -%}
+{%- comment -%}
+  The announcement is a light touch: it shows from a visitor's first page,
+  slides away on its own after announcement_minutes, and stays gone for the
+  rest of that browsing session (or at once, if they close it). The timer
+  lives in sessionStorage so it keeps counting across page loads instead of
+  restarting on every page.
+
+  US-only by default: the free-shipping threshold it advertises is the US
+  one ($50); UK and Canada orders ship free from $75.
+{%- endcomment -%}
+{%- liquid
+  assign show_announcement = section.settings.show_announcement
+  if section.settings.announcement_text == blank
+    assign show_announcement = false
+  endif
+  if section.settings.announcement_us_only and localization.country.iso_code != 'US'
+    assign show_announcement = false
+  endif
+-%}
 <div class="wt-header">
-  {% if section.settings.show_announcement %}
-    <div class="wt-header__announcement">
-      {{ section.settings.announcement_text }}
+  {% if show_announcement %}
+    <div class="wt-header__announcement" role="status">
+      <span>{{ section.settings.announcement_text }}</span>
+      <button type="button" class="wt-header__announcement-close" aria-label="Dismiss">&times;</button>
     </div>
+    {%- unless request.design_mode -%}
+      <script>
+        /* Inline, straight after the bar, so a bar that has already timed
+           out this session is hidden before it paints -- no flash. */
+        (function () {
+          var bar = document.currentScript.previousElementSibling;
+          var key = 'wt-announcement';
+          var ms = {{ section.settings.announcement_minutes | times: 60000 }};
+          var now = Date.now();
+          var state = null;
+          try { state = JSON.parse(sessionStorage.getItem(key)); } catch (e) {}
+          if (!state) {
+            state = { start: now };
+            try { sessionStorage.setItem(key, JSON.stringify(state)); } catch (e) {}
+          }
+          if (state.closed || now - state.start >= ms) {
+            bar.hidden = true;
+            return;
+          }
+          function hide(closed) {
+            if (closed) {
+              state.closed = true;
+              try { sessionStorage.setItem(key, JSON.stringify(state)); } catch (e) {}
+            }
+            bar.classList.add('is-leaving');
+            setTimeout(function () { bar.hidden = true; }, 450);
+          }
+          setTimeout(function () { hide(false); }, ms - (now - state.start));
+          bar.querySelector('button').addEventListener('click', function () { hide(true); });
+        })();
+      </script>
+    {%- endunless -%}
   {% endif %}
   <header class="wt-header__bar">
     <div class="wt-header__row">
@@ -94,14 +146,58 @@
     color: var(--wt-ink);
   }
 
+  /* Deliberately quiet: a pale strip with small type, not the brand red. */
   .wt-header__announcement {
-    background: var(--wt-red);
-    color: #fff;
+    position: relative;
+    background: #F6F6F7;
+    color: var(--wt-ink);
+    border-bottom: 1px solid var(--wt-line);
     text-align: center;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 9px 16px;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 7px 44px;
+    max-height: 64px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.3s ease;
+  }
+
+  .wt-header__announcement.is-leaving {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom-width: 0;
+    opacity: 0;
+  }
+
+  .wt-header__announcement[hidden] {
+    display: none;
+  }
+
+  .wt-header__announcement-close {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--wt-muted);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .wt-header__announcement-close:hover {
+    color: var(--wt-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wt-header__announcement {
+      transition: none;
+    }
   }
 
   .wt-header__bar {
@@ -337,4 +433,4 @@
   });
 {% endjavascript %}
 
-{% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Orders over $20 ship free" } ] } {% endschema %}
+{% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Free standard shipping on orders $50+" }, { "type": "range", "id": "announcement_minutes", "label": "Hide announcement after", "min": 1, "max": 10, "step": 1, "unit": "min", "default": 3 }, { "type": "checkbox", "id": "announcement_us_only", "label": "Show announcement to US visitors only", "default": true } ] } {% endschema %}
