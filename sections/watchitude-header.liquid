@@ -29,7 +29,7 @@
   restarting on every page.
 
   US-only by default: the free-shipping threshold it advertises is the US
-  one ($50); UK and Canada orders ship free from $75.
+  one ($40); UK and Canada orders ship free from $75.
 {%- endcomment -%}
 {%- liquid
   assign show_announcement = section.settings.show_announcement
@@ -433,4 +433,4 @@
   });
 {% endjavascript %}
 
-{% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Free standard shipping on orders $50+" }, { "type": "range", "id": "announcement_minutes", "label": "Hide announcement after", "min": 1, "max": 10, "step": 1, "unit": "min", "default": 3 }, { "type": "checkbox", "id": "announcement_us_only", "label": "Show announcement to US visitors only", "default": true } ] } {% endschema %}
+{% schema %} { "name": "Watchitude header", "settings": [ { "type": "image_picker", "id": "logo", "label": "Logo" }, { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true }, { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Free standard shipping on orders $40+" }, { "type": "range", "id": "announcement_minutes", "label": "Hide announcement after", "min": 1, "max": 10, "step": 1, "unit": "min", "default": 3 }, { "type": "checkbox", "id": "announcement_us_only", "label": "Show announcement to US visitors only", "default": true } ] } {% endschema %}

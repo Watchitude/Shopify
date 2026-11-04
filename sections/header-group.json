@@ -16,7 +16,7 @@
       "settings": {
         "logo": "shopify://shop_images/WatLogo.png",
         "show_announcement": true,
-        "announcement_text": "Free standard shipping on orders $50+",
+        "announcement_text": "Free standard shipping on orders $40+",
         "announcement_minutes": 3,
         "announcement_us_only": true
       }
