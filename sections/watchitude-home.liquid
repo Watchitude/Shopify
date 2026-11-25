@@ -3,6 +3,8 @@
   <div class="wt-sale__inner">
     <p class="wt-sale__eyebrow">Black Friday &middot; through Cyber Monday, Dec 1</p>
     <p class="wt-sale__title"><span>15% off everything.</span> <span>25% off orders $50+.</span></p>
+    {%- comment -%} Matches the "BFCM: 30% off Endless Bubble Wrap Red, Green, Dark Blue" automatic discount (ends Dec 1). {%- endcomment -%}
+    <p class="wt-sale__extra"><a href="{{ p_bubble.url | default: routes.all_products_collection_url }}">Endless Bubble Wrap in Red, Green &amp; Dark Blue: 30% off</a></p>
     <p class="wt-sale__note">Taken off automatically at checkout &mdash; no code needed.</p>
     <a href="{{ routes.all_products_collection_url }}" class="wt-sale__btn">Shop the sale</a>
   </div>
@@ -323,6 +325,13 @@
     line-height: 1.15;
   }
   .wt-sale__title span { white-space: nowrap; }
+  .wt-sale__extra {
+    margin: 0;
+    flex-basis: 100%;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .wt-sale__extra a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
   .wt-sale__note {
     margin: 0;
     font-size: 15px;
